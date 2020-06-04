@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gamestop_scraper.iml" filepath="$PROJECT_DIR$/gamestop_scraper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gamestop_website_scraper.iml" filepath="$PROJECT_DIR$/gamestop_website_scraper.iml" />
     </modules>
   </component>
 </project>
