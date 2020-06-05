@@ -1,3 +1,5 @@
+package main;
+
 public class Gamestop {
 
     private String website = "www.gamestop";
