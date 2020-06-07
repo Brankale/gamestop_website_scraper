@@ -44,15 +44,24 @@ public class SearchResultsPageParser {
         final int id = getIdFromItem(item);
         final GamePreview gamePreview = new GamePreview(id);
 
+        final String title = getTitleFromItem(item);
+
+        gamePreview.setTitle(title);
+
         // TODO: init gamepreview parameters
 
         return gamePreview;
     }
 
     private static int getIdFromItem(@NotNull final Element item) {
-        final Element prodImg = item.getElementsByClass("prodImg").get(0);
+        final Element prodImg = item.getElementsByClass("prodImg").first();
         final String id = prodImg.attr("href").split("/")[3];
         return Integer.parseInt(id);
+    }
+
+    @NotNull
+    private static String getTitleFromItem(@NotNull final Element item) {
+        return item.getElementsByTag("h3").first().text();
     }
 
 }

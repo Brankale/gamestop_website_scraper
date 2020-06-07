@@ -1,5 +1,6 @@
 package test;
 
+import main.models.GamePreview;
 import main.models.GamePreviews;
 import main.parsers.SearchResultsPageParser;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,26 @@ class SearchResultsPageParserTest {
         }
 
         assert true;
+    }
+
+    // Use this to test new features
+    @Test
+    public void newFeature() {
+        final String link = "https://www.gamestop.it/SearchResult/QuickSearch?q=persona";
+
+        try {
+            GamePreviews gamePreviews = SearchResultsPageParser.getSearchResults(link);
+            GamePreview gamePreview = gamePreviews.get(6);
+
+            assertEquals(
+                    "Persona 5 Royal - Steelbook Edition",
+                    gamePreview.getTitle(),
+                    "title doesn't correspond"
+            );
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
