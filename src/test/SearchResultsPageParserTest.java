@@ -33,11 +33,11 @@ class SearchResultsPageParserTest {
 
         try {
             GamePreviews gamePreviews = SearchResultsPageParser.getSearchResults(link);
-            GamePreview gamePreview = gamePreviews.get(6);
+            GamePreview gamePreview = gamePreviews.get(1);
 
             assertEquals(
-                    "PS4",
-                    gamePreview.getPlatform()
+                    "Deep Silver",
+                    gamePreview.getPublisher()
             );
 
         } catch (IOException ex) {
