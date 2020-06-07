@@ -45,8 +45,10 @@ public class SearchResultsPageParser {
         final GamePreview gamePreview = new GamePreview(id);
 
         final String title = getTitleFromItem(item);
+        final String platform = getPlatformFromItem(item);
 
         gamePreview.setTitle(title);
+        gamePreview.setPlatform(platform);
 
         // TODO: init gamepreview parameters
 
@@ -62,6 +64,11 @@ public class SearchResultsPageParser {
     @NotNull
     private static String getTitleFromItem(@NotNull final Element item) {
         return item.getElementsByTag("h3").first().text();
+    }
+
+    @NotNull
+    private static String getPlatformFromItem(@NotNull final Element item) {
+        return item.getElementsByTag("h4").first().textNodes().get(0).text().trim();
     }
 
 }

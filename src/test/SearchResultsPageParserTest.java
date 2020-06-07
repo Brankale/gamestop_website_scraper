@@ -36,9 +36,8 @@ class SearchResultsPageParserTest {
             GamePreview gamePreview = gamePreviews.get(6);
 
             assertEquals(
-                    "Persona 5 Royal - Steelbook Edition",
-                    gamePreview.getTitle(),
-                    "title doesn't correspond"
+                    "PS4",
+                    gamePreview.getPlatform()
             );
 
         } catch (IOException ex) {
