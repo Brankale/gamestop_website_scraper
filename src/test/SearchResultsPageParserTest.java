@@ -2,6 +2,8 @@ package test;
 
 import main.models.GamePreview;
 import main.models.GamePreviews;
+import main.models.Price;
+import main.models.Prices;
 import main.parsers.SearchResultsPageParser;
 import org.junit.jupiter.api.Test;
 
@@ -33,12 +35,21 @@ class SearchResultsPageParserTest {
 
         try {
             GamePreviews gamePreviews = SearchResultsPageParser.getSearchResults(link);
-            GamePreview gamePreview = gamePreviews.get(1);
 
-            assertEquals(
-                    "Deep Silver",
-                    gamePreview.getPublisher()
-            );
+            for (GamePreview gamePreview : gamePreviews) {
+                System.out.println("\ntitle: " + gamePreview.getTitle());
+                Prices prices = gamePreview.getPrices();
+                if (!prices.isEmpty()) {
+                    for (Price price : prices) {
+                        System.out.println("type: " + price.getType().toString() );
+                        System.out.println("price: " + price.getPrice());
+
+                        for (float oldPrice : price.getOldPrices()) {
+                            System.out.println("oldPrice: " + oldPrice);
+                        }
+                    }
+                }
+            }
 
         } catch (IOException ex) {
             ex.printStackTrace();

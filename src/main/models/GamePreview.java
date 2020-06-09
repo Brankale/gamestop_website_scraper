@@ -1,5 +1,6 @@
 package main.models;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class GamePreview {
@@ -8,6 +9,7 @@ public class GamePreview {
     private String title;
     private String publisher;
     private String platform;
+    private Prices prices;
 
     public GamePreview(int id) {
         this.id = id;
@@ -39,6 +41,14 @@ public class GamePreview {
 
     public final void setPlatform(String platform) {
         this.platform = platform;
+    }
+
+    public Prices getPrices() {
+        return prices;
+    }
+
+    public void setPrices(Prices prices) {
+        this.prices = prices;
     }
 
     @Override

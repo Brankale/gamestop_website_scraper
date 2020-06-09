@@ -18,10 +18,10 @@ public class Price {
     private boolean homeDelivery;
     private boolean pickUpInStore;
 
-    public Price(PriceType type, float price) {
+    public Price(PriceType type, float price, ArrayList<Float> oldPrices) {
         this.type = type;
         this.price = price;
-        oldPrices = new ArrayList<>();
+        this.oldPrices = oldPrices;
     }
 
     public PriceType getType() {
@@ -34,10 +34,6 @@ public class Price {
 
     public ArrayList<Float> getOldPrices() {
         return oldPrices;
-    }
-
-    public void addOldPrice(float oldPrice) {
-        oldPrices.add(oldPrice);
     }
 
     public boolean isAvailable() {

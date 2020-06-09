@@ -37,7 +37,7 @@ public class SearchResultsPageParser {
         if (productsList != null) {
             return productsList.getElementsByClass("singleProduct");
         } else {
-            throw new IllegalArgumentException("productsList not found!");
+            throw new IllegalArgumentException("productsList tag id not found!");
         }
     }
 
@@ -50,10 +50,12 @@ public class SearchResultsPageParser {
         final String title = getTitleFromItem(item);
         final String platform = getPlatformFromItem(item);
         final String publisher = getPublisherFromItem(item);
+        final Prices prices = getPricesFromItem(item);
 
         gamePreview.setTitle(title);
         gamePreview.setPlatform(platform);
         gamePreview.setPublisher(publisher);
+        gamePreview.setPrices(prices);
 
         // TODO: init gamepreview parameters
 
@@ -84,7 +86,6 @@ public class SearchResultsPageParser {
     @NotNull
     private static Prices getPricesFromItem(@NotNull final Element item) {
         final Prices prices = new Prices();
-        // TODO: init prices
 
         final Element pricesSection = item.getElementsByClass("prodBuy").first();
         final Elements tags = pricesSection.children();
@@ -105,7 +106,7 @@ public class SearchResultsPageParser {
         Price price = null;
 
         float value;
-        ArrayList<Float> oldPrices;
+        final ArrayList<Float> oldPrices = new ArrayList<>();
 
         // FIND PRICE
 
@@ -119,9 +120,8 @@ public class SearchResultsPageParser {
             // if more than one price is present
             value = stringToPrice(em.get(0).text());
 
-            oldPrices = new ArrayList<>();
-            for (Element element : em) {
-                final float oldValue = stringToPrice(element.text());
+            for (int i = 1; i < em.size(); ++i) {
+                final float oldValue = stringToPrice(em.get(i).text());
                 oldPrices.add(oldValue);
             }
         }
@@ -129,14 +129,11 @@ public class SearchResultsPageParser {
         // FIND PRICE TYPE & INIT
 
         switch (priceType.className()) {
-            case "buyNew": price = new Price(Price.PriceType.NEW, value);
-            case "buyUsed": price = new Price(Price.PriceType.USED, value);
-            case "buyPresell": price = new Price(Price.PriceType.PREORDER, value);
-            case "buyDLC": price = new Price(Price.PriceType.DIGITAL, value);
-        }
-
-        if (price == null) {
-            throw new IllegalArgumentException("Couldn't find price type tag");
+            case "buyNew": price = new Price(Price.PriceType.NEW, value, oldPrices); break;
+            case "buyUsed": price = new Price(Price.PriceType.USED, value, oldPrices); break;
+            case "buyPresell": price = new Price(Price.PriceType.PREORDER, value, oldPrices); break;
+            case "buyDLC": price = new Price(Price.PriceType.DIGITAL, value, oldPrices); break;
+            default: throw new IllegalArgumentException("Couldn't find price type tag");
         }
 
         // CHECK AVAILABILITY
@@ -163,7 +160,7 @@ public class SearchResultsPageParser {
         String str = price;
 
         // remove all the characters except for numbers, ',' and '.'
-        str = str.replace("[^0-9.,]","");
+        str = str.replaceAll("[^0-9.,]","");
         // to handle prices over 999,99€ like 1.249,99€
         str = str.replace(".", "");
         // to convert the price in a string that can be parsed
