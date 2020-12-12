@@ -1,6 +1,6 @@
 package test;
 
-import main.models.GamePreview;
+import main.models.GamePreviewOld;
 import main.models.GamePreviews;
 import main.models.Price;
 import main.models.Prices;
@@ -36,7 +36,7 @@ class SearchResultsPageParserTest {
         try {
             GamePreviews gamePreviews = SearchResultsPageParser.getSearchResults(link);
 
-            for (GamePreview gamePreview : gamePreviews) {
+            for (GamePreviewOld gamePreview : gamePreviews) {
                 System.out.println("\ntitle: " + gamePreview.getTitle());
                 Prices prices = gamePreview.getPrices();
                 if (!prices.isEmpty()) {

@@ -1,9 +1,8 @@
 package main.models;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class GamePreview {
+public class GamePreviewOld {
 
     private final int id;
     private String title;
@@ -11,7 +10,7 @@ public class GamePreview {
     private String platform;
     private Prices prices;
 
-    public GamePreview(int id) {
+    public GamePreviewOld(int id) {
         this.id = id;
     }
 
@@ -55,7 +54,7 @@ public class GamePreview {
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GamePreview that = (GamePreview) o;
+        GamePreviewOld that = (GamePreviewOld) o;
         return id == that.id;
     }
 

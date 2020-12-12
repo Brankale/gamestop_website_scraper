@@ -1,7 +1,7 @@
 package main.parsers;
 
 import com.sun.istack.internal.NotNull;
-import main.models.GamePreview;
+import main.models.GamePreviewOld;
 import main.models.GamePreviews;
 import main.models.Price;
 import main.models.Prices;
@@ -24,7 +24,7 @@ public class SearchResultsPageParser {
 
         Elements items = getItems(root);
         for (Element item : items) {
-            final GamePreview gamePreview = parseItem(item);
+            final GamePreviewOld gamePreview = parseItem(item);
             gamePreviews.add(gamePreview);
         }
 
@@ -42,10 +42,10 @@ public class SearchResultsPageParser {
     }
 
     @NotNull
-    private static GamePreview parseItem(@NotNull final Element item) {
+    private static GamePreviewOld parseItem(@NotNull final Element item) {
 
         final int id = getIdFromItem(item);
-        final GamePreview gamePreview = new GamePreview(id);
+        final GamePreviewOld gamePreview = new GamePreviewOld(id);
 
         final String title = getTitleFromItem(item);
         final String platform = getPlatformFromItem(item);
