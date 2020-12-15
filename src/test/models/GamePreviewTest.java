@@ -93,4 +93,35 @@ public class GamePreviewTest {
         assertEquals(g2.hashCode(), g1.hashCode());
     }
 
+    @Test
+    public void settingValidCoverUrlReturnsTrue() {
+        String url = "https://example.com";
+        assertTrue(gamePreview.setCoverUrl(url));
+    }
+
+    @Test
+    public void settingInvalidCoverUrlReturnsFalse() {
+        String url = "this is not a url";
+        assertFalse(gamePreview.setCoverUrl(url));
+    }
+
+    @Test
+    public void setCoverUrl() {
+        String url = "https://example.com";
+        gamePreview.setCoverUrl(url);
+        assertEquals(gamePreview.getCoverUrl(), url);
+    }
+
+    @Test
+    public void invalidCoverUrlIsNotSet() {
+        String url = "this is not a url";
+        gamePreview.setCoverUrl(url);
+        assertNotEquals(gamePreview.getCoverUrl(), url);
+    }
+
+    @Test
+    public void coverUrlCantBeNull() {
+        assertNotNull(gamePreview.getCoverUrl());
+    }
+
 }

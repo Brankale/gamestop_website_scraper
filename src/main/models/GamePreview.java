@@ -2,6 +2,8 @@ package main.models;
 
 import com.sun.istack.internal.NotNull;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 public class GamePreview {
@@ -11,6 +13,7 @@ public class GamePreview {
     private String platform;    // do not use enum because if a new console is released it must be added
     private String publisher;
     private String releaseDate;
+    private String coverUrl;
 
     public GamePreview(int id) {
         this.id = id;
@@ -64,6 +67,31 @@ public class GamePreview {
         if (releaseDate == null)
             return "";
         return releaseDate;
+    }
+
+    public boolean setCoverUrl(String url) {
+        if (isValidUrl(url)) {
+            coverUrl = url;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @NotNull
+    public String getCoverUrl() {
+        if (coverUrl == null)
+            return "";
+        return coverUrl;
+    }
+
+    public boolean isValidUrl(String url) {
+        try {
+            new URL(url);
+            return true;
+        } catch (MalformedURLException ex) {
+            return false;
+        }
     }
 
     @Override
