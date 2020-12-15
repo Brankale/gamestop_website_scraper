@@ -15,6 +15,9 @@ public class GamePreview {
     private String releaseDate;
     private String coverUrl;
 
+    /**
+     * @param id of the game. ID cannot be negative.
+     */
     public GamePreview(int id) {
         this.id = id;
         if (id < 0)
@@ -85,7 +88,7 @@ public class GamePreview {
         return coverUrl;
     }
 
-    public boolean isValidUrl(String url) {
+    private boolean isValidUrl(String url) {
         try {
             new URL(url);
             return true;
@@ -94,6 +97,10 @@ public class GamePreview {
         }
     }
 
+    /**
+     * @param o a GamePreview object
+     * @return true if the GamePreview objects have the same ID, false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
