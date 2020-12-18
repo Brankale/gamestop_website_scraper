@@ -1,7 +1,11 @@
 package main.parsers;
 
 import com.sun.istack.internal.NotNull;
-import main.models.*;
+import main.models.old.GamePreviewOld;
+import main.models.old.GamePreviews;
+import main.models.old.PriceOld;
+import main.models.old.Prices;
+import main.models.price.PriceType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

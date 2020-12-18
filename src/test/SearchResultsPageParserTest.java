@@ -1,9 +1,9 @@
 package test;
 
-import main.models.GamePreviewOld;
-import main.models.GamePreviews;
-import main.models.PriceOld;
-import main.models.Prices;
+import main.models.old.GamePreviewOld;
+import main.models.old.GamePreviews;
+import main.models.old.PriceOld;
+import main.models.old.Prices;
 import main.parsers.SearchResultsPageParser;
 import org.junit.jupiter.api.Test;
 

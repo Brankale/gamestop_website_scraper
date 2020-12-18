@@ -1,7 +1,8 @@
-package main.models;
+package main.models.old;
 
 import java.util.Objects;
 
+@Deprecated
 public class GamePreviewOld {
 
     private final int id;

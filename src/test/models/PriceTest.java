@@ -1,7 +1,7 @@
 package test.models;
 
-import main.models.Price;
-import main.models.PriceType;
+import main.models.price.Price;
+import main.models.price.PriceType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

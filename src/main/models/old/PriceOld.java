@@ -1,7 +1,10 @@
-package main.models;
+package main.models.old;
+
+import main.models.price.PriceType;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class PriceOld {
 
     private final PriceType type;

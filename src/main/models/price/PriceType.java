@@ -1,4 +1,4 @@
-package main.models;
+package main.models.price;
 
 public enum PriceType {
     NEW,
