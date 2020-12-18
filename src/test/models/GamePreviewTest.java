@@ -4,6 +4,8 @@ import main.models.GamePreview;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.net.MalformedURLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GamePreviewTest {
@@ -94,29 +96,23 @@ public class GamePreviewTest {
     }
 
     @Test
-    public void settingValidCoverUrlReturnsTrue() {
-        String url = "https://example.com";
-        assertTrue(gamePreview.setCoverUrl(url));
-    }
-
-    @Test
-    public void settingInvalidCoverUrlReturnsFalse() {
-        String url = "this is not a url";
-        assertFalse(gamePreview.setCoverUrl(url));
-    }
-
-    @Test
     public void setCoverUrl() {
-        String url = "https://example.com";
-        gamePreview.setCoverUrl(url);
-        assertEquals(gamePreview.getCoverUrl(), url);
+        try {
+            String url = "https://example.com";
+            gamePreview.setCoverUrl(url);
+            assertEquals(gamePreview.getCoverUrl(), url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            assert false;
+        }
     }
 
     @Test
-    public void invalidCoverUrlIsNotSet() {
-        String url = "this is not a url";
-        gamePreview.setCoverUrl(url);
-        assertNotEquals(gamePreview.getCoverUrl(), url);
+    public void invalidCoverUrlThrowsMalformedURLException() {
+        assertThrows(MalformedURLException.class, () -> {
+            String url = "this is not a url";
+            gamePreview.setCoverUrl(url);
+        });
     }
 
     @Test

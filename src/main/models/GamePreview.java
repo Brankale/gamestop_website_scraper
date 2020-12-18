@@ -72,13 +72,9 @@ public class GamePreview {
         return releaseDate;
     }
 
-    public boolean setCoverUrl(String url) {
-        if (isValidUrl(url)) {
-            coverUrl = url;
-            return true;
-        } else {
-            return false;
-        }
+    public void setCoverUrl(String url) throws MalformedURLException {
+        new URL(url);
+        coverUrl = url;
     }
 
     @NotNull
@@ -86,15 +82,6 @@ public class GamePreview {
         if (coverUrl == null)
             return "";
         return coverUrl;
-    }
-
-    private boolean isValidUrl(String url) {
-        try {
-            new URL(url);
-            return true;
-        } catch (MalformedURLException ex) {
-            return false;
-        }
     }
 
     /**
