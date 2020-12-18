@@ -11,8 +11,10 @@ public class Price {
     private boolean collectInStore;
 
     public Price(BigDecimal price, PriceType type) {
+        // TODO: add a message to the exception
         if (price == null)
             throw new PriceInitException();
+        // TODO: add a message to the exception
         if (type == null)
             throw new PriceInitException();
 
