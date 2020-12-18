@@ -4,13 +4,6 @@ import java.util.ArrayList;
 
 public class PriceOld {
 
-    public enum PriceType {
-        NEW,
-        USED,
-        PREORDER,
-        DIGITAL
-    }
-
     private final PriceType type;
     private final float price;
     private final ArrayList<Float> oldPrices;

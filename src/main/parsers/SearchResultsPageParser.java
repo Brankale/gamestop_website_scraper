@@ -1,10 +1,7 @@
 package main.parsers;
 
 import com.sun.istack.internal.NotNull;
-import main.models.GamePreviewOld;
-import main.models.GamePreviews;
-import main.models.PriceOld;
-import main.models.Prices;
+import main.models.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -129,10 +126,10 @@ public class SearchResultsPageParser {
         // FIND PRICE TYPE & INIT
 
         switch (priceType.className()) {
-            case "buyNew": price = new PriceOld(PriceOld.PriceType.NEW, value, oldPrices); break;
-            case "buyUsed": price = new PriceOld(PriceOld.PriceType.USED, value, oldPrices); break;
-            case "buyPresell": price = new PriceOld(PriceOld.PriceType.PREORDER, value, oldPrices); break;
-            case "buyDLC": price = new PriceOld(PriceOld.PriceType.DIGITAL, value, oldPrices); break;
+            case "buyNew": price = new PriceOld(PriceType.NEW, value, oldPrices); break;
+            case "buyUsed": price = new PriceOld(PriceType.USED, value, oldPrices); break;
+            case "buyPresell": price = new PriceOld(PriceType.PREORDER, value, oldPrices); break;
+            case "buyDLC": price = new PriceOld(PriceType.DIGITAL, value, oldPrices); break;
             default: throw new IllegalArgumentException("Couldn't find price type tag");
         }
 
