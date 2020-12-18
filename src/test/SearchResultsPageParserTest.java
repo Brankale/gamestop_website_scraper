@@ -2,14 +2,12 @@ package test;
 
 import main.models.GamePreviewOld;
 import main.models.GamePreviews;
-import main.models.Price;
+import main.models.PriceOld;
 import main.models.Prices;
 import main.parsers.SearchResultsPageParser;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsPageParserTest {
 
@@ -40,7 +38,7 @@ class SearchResultsPageParserTest {
                 System.out.println("\ntitle: " + gamePreview.getTitle());
                 Prices prices = gamePreview.getPrices();
                 if (!prices.isEmpty()) {
-                    for (Price price : prices) {
+                    for (PriceOld price : prices) {
                         System.out.println("type: " + price.getType().toString() );
                         System.out.println("price: " + price.getPrice());
 

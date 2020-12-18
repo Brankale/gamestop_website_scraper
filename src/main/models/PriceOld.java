@@ -2,7 +2,7 @@ package main.models;
 
 import java.util.ArrayList;
 
-public class Price {
+public class PriceOld {
 
     public enum PriceType {
         NEW,
@@ -18,7 +18,7 @@ public class Price {
     private boolean homeDelivery;
     private boolean pickUpInStore;
 
-    public Price(PriceType type, float price, ArrayList<Float> oldPrices) {
+    public PriceOld(PriceType type, float price, ArrayList<Float> oldPrices) {
         this.type = type;
         this.price = price;
         this.oldPrices = oldPrices;

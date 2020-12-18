@@ -2,6 +2,6 @@ package main.models;
 
 import java.util.ArrayList;
 
-public class Prices extends ArrayList<Price> {
+public class Prices extends ArrayList<PriceOld> {
 
 }

@@ -3,7 +3,7 @@ package main.parsers;
 import com.sun.istack.internal.NotNull;
 import main.models.GamePreviewOld;
 import main.models.GamePreviews;
-import main.models.Price;
+import main.models.PriceOld;
 import main.models.Prices;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -93,7 +93,7 @@ public class SearchResultsPageParser {
         for (int i = 0; i < tags.size(); i += 2) {
             final Element priceType = tags.get(i);
             final Element availability = tags.get(i+1);
-            final Price price = getPrice(priceType, availability);
+            final PriceOld price = getPrice(priceType, availability);
             prices.add(price);
         }
 
@@ -101,9 +101,9 @@ public class SearchResultsPageParser {
     }
 
     @NotNull
-    private static Price getPrice(final Element priceType, final Element availability) {
+    private static PriceOld getPrice(final Element priceType, final Element availability) {
 
-        Price price = null;
+        PriceOld price = null;
 
         float value;
         final ArrayList<Float> oldPrices = new ArrayList<>();
@@ -129,10 +129,10 @@ public class SearchResultsPageParser {
         // FIND PRICE TYPE & INIT
 
         switch (priceType.className()) {
-            case "buyNew": price = new Price(Price.PriceType.NEW, value, oldPrices); break;
-            case "buyUsed": price = new Price(Price.PriceType.USED, value, oldPrices); break;
-            case "buyPresell": price = new Price(Price.PriceType.PREORDER, value, oldPrices); break;
-            case "buyDLC": price = new Price(Price.PriceType.DIGITAL, value, oldPrices); break;
+            case "buyNew": price = new PriceOld(PriceOld.PriceType.NEW, value, oldPrices); break;
+            case "buyUsed": price = new PriceOld(PriceOld.PriceType.USED, value, oldPrices); break;
+            case "buyPresell": price = new PriceOld(PriceOld.PriceType.PREORDER, value, oldPrices); break;
+            case "buyDLC": price = new PriceOld(PriceOld.PriceType.DIGITAL, value, oldPrices); break;
             default: throw new IllegalArgumentException("Couldn't find price type tag");
         }
 
