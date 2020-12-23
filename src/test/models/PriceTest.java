@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,6 +30,7 @@ class PriceTest {
         assertEquals(price.getPrice(), _price);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void cantPassNullPrice() {
         assertThrows(Price.PriceInitException.class, () -> {
@@ -36,6 +39,7 @@ class PriceTest {
         });
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void cantPassNullPriceType() {
         assertThrows(Price.PriceInitException.class, () -> {
@@ -45,39 +49,53 @@ class PriceTest {
     }
 
     @Test
-    public void setAvailableTrue() {
+    public void setAvailable() {
         price.setAvailable(true);
         assertTrue(price.isAvailable());
-    }
-
-    @Test
-    public void setAvailableFalse() {
         price.setAvailable(false);
         assertFalse(price.isAvailable());
     }
 
     @Test
-    public void setHomeDeliveryTrue() {
+    public void setHomeDelivery() {
         price.setHomeDeliveryAvailability(true);
         assertTrue(price.isHomeDeliveryAvailable());
-    }
-
-    @Test
-    public void setHomeDeliveryFalse() {
         price.setHomeDeliveryAvailability(false);
         assertFalse(price.isHomeDeliveryAvailable());
     }
 
     @Test
-    public void setCanCollectInStoreTrue() {
+    public void setCanCollectInStore() {
         price.setCanCollectInStore(true);
         assertTrue(price.canCollectInStore());
+        price.setCanCollectInStore(false);
+        assertFalse(price.canCollectInStore());
     }
 
     @Test
-    public void setCanCollectInStoreFalse() {
-        price.setCanCollectInStore(false);
-        assertFalse(price.canCollectInStore());
+    public void oldPricesCantBeNull() {
+        assertNotNull(price.getOldPrices());
+    }
+
+    @Test
+    public void addOldPrice() {
+        List<BigDecimal> test = new ArrayList<>();
+        test.add(BigDecimal.valueOf(10));
+        price.addOldPrice(BigDecimal.valueOf(10));
+        assertEquals(price.getOldPrices(), test);
+    }
+
+    @Test
+    public void getPriceType() {
+        Price price;
+        price = new Price(BigDecimal.valueOf(1), PriceType.NEW);
+        assertEquals(price.getPriceType(), PriceType.NEW);
+        price = new Price(BigDecimal.valueOf(1), PriceType.USED);
+        assertEquals(price.getPriceType(), PriceType.USED);
+        price = new Price(BigDecimal.valueOf(1), PriceType.PREORDER);
+        assertEquals(price.getPriceType(), PriceType.PREORDER);
+        price = new Price(BigDecimal.valueOf(1), PriceType.DIGITAL);
+        assertEquals(price.getPriceType(), PriceType.DIGITAL);
     }
 
 }
