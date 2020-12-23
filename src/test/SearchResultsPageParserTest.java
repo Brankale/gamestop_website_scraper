@@ -2,12 +2,13 @@ package test;
 
 import main.models.old.GamePreviewOld;
 import main.models.old.GamePreviews;
-import main.models.old.PriceOld;
-import main.models.old.Prices;
+import main.models.price.Price;
+import main.models.price.Prices;
 import main.parsers.SearchResultsPageParser;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 class SearchResultsPageParserTest {
 
@@ -38,11 +39,11 @@ class SearchResultsPageParserTest {
                 System.out.println("\ntitle: " + gamePreview.getTitle());
                 Prices prices = gamePreview.getPrices();
                 if (!prices.isEmpty()) {
-                    for (PriceOld price : prices) {
+                    for (Price price : prices) {
                         System.out.println("type: " + price.getType().toString() );
                         System.out.println("price: " + price.getPrice());
 
-                        for (float oldPrice : price.getOldPrices()) {
+                        for (BigDecimal oldPrice : price.getOldPrices()) {
                             System.out.println("oldPrice: " + oldPrice);
                         }
                     }

@@ -3,15 +3,16 @@ package main.parsers;
 import com.sun.istack.internal.NotNull;
 import main.models.old.GamePreviewOld;
 import main.models.old.GamePreviews;
-import main.models.old.PriceOld;
-import main.models.old.Prices;
+import main.models.price.Price;
 import main.models.price.PriceType;
+import main.models.price.Prices;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class SearchResultsPageParser {
@@ -94,7 +95,7 @@ public class SearchResultsPageParser {
         for (int i = 0; i < tags.size(); i += 2) {
             final Element priceType = tags.get(i);
             final Element availability = tags.get(i+1);
-            final PriceOld price = getPrice(priceType, availability);
+            final Price price = getPrice(priceType, availability);
             prices.add(price);
         }
 
@@ -102,9 +103,9 @@ public class SearchResultsPageParser {
     }
 
     @NotNull
-    private static PriceOld getPrice(final Element priceType, final Element availability) {
+    private static Price getPrice(final Element priceType, final Element availability) {
 
-        PriceOld price = null;
+        Price price = null;
 
         float value;
         final ArrayList<Float> oldPrices = new ArrayList<>();
@@ -129,12 +130,19 @@ public class SearchResultsPageParser {
 
         // FIND PRICE TYPE & INIT
 
+        PriceType type;
+
         switch (priceType.className()) {
-            case "buyNew": price = new PriceOld(PriceType.NEW, value, oldPrices); break;
-            case "buyUsed": price = new PriceOld(PriceType.USED, value, oldPrices); break;
-            case "buyPresell": price = new PriceOld(PriceType.PREORDER, value, oldPrices); break;
-            case "buyDLC": price = new PriceOld(PriceType.DIGITAL, value, oldPrices); break;
+            case "buyNew": type = PriceType.NEW; break;
+            case "buyUsed": type = PriceType.USED; break;
+            case "buyPresell": type = PriceType.PREORDER; break;
+            case "buyDLC": type = PriceType.DIGITAL; break;
             default: throw new IllegalArgumentException("Couldn't find price type tag");
+        }
+
+        price = new Price(BigDecimal.valueOf(value), type);
+        for (float oldPrice : oldPrices) {
+            price.addOldPrice(BigDecimal.valueOf(oldPrice));
         }
 
         // CHECK AVAILABILITY

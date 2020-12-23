@@ -33,8 +33,16 @@ public class Price {
         return price;
     }
 
-    public void addOldPrice(BigDecimal oldPrice) {
+    public void addOldPrice(@NotNull BigDecimal oldPrice) {
+        if (oldPrice == null)
+            throw new NullPointerException();
         oldPrices.add(oldPrice);
+    }
+
+    public void addOldPrices(@NotNull List<BigDecimal> oldPrices) {
+        for (BigDecimal oldPrice : oldPrices) {
+            addOldPrice(oldPrice);
+        }
     }
 
     @NotNull
@@ -43,7 +51,7 @@ public class Price {
     }
 
     @NotNull
-    public PriceType getPriceType() {
+    public PriceType getType() {
         return type;
     }
 

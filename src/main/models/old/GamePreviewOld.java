@@ -1,5 +1,7 @@
 package main.models.old;
 
+import main.models.price.Prices;
+
 import java.util.Objects;
 
 @Deprecated
