@@ -1,6 +1,8 @@
 package main.models;
 
 import com.sun.istack.internal.NotNull;
+import main.models.price.Price;
+import main.models.price.Prices;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,6 +12,7 @@ public class GamePreview {
 
     private final int id;
     private String title;
+    private final Prices prices;
     private String platform;    // do not use enum because if a new console is released it must be added
     private String publisher;
     private String releaseDate;
@@ -22,6 +25,7 @@ public class GamePreview {
         this.id = id;
         if (id < 0)
             throw new InvalidGamePreviewIdException(id);
+        prices = new Prices();
     }
 
     public int getId() {
@@ -37,6 +41,19 @@ public class GamePreview {
         if (title == null)
             return "";
         return title;
+    }
+
+    /**
+     * @param price not added if null
+     */
+    public void addPrice(Price price) {
+        if (price != null)
+            prices.add(price);
+    }
+
+    @NotNull
+    public Prices getPrices() {
+        return prices;
     }
 
     public void setPlatform(String platform) {
@@ -115,4 +132,3 @@ public class GamePreview {
     }
 
 }
-

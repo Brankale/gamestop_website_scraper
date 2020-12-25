@@ -1,9 +1,13 @@
 package test.models;
 
 import main.models.GamePreview;
+import main.models.price.Price;
+import main.models.price.PriceType;
+import main.models.price.Prices;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -118,6 +122,21 @@ public class GamePreviewTest {
     @Test
     public void coverUrlCantBeNull() {
         assertNotNull(gamePreview.getCoverUrl());
+    }
+
+    @Test
+    public void addPrice() {
+        Price price = new Price(BigDecimal.valueOf(9.99), PriceType.NEW);
+        gamePreview.addPrice(price);
+        Prices prices = new Prices();
+        prices.add(price);
+        assertEquals(gamePreview.getPrices(), prices);
+    }
+
+    @Test
+    public void cantAddNullPrice() {
+        gamePreview.addPrice(null);
+        assertTrue(gamePreview.getPrices().isEmpty());
     }
 
 }
