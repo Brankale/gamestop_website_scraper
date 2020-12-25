@@ -2,7 +2,7 @@ package main.parsers;
 
 import com.sun.istack.internal.NotNull;
 import main.models.old.GamePreviewOld;
-import main.models.old.GamePreviews;
+import main.models.GamePreviews;
 import main.models.price.Price;
 import main.models.price.PriceType;
 import main.models.price.Prices;

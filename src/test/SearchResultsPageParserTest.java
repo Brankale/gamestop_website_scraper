@@ -1,7 +1,7 @@
 package test;
 
 import main.models.old.GamePreviewOld;
-import main.models.old.GamePreviews;
+import main.models.GamePreviews;
 import main.models.price.Price;
 import main.models.price.Prices;
 import main.parsers.SearchResultsPageParser;
