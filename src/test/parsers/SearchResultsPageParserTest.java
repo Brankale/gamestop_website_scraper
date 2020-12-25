@@ -1,4 +1,4 @@
-package test;
+package test.parsers;
 
 import main.models.GamePreview;
 import main.models.GamePreviews;
