@@ -51,6 +51,11 @@ public class GamePreview {
             prices.add(price);
     }
 
+    public void addPrices(Prices prices) {
+        for (Price price : prices)
+            addPrice(price);
+    }
+
     @NotNull
     public Prices getPrices() {
         return prices;
