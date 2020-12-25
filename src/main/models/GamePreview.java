@@ -43,12 +43,8 @@ public class GamePreview {
         return title;
     }
 
-    /**
-     * @param price not added if null
-     */
     public void addPrice(Price price) {
-        if (price != null)
-            prices.add(price);
+        prices.add(price);
     }
 
     public void addPrices(Prices prices) {

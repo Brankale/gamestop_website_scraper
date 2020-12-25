@@ -133,18 +133,4 @@ public class GamePreviewTest {
         assertEquals(gamePreview.getPrices(), prices);
     }
 
-    @Test
-    public void cantAddNullPrice() {
-        gamePreview.addPrice(null);
-        assertTrue(gamePreview.getPrices().isEmpty());
-    }
-
-    @Test
-    public void cantAddNullPrices() {
-        Prices prices = new Prices();
-        prices.add(null);
-        gamePreview.addPrices(prices);
-        assertTrue(gamePreview.getPrices().isEmpty());
-    }
-
 }
