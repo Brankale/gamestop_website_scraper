@@ -5,6 +5,16 @@ import org.jsoup.nodes.Element;
 public class SearchResultsItemParser {
 
     /**
+     * Returns the id of the game given the h3 tag
+     * @param rootTag h3 tag inside <div class="classProdInfo">
+     * @return the id of the game
+     */
+    public int parseId(Element rootTag) {
+        final String id = rootTag.child(0).attr("href").split("/")[3];
+        return Integer.parseInt(id);
+    }
+
+    /**
      * Returns the title of the game given the h3 tag
      * @param rootTag h3 tag inside <div class="classProdInfo">
      * @return the title of the game

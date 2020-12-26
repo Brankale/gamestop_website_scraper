@@ -22,6 +22,19 @@ class SearchResultsItemParserTest {
     }
 
     @Test
+    public void parseId() {
+        int id = 133354;
+        String html =   "<h3>" +
+                            "<a href=\"/Switch/Games/" + id + "/persona-5-strikers\">" +
+                                "Persona® 5 Strikers" +
+                            "</a>" +
+                        "</h3>";
+        Element element = createElement(html);
+        int parsedId = parser.parseId(element);
+        assertEquals(id, parsedId);
+    }
+
+    @Test
     public void parseTitle() {
         String title = "Persona® 5 Strikers";
         String html =   "<h3>" +
