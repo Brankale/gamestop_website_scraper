@@ -72,4 +72,20 @@ class SearchResultsItemParserTest {
         assertEquals(publisher, parsedPublisher);
     }
 
+    @Test
+    public void parseCoverUrl() {
+        String coverUrl = "https://static-it.gamestop.it/images/products/302017/2med.jpg";
+        String html =   "<a class=\"prodImg\" href=\"/Switch/Games/133354/persona-5-strikers\">" +
+                            "<img   data-llsrc=\"https://static-it.gamestop.it/images/products/302017/2med.jpg\" " +
+                                    "alt=\"2med image\"" +
+                                    "src=\"" + coverUrl + "\"" +
+                                    "class=\"\"" +
+                                    "onerror=\"this.src = '/Views/Locale/Content/Images/medDefault.jpg';\"" +
+                                    "style=\"display: inline;\">" +
+                        "</a>";
+        Element element = createElement(html);
+        String parsedCoverUrl = parser.parseCoverUrl(element);
+        assertEquals(coverUrl, parsedCoverUrl);
+    }
+
 }

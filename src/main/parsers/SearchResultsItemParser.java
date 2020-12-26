@@ -41,4 +41,13 @@ public class SearchResultsItemParser {
         return rootTag.getElementsByTag("strong").text().trim();
     }
 
+    /**
+     * Returns the cover url of the game given the "a" tag
+     * @param rootTag "a" tag with class="prodImg" inside <div class="classProdInfo">
+     * @return the cover url of the game
+     */
+    public String parseCoverUrl(Element rootTag) {
+        return rootTag.child(0).attr("data-llsrc");
+    }
+
 }
