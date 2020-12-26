@@ -2,6 +2,12 @@ package main.parsers;
 
 import org.jsoup.nodes.Element;
 
+/**
+ * Parses an Element with root tag: <div id="product_x">
+ * (where x is a number) and returns a GamePreview.
+ * HTML structure examples can be found on the GameStop website
+ * or in the tests for these methods.
+ */
 public class SearchResultsItemParser {
 
     /**
