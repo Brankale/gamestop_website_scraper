@@ -46,4 +46,17 @@ class SearchResultsItemParserTest {
         assertEquals(platform, parsedPlatform);
     }
 
+    @Test
+    public void parsePublisher() {
+        String publisher = "Atlus";
+        String html =   "<h4 class=\"platLogo plat-Switch\">Switch" +
+                            "<span class=\"hideOnMobile\"> by " +
+                                "<strong>" + publisher + "</strong> " +
+                            "</span>" +
+                        "</h4>";
+        Element element = createElement(html);
+        String parsedPublisher = parser.parsePublisher(element);
+        assertEquals(publisher, parsedPublisher);
+    }
+
 }

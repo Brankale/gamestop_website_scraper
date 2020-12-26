@@ -22,4 +22,13 @@ public class SearchResultsItemParser {
         return rootTag.textNodes().get(0).text().trim();
     }
 
+    /**
+     * Returns the publisher of the game given the h4 tag
+     * @param rootTag h4 tag inside <div class="classProdInfo">
+     * @return the publisher of the game
+     */
+    public String parsePublisher(Element rootTag) {
+        return rootTag.getElementsByTag("strong").text().trim();
+    }
+
 }
