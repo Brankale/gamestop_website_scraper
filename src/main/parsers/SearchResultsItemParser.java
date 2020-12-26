@@ -1,5 +1,6 @@
 package main.parsers;
 
+import com.sun.istack.internal.NotNull;
 import org.jsoup.nodes.Element;
 
 /**
@@ -15,7 +16,7 @@ public class SearchResultsItemParser {
      * @param rootTag h3 tag inside <div class="classProdInfo">
      * @return the id of the game
      */
-    public int parseId(Element rootTag) {
+    public int parseId(@NotNull final Element rootTag) {
         final String id = rootTag.child(0).attr("href").split("/")[3];
         return Integer.parseInt(id);
     }
@@ -25,7 +26,7 @@ public class SearchResultsItemParser {
      * @param rootTag h3 tag inside <div class="classProdInfo">
      * @return the title of the game
      */
-    public String parseTitle(Element rootTag) {
+    public String parseTitle(@NotNull final Element rootTag) {
         return rootTag.child(0).text().trim();
     }
 
@@ -34,7 +35,7 @@ public class SearchResultsItemParser {
      * @param rootTag h4 tag inside <div class="classProdInfo">
      * @return the platform of the game
      */
-    public String parsePlatform(Element rootTag) {
+    public String parsePlatform(@NotNull final Element rootTag) {
         return rootTag.textNodes().get(0).text().trim();
     }
 
@@ -43,7 +44,7 @@ public class SearchResultsItemParser {
      * @param rootTag h4 tag inside <div class="classProdInfo">
      * @return the publisher of the game
      */
-    public String parsePublisher(Element rootTag) {
+    public String parsePublisher(@NotNull final Element rootTag) {
         return rootTag.getElementsByTag("strong").text().trim();
     }
 
@@ -52,7 +53,7 @@ public class SearchResultsItemParser {
      * @param rootTag "a" tag with class="prodImg" inside <div class="classProdInfo">
      * @return the cover url of the game
      */
-    public String parseCoverUrl(Element rootTag) {
+    public String parseCoverUrl(@NotNull final Element rootTag) {
         return rootTag.child(0).attr("data-llsrc");
     }
 
