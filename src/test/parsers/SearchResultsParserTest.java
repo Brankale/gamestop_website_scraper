@@ -5,14 +5,17 @@ import main.models.GamePreviews;
 import main.models.price.Price;
 import main.models.price.Prices;
 import main.parsers.SearchResultsParser;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 
 class SearchResultsParserTest {
-
-
 
     @Test
     public void skipGiftCard() {

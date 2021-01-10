@@ -1,4 +1,4 @@
-package test.parsers.search_results_item_parser;
+package test.parsers;
 
 import main.models.GamePreview;
 import main.parsers.SearchResultsItemParser;
@@ -19,7 +19,7 @@ class SearchResultsItemParserTest {
     @BeforeAll
     public static void parseItem() {
         SearchResultsItemParser parser = new SearchResultsItemParser();
-        File html = new File("src/test/parsers/search_results_item_parser/search_results_item.html");
+        File html = new File("src/test/parsers/html/search_results_item.html");
         Element root = createElement(html);
         gamePreview = parser.parse(root);
     }
