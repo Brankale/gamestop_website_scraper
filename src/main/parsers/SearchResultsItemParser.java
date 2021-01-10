@@ -38,7 +38,7 @@ public class SearchResultsItemParser {
      * @param rootTag h3 tag inside <div class="singleProdInfo">
      * @return the id of the game
      */
-    public int parseId(@NotNull final Element rootTag) {
+    private int parseId(@NotNull final Element rootTag) {
         final String id = rootTag.child(0).attr("href").split("/")[3];
         return Integer.parseInt(id);
     }
@@ -48,7 +48,7 @@ public class SearchResultsItemParser {
      * @param rootTag h3 tag inside <div class="singleProdInfo">
      * @return the title of the game
      */
-    public String parseTitle(@NotNull final Element rootTag) {
+    private String parseTitle(@NotNull final Element rootTag) {
         return rootTag.child(0).text().trim();
     }
 
@@ -57,7 +57,7 @@ public class SearchResultsItemParser {
      * @param rootTag h4 tag inside <div class="singleProdInfo">
      * @return the platform of the game
      */
-    public String parsePlatform(@NotNull final Element rootTag) {
+    private String parsePlatform(@NotNull final Element rootTag) {
         return rootTag.textNodes().get(0).text().trim();
     }
 
@@ -66,7 +66,7 @@ public class SearchResultsItemParser {
      * @param rootTag h4 tag inside <div class="singleProdInfo">
      * @return the publisher of the game
      */
-    public String parsePublisher(@NotNull final Element rootTag) {
+    private String parsePublisher(@NotNull final Element rootTag) {
         return rootTag.getElementsByTag("strong").text().trim();
     }
 
@@ -75,7 +75,7 @@ public class SearchResultsItemParser {
      * @param rootTag "a" tag with class="prodImg" inside <div class="singleProduct">
      * @return the cover url of the game
      */
-    public String parseCoverUrl(@NotNull final Element rootTag) {
+    private String parseCoverUrl(@NotNull final Element rootTag) {
         return rootTag.child(0).attr("data-llsrc");
     }
 
