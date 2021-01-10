@@ -4,6 +4,8 @@ import com.sun.istack.internal.NotNull;
 import main.models.GamePreview;
 import org.jsoup.nodes.Element;
 
+import java.net.MalformedURLException;
+
 /**
  * Parses an Element with root tag: <div id="product_x">
  * (where x is a number) and returns a GamePreview.
@@ -14,7 +16,21 @@ public class SearchResultsItemParser {
 
     public GamePreview parse(@NotNull Element root) {
         int id = parseId(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
-        return new GamePreview(id);
+        String title = parseTitle(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
+        String platform = parsePlatform(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
+        String publisher = parsePublisher(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
+        String coverUrl = parseCoverUrl(root.getElementsByClass("prodImg").first());
+
+        GamePreview gamePreview = new GamePreview(id);
+        gamePreview.setTitle(title);
+        gamePreview.setPlatform(platform);
+        gamePreview.setPublisher(publisher);
+        try {
+            gamePreview.setCoverUrl(coverUrl);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return gamePreview;
     }
 
     /**

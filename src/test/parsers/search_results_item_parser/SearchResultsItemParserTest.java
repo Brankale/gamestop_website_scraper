@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,55 +53,25 @@ class SearchResultsItemParserTest {
     @Test
     public void parseTitle() {
         String title = "Persona® 5 Strikers";
-        String html =   "<h3>" +
-                        "   <a href=\"/Switch/Games/133354/persona-5-strikers\">" +
-                                title +
-                        "   </a>" +
-                        "</h3>";
-        Element element = createElement(html);
-        String parsedTitle = parser.parseTitle(element);
-        assertEquals(title, parsedTitle);
+        assertEquals(title, gamePreview.getTitle());
     }
 
     @Test
     public void parsePlatform() {
         String platform = "Switch";
-        String html =   "<h4 class=\"platLogo plat-Switch\">" +
-                            platform +
-                            "<span class=\"hideOnMobile\"> by <strong>Atlus</strong> </span>" +
-                        "</h4>";
-        Element element = createElement(html);
-        String parsedPlatform = parser.parsePlatform(element);
-        assertEquals(platform, parsedPlatform);
+        assertEquals(platform, gamePreview.getPlatform());
     }
 
     @Test
     public void parsePublisher() {
         String publisher = "Atlus";
-        String html =   "<h4 class=\"platLogo plat-Switch\">Switch" +
-                            "<span class=\"hideOnMobile\"> by " +
-                                "<strong>" + publisher + "</strong> " +
-                            "</span>" +
-                        "</h4>";
-        Element element = createElement(html);
-        String parsedPublisher = parser.parsePublisher(element);
-        assertEquals(publisher, parsedPublisher);
+        assertEquals(publisher, gamePreview.getPublisher());
     }
 
     @Test
     public void parseCoverUrl() {
         String coverUrl = "https://static-it.gamestop.it/images/products/302017/2med.jpg";
-        String html =   "<a class=\"prodImg\" href=\"/Switch/Games/133354/persona-5-strikers\">" +
-                            "<img   data-llsrc=\"https://static-it.gamestop.it/images/products/302017/2med.jpg\" " +
-                                    "alt=\"2med image\"" +
-                                    "src=\"" + coverUrl + "\"" +
-                                    "class=\"\"" +
-                                    "onerror=\"this.src = '/Views/Locale/Content/Images/medDefault.jpg';\"" +
-                                    "style=\"display: inline;\">" +
-                        "</a>";
-        Element element = createElement(html);
-        String parsedCoverUrl = parser.parseCoverUrl(element);
-        assertEquals(coverUrl, parsedCoverUrl);
+        assertEquals(coverUrl, gamePreview.getCoverUrl());
     }
 
 }
