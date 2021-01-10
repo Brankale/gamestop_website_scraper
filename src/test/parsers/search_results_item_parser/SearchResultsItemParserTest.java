@@ -1,4 +1,4 @@
-package test.parsers;
+package test.parsers.search_results_item_parser;
 
 import main.parsers.SearchResultsItemParser;
 import org.jsoup.Jsoup;
