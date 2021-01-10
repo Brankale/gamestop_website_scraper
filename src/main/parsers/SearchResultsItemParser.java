@@ -19,7 +19,7 @@ public class SearchResultsItemParser {
 
     /**
      * Returns the id of the game given the h3 tag
-     * @param rootTag h3 tag inside <div class="classProdInfo">
+     * @param rootTag h3 tag inside <div class="singleProdInfo">
      * @return the id of the game
      */
     public int parseId(@NotNull final Element rootTag) {
@@ -29,7 +29,7 @@ public class SearchResultsItemParser {
 
     /**
      * Returns the title of the game given the h3 tag
-     * @param rootTag h3 tag inside <div class="classProdInfo">
+     * @param rootTag h3 tag inside <div class="singleProdInfo">
      * @return the title of the game
      */
     public String parseTitle(@NotNull final Element rootTag) {
@@ -38,7 +38,7 @@ public class SearchResultsItemParser {
 
     /**
      * Returns the platform of the game given the h4 tag
-     * @param rootTag h4 tag inside <div class="classProdInfo">
+     * @param rootTag h4 tag inside <div class="singleProdInfo">
      * @return the platform of the game
      */
     public String parsePlatform(@NotNull final Element rootTag) {
@@ -47,7 +47,7 @@ public class SearchResultsItemParser {
 
     /**
      * Returns the publisher of the game given the h4 tag
-     * @param rootTag h4 tag inside <div class="classProdInfo">
+     * @param rootTag h4 tag inside <div class="singleProdInfo">
      * @return the publisher of the game
      */
     public String parsePublisher(@NotNull final Element rootTag) {
@@ -56,7 +56,7 @@ public class SearchResultsItemParser {
 
     /**
      * Returns the cover url of the game given the "a" tag
-     * @param rootTag "a" tag with class="prodImg" inside <div class="classProdInfo">
+     * @param rootTag "a" tag with class="prodImg" inside <div class="singleProdInfo">
      * @return the cover url of the game
      */
     public String parseCoverUrl(@NotNull final Element rootTag) {
