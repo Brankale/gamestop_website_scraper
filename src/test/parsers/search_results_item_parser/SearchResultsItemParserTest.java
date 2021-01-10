@@ -26,7 +26,6 @@ class SearchResultsItemParserTest {
     public static void parseItem() {
         SearchResultsItemParser parser = new SearchResultsItemParser();
         File html = new File("src/test/parsers/search_results_item_parser/search_results_item.html");
-        System.out.println(html.getAbsolutePath());
         Element root = createElement(html);
         gamePreview = parser.parse(root);
     }
@@ -47,14 +46,7 @@ class SearchResultsItemParserTest {
     @Test
     public void parseId() {
         int id = 133354;
-        String html =   "<h3>" +
-                            "<a href=\"/Switch/Games/" + id + "/persona-5-strikers\">" +
-                                "Persona® 5 Strikers" +
-                            "</a>" +
-                        "</h3>";
-        Element element = createElement(html);
-        int parsedId = parser.parseId(element);
-        assertEquals(id, parsedId);
+        assertEquals(id, gamePreview.getId());
     }
 
     @Test

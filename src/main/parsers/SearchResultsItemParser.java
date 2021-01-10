@@ -13,7 +13,8 @@ import org.jsoup.nodes.Element;
 public class SearchResultsItemParser {
 
     public GamePreview parse(@NotNull Element root) {
-        return new GamePreview(0);
+        int id = parseId(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
+        return new GamePreview(id);
     }
 
     /**
