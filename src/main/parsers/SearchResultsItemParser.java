@@ -1,6 +1,7 @@
 package main.parsers;
 
 import com.sun.istack.internal.NotNull;
+import main.models.GamePreview;
 import org.jsoup.nodes.Element;
 
 /**
@@ -10,6 +11,10 @@ import org.jsoup.nodes.Element;
  * or in the tests for these methods.
  */
 public class SearchResultsItemParser {
+
+    public GamePreview parse(@NotNull Element root) {
+        return new GamePreview(0);
+    }
 
     /**
      * Returns the id of the game given the h3 tag

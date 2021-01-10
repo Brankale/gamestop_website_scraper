@@ -1,20 +1,43 @@
 package test.parsers.search_results_item_parser;
 
+import main.models.GamePreview;
 import main.parsers.SearchResultsItemParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemParserTest {
 
     private static SearchResultsItemParser parser;
+    private static GamePreview gamePreview;
 
     @BeforeAll
     private static void initParser() {
         parser = new SearchResultsItemParser();
+    }
+
+    @BeforeAll
+    public static void parseItem() {
+        SearchResultsItemParser parser = new SearchResultsItemParser();
+        File html = new File("src/test/parsers/search_results_item_parser/search_results_item.html");
+        System.out.println(html.getAbsolutePath());
+        Element root = createElement(html);
+        gamePreview = parser.parse(root);
+    }
+
+    private static Element createElement(File html) {
+        try {
+            return Jsoup.parse(html, "UTF-8").body().child(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Element("div");
+        }
     }
 
     private Element createElement(String html) {
