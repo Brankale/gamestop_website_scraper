@@ -33,10 +33,6 @@ class SearchResultsItemParserTest {
         }
     }
 
-    private Element createElement(String html) {
-        return Jsoup.parse(html).body().child(0);
-    }
-
     @Test
     public void parseId() {
         int id = 133354;
