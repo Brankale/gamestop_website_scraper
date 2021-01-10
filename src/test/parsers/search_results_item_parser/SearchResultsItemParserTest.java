@@ -15,13 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemParserTest {
 
-    private static SearchResultsItemParser parser;
     private static GamePreview gamePreview;
-
-    @BeforeAll
-    private static void initParser() {
-        parser = new SearchResultsItemParser();
-    }
 
     @BeforeAll
     public static void parseItem() {
