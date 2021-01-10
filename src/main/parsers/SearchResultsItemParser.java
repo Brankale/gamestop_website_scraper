@@ -14,13 +14,18 @@ import java.net.MalformedURLException;
  */
 public class SearchResultsItemParser {
 
-    public GamePreview parse(@NotNull Element root) {
-        int id = parseId(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
-        String title = parseTitle(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
-        String platform = parsePlatform(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
-        String publisher = parsePublisher(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
-        String coverUrl = parseCoverUrl(root.getElementsByClass("prodImg").first());
+    private int id;
+    private String title;
+    private String platform;
+    private String publisher;
+    private String coverUrl;
 
+    public GamePreview parse(@NotNull Element root) {
+        initAttributes(root);
+        return createGamePreview();
+    }
+
+    private GamePreview createGamePreview() {
         GamePreview gamePreview = new GamePreview(id);
         gamePreview.setTitle(title);
         gamePreview.setPlatform(platform);
@@ -31,6 +36,14 @@ public class SearchResultsItemParser {
             e.printStackTrace();
         }
         return gamePreview;
+    }
+
+    private void initAttributes(Element root) {
+        id = parseId(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
+        title = parseTitle(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
+        platform = parsePlatform(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
+        publisher = parsePublisher(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
+        coverUrl = parseCoverUrl(root.getElementsByClass("prodImg").first());
     }
 
     /**
