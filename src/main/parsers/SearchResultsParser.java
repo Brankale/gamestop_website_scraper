@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class SearchResultsPageParser {
+public class SearchResultsParser {
 
     @NotNull
     public static GamePreviews getSearchResults(@NotNull final String link) throws IOException {

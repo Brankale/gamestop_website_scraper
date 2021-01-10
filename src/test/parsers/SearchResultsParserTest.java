@@ -4,20 +4,22 @@ import main.models.GamePreview;
 import main.models.GamePreviews;
 import main.models.price.Price;
 import main.models.price.Prices;
-import main.parsers.SearchResultsPageParser;
+import main.parsers.SearchResultsParser;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 
-class SearchResultsPageParserTest {
+class SearchResultsParserTest {
+
+
 
     @Test
     public void skipGiftCard() {
         final String link = "https://www.gamestop.it/SearchResult/QuickSearch?q=giftcard";
 
         try {
-            SearchResultsPageParser.getSearchResults(link);
+            SearchResultsParser.getSearchResults(link);
         } catch (IOException ex) {
             assert true;
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -33,7 +35,7 @@ class SearchResultsPageParserTest {
         final String link = "https://www.gamestop.it/SearchResult/QuickSearch?q=persona";
 
         try {
-            GamePreviews gamePreviews = SearchResultsPageParser.getSearchResults(link);
+            GamePreviews gamePreviews = SearchResultsParser.getSearchResults(link);
 
             for (GamePreview gamePreview : gamePreviews) {
                 System.out.println("\ntitle: " + gamePreview.getTitle());
