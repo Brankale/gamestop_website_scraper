@@ -19,7 +19,7 @@ class SearchResultsItemParserTest {
     @BeforeAll
     public static void parseItem() {
         SearchResultsItemParser parser = new SearchResultsItemParser();
-        File html = new File("src/test/parsers/html/search_results_item.html");
+        File html = new File("src/test/parsers/htmls/search_results_item.html");
         Element root = createElement(html);
         gamePreview = parser.parse(root);
     }
