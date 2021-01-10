@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element;
 import java.net.MalformedURLException;
 
 /**
- * Parses an Element with root tag: <div id="product_x">
+ * Parses an Element with root tag: <div id="product_x" class="singleProduct">
  * (where x is a number) and returns a GamePreview.
  * HTML structure examples can be found on the GameStop website
  * or in the tests for these methods.
@@ -72,7 +72,7 @@ public class SearchResultsItemParser {
 
     /**
      * Returns the cover url of the game given the "a" tag
-     * @param rootTag "a" tag with class="prodImg" inside <div class="singleProdInfo">
+     * @param rootTag "a" tag with class="prodImg" inside <div class="singleProduct">
      * @return the cover url of the game
      */
     public String parseCoverUrl(@NotNull final Element rootTag) {
