@@ -30,27 +30,27 @@ class SearchResultsItemPriceParserTest {
     }
 
     private static Element getPriceNewElement() {
-        File file = new File("src/test/parsers/htmls/prices/search_results_item_price_new.html");
+        File file = new File("src/test/parsers/htmls/search_results/prices/price_new.html");
         return createElement(file);
     }
 
     private static Element getPriceUsedElement() {
-        File file = new File("src/test/parsers/htmls/prices/search_results_item_price_used.html");
+        File file = new File("src/test/parsers/htmls/search_results/prices/price_used.html");
         return createElement(file);
     }
 
     private static Element getPricePreorderElement() {
-        File file = new File("src/test/parsers/htmls/prices/search_results_item_price_preorder.html");
+        File file = new File("src/test/parsers/htmls/search_results/prices/price_preorder.html");
         return createElement(file);
     }
 
     private static Element getPriceDigitalElement() {
-        File file = new File("src/test/parsers/htmls/prices/search_results_item_price_digital.html");
+        File file = new File("src/test/parsers/htmls/search_results/prices/price_digital.html");
         return createElement(file);
     }
 
     private static Element getUnknownPriceTypeElement() {
-        File file = new File("src/test/parsers/htmls/prices/search_results_item_price_unknown_price_type.html");
+        File file = new File("src/test/parsers/htmls/search_results/prices/unknown_price_type.html");
         return createElement(file);
     }
 
