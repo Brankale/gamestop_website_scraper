@@ -15,6 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemPriceParserTest {
 
+    private static final String DIR = "src/test/parsers/htmls/search_results/prices/";
+    private static final File FILE_PRICE_NEW = new File(DIR + "price_new.html");
+    private static final File FILE_PRICE_USED = new File(DIR + "price_used.html");
+    private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
+    private static final File FILE_PRICE_DIGITAL = new File(DIR + "price_digital.html");
+    private static final File FILE_PRICE_UNKNOWN = new File(DIR + "unknown_price_type.html");
+
     private static Price priceNew;
     private static Price priceUsed;
     private static Price pricePreorder;
@@ -29,38 +36,13 @@ class SearchResultsItemPriceParserTest {
         }
     }
 
-    private static Element getPriceNewElement() {
-        File file = new File("src/test/parsers/htmls/search_results/prices/price_new.html");
-        return createElement(file);
-    }
-
-    private static Element getPriceUsedElement() {
-        File file = new File("src/test/parsers/htmls/search_results/prices/price_used.html");
-        return createElement(file);
-    }
-
-    private static Element getPricePreorderElement() {
-        File file = new File("src/test/parsers/htmls/search_results/prices/price_preorder.html");
-        return createElement(file);
-    }
-
-    private static Element getPriceDigitalElement() {
-        File file = new File("src/test/parsers/htmls/search_results/prices/price_digital.html");
-        return createElement(file);
-    }
-
-    private static Element getUnknownPriceTypeElement() {
-        File file = new File("src/test/parsers/htmls/search_results/prices/unknown_price_type.html");
-        return createElement(file);
-    }
-
     @BeforeAll
     public static void init() {
         SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
-        priceNew = priceParser.parse(getPriceNewElement());
-        priceUsed = priceParser.parse(getPriceUsedElement());
-        pricePreorder = priceParser.parse(getPricePreorderElement());
-        priceDigital = priceParser.parse(getPriceDigitalElement());
+        priceNew = priceParser.parse(createElement(FILE_PRICE_NEW));
+        priceUsed = priceParser.parse(createElement(FILE_PRICE_USED));
+        pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
+        priceDigital = priceParser.parse(createElement(FILE_PRICE_DIGITAL));
     }
 
     @Test
@@ -87,7 +69,7 @@ class SearchResultsItemPriceParserTest {
     public void throwsExceptionOnInvalidPriceType() {
         assertThrows(SearchResultsItemPriceParser.UnknownPriceTypeException.class, () -> {
             SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
-            priceParser.parse(getUnknownPriceTypeElement());
+            priceParser.parse(createElement(FILE_PRICE_UNKNOWN));
         });
     }
 
