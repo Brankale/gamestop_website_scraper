@@ -36,7 +36,7 @@ class SearchResultsItemPriceParserTest {
     }
 
     @Test
-    public static void checkPriceType() {
+    public void checkPriceType() {
         SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
 
         Price priceNew = priceParser.parse(createElement(FILE_PRICE_NEW));
@@ -59,7 +59,7 @@ class SearchResultsItemPriceParserTest {
     }
 
     @Test
-    public void isAvailable() {
+    public void checkAvailability() {
         SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
 
         Price available = priceParser.parse(createElement(FILE_PRICE_AVAILABLE));
