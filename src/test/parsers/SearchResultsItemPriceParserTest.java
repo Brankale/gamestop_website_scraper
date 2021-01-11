@@ -5,7 +5,6 @@ import main.models.price.PriceType;
 import main.parsers.SearchResultsItemPriceParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -21,11 +20,11 @@ class SearchResultsItemPriceParserTest {
     private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
     private static final File FILE_PRICE_DIGITAL = new File(DIR + "price_digital.html");
     private static final File FILE_PRICE_UNKNOWN = new File(DIR + "unknown_price_type.html");
-
-    private static Price priceNew;
-    private static Price priceUsed;
-    private static Price pricePreorder;
-    private static Price priceDigital;
+    private static final File FILE_PRICE_AVAILABLE = new File(DIR + "price_available.html");
+    private static final File FILE_PRICE_NOT_AVAILABLE = new File(DIR + "price_not_available.html");
+    private static final File FILE_PREORDER_AVAILABLE = new File(DIR + "preorder_available.html");
+    // TODO: find an HTML example
+    // private static final File FILE_PREORDER_NOT_AVAILABLE = new File(DIR + "preorder_not_available.html");
 
     private static Element createElement(File html) {
         try {
@@ -36,32 +35,18 @@ class SearchResultsItemPriceParserTest {
         }
     }
 
-    @BeforeAll
-    public static void init() {
+    @Test
+    public static void checkPriceType() {
         SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
-        priceNew = priceParser.parse(createElement(FILE_PRICE_NEW));
-        priceUsed = priceParser.parse(createElement(FILE_PRICE_USED));
-        pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
-        priceDigital = priceParser.parse(createElement(FILE_PRICE_DIGITAL));
-    }
 
-    @Test
-    public void priceTypeIsNew() {
+        Price priceNew = priceParser.parse(createElement(FILE_PRICE_NEW));
+        Price priceUsed = priceParser.parse(createElement(FILE_PRICE_USED));
+        Price pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
+        Price priceDigital = priceParser.parse(createElement(FILE_PRICE_DIGITAL));
+
         assertEquals(priceNew.getType(), PriceType.NEW);
-    }
-
-    @Test
-    public void priceTypeIsUsed() {
         assertEquals(priceUsed.getType(), PriceType.USED);
-    }
-
-    @Test
-    public void priceTypeIsPreorder() {
         assertEquals(pricePreorder.getType(), PriceType.PREORDER);
-    }
-
-    @Test
-    public void priceTypeIsDigital() {
         assertEquals(priceDigital.getType(), PriceType.DIGITAL);
     }
 
@@ -75,7 +60,19 @@ class SearchResultsItemPriceParserTest {
 
     @Test
     public void isAvailable() {
-        assertTrue(priceNew.isAvailable());
+        SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
+
+        Price available = priceParser.parse(createElement(FILE_PRICE_AVAILABLE));
+        Price notAvailable = priceParser.parse(createElement(FILE_PRICE_NOT_AVAILABLE));
+        Price preorderAvailable = priceParser.parse(createElement(FILE_PREORDER_AVAILABLE));
+        // TODO: find an HTML example
+        // Price preorderNotAvailable = priceParser.parse(createElement(FILE_PREORDER_NOT_AVAILABLE));
+
+        assertTrue(available.isAvailable());
+        assertFalse(notAvailable.isAvailable());
+        assertTrue(preorderAvailable.isAvailable());
+        // TODO: find an HTML example
+        // assertFalse(preorderNotAvailable.isAvailable());
     }
 
 }
