@@ -91,4 +91,9 @@ class SearchResultsItemPriceParserTest {
         });
     }
 
+    @Test
+    public void isAvailable() {
+        assertTrue(priceNew.isAvailable());
+    }
+
 }

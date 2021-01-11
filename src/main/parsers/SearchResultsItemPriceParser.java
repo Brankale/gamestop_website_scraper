@@ -16,7 +16,10 @@ public class SearchResultsItemPriceParser {
      */
     public Price parse(Element element) {
         PriceType priceType = getPriceType(element.getElementsByTag("p").first());
-        return new Price(BigDecimal.valueOf(-1), priceType);
+        boolean available = isAvailable(element);
+        Price price = new Price(BigDecimal.valueOf(-1), priceType);
+        price.setAvailable(available);
+        return price;
     }
 
     /**
@@ -34,6 +37,25 @@ public class SearchResultsItemPriceParser {
             case "buyDLC": return PriceType.DIGITAL;
             default: throw new UnknownPriceTypeException(element.className());
         }
+    }
+
+    /**
+     * Returns the availability given an Element with the root tag
+     * <p class="buyXXX"></p>
+     * @param element p tag with class="buyXXX"
+     * @return the availability of the price type
+     */
+    private boolean isAvailable(Element element) {
+        // if you can buy the product:
+        //   - class "megaButton buyTier3 cartAddNoRadio" (NEW, USED prices)
+        //   - class "megaButton cartAddNoRadio"          (PREORDER prices)
+        // if you can't buy the product:
+        //   - class "megaButton buyTier3 buyDisabled"    (NEW, USED prices)
+        //   - class "megaButton buyDisabled"             (PREORDER prices)
+
+        Element a = element.getElementsByTag("a").first();
+        return a.className().equals("megaButton buyTier3 cartAddNoRadio") ||
+                a.className().equals("megaButton cartAddNoRadio");
     }
 
     public static class UnknownPriceTypeException extends RuntimeException {
