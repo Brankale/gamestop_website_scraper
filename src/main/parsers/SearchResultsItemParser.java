@@ -25,6 +25,14 @@ public class SearchResultsItemParser {
         return createGamePreview();
     }
 
+    private void initAttributes(Element element) {
+        id = parseId(element);
+        title = parseTitle(element);
+        platform = parsePlatform(element);
+        publisher = parsePublisher(element);
+        coverUrl = parseCoverUrl(element);
+    }
+
     private GamePreview createGamePreview() {
         GamePreview gamePreview = new GamePreview(id);
         gamePreview.setTitle(title);
@@ -36,14 +44,6 @@ public class SearchResultsItemParser {
             e.printStackTrace();
         }
         return gamePreview;
-    }
-
-    private void initAttributes(Element element) {
-        id = parseId(element);
-        title = parseTitle(element);
-        platform = parsePlatform(element);
-        publisher = parsePublisher(element);
-        coverUrl = parseCoverUrl(element);
     }
 
     /**
