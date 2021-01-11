@@ -38,58 +38,72 @@ public class SearchResultsItemParser {
         return gamePreview;
     }
 
-    private void initAttributes(Element root) {
-        id = parseId(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
-        title = parseTitle(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h3").first());
-        platform = parsePlatform(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
-        publisher = parsePublisher(root.getElementsByClass("singleProdInfo").first().getElementsByTag("h4").first());
-        coverUrl = parseCoverUrl(root.getElementsByClass("prodImg").first());
+    private void initAttributes(Element element) {
+        id = parseId(element);
+        title = parseTitle(element);
+        platform = parsePlatform(element);
+        publisher = parsePublisher(element);
+        coverUrl = parseCoverUrl(element);
     }
 
     /**
-     * Returns the id of the game given the h3 tag
-     * @param rootTag h3 tag inside <div class="singleProdInfo">
+     * Returns the id of the game given an Element with root tag
+     * <div class="singleProdInfo">
+     * @param element with root tag <div class="singleProdInfo">
      * @return the id of the game
      */
-    private int parseId(@NotNull final Element rootTag) {
-        final String id = rootTag.child(0).attr("href").split("/")[3];
+    private int parseId(@NotNull final Element element) {
+        final Element h3 = element.getElementsByClass("singleProdInfo").first()
+                .getElementsByTag("h3").first();
+        final String id = h3.child(0).attr("href").split("/")[3];
         return Integer.parseInt(id);
     }
 
     /**
-     * Returns the title of the game given the h3 tag
-     * @param rootTag h3 tag inside <div class="singleProdInfo">
+     * Returns the title of the game given an Element with root tag
+     * <div class="singleProdInfo">
+     * @param element with root tag <div class="singleProdInfo">
      * @return the title of the game
      */
-    private String parseTitle(@NotNull final Element rootTag) {
-        return rootTag.child(0).text().trim();
+    private String parseTitle(@NotNull final Element element) {
+        final Element h3 = element.getElementsByClass("singleProdInfo").first()
+                .getElementsByTag("h3").first();
+        return h3.child(0).text().trim();
     }
 
     /**
-     * Returns the platform of the game given the h4 tag
-     * @param rootTag h4 tag inside <div class="singleProdInfo">
+     * Returns the platform of the game given an Element with root tag
+     * <div class="singleProdInfo">
+     * @param element with root tag <div class="singleProdInfo">
      * @return the platform of the game
      */
-    private String parsePlatform(@NotNull final Element rootTag) {
-        return rootTag.textNodes().get(0).text().trim();
+    private String parsePlatform(@NotNull final Element element) {
+        final Element h4 = element.getElementsByClass("singleProdInfo").first()
+                .getElementsByTag("h4").first();
+        return h4.textNodes().get(0).text().trim();
     }
 
     /**
-     * Returns the publisher of the game given the h4 tag
-     * @param rootTag h4 tag inside <div class="singleProdInfo">
+     * Returns the publisher of the game given an Element with root tag
+     * <div class="singleProdInfo">
+     * @param element with root tag <div class="singleProdInfo">
      * @return the publisher of the game
      */
-    private String parsePublisher(@NotNull final Element rootTag) {
-        return rootTag.getElementsByTag("strong").text().trim();
+    private String parsePublisher(@NotNull final Element element) {
+        final Element h4 = element.getElementsByClass("singleProdInfo").first()
+                .getElementsByTag("h4").first();
+        return h4.getElementsByTag("strong").text().trim();
     }
 
     /**
-     * Returns the cover url of the game given the "a" tag
-     * @param rootTag "a" tag with class="prodImg" inside <div class="singleProduct">
+     * Returns the cover url of the game given an Element with root tag
+     * <div class="singleProdInfo">
+     * @param element with root tag <div class="singleProdInfo">
      * @return the cover url of the game
      */
-    private String parseCoverUrl(@NotNull final Element rootTag) {
-        return rootTag.child(0).attr("data-llsrc");
+    private String parseCoverUrl(@NotNull final Element element) {
+        final Element a = element.getElementsByClass("prodImg").first();
+        return a.child(0).attr("data-llsrc");
     }
 
 }
