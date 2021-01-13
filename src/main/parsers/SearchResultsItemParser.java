@@ -51,9 +51,9 @@ public class SearchResultsItemParser {
      * @return the id of the game
      */
     private int parseId(@NotNull final Element element) {
-        final Element h3 = element.getElementsByClass("singleProdInfo").first()
+        Element h3 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h3").first();
-        final String id = h3.child(0).attr("href").split("/")[3];
+        String id = h3.child(0).attr("href").split("/")[3];
         return Integer.parseInt(id);
     }
 
@@ -62,7 +62,7 @@ public class SearchResultsItemParser {
      * @return the title of the game
      */
     private String parseTitle(@NotNull final Element element) {
-        final Element h3 = element.getElementsByClass("singleProdInfo").first()
+        Element h3 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h3").first();
         return h3.child(0).text().trim();
     }
@@ -72,7 +72,7 @@ public class SearchResultsItemParser {
      * @return the platform of the game
      */
     private String parsePlatform(@NotNull final Element element) {
-        final Element h4 = element.getElementsByClass("singleProdInfo").first()
+        Element h4 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h4").first();
         return h4.textNodes().get(0).text().trim();
     }
@@ -82,7 +82,7 @@ public class SearchResultsItemParser {
      * @return the publisher of the game
      */
     private String parsePublisher(@NotNull final Element element) {
-        final Element h4 = element.getElementsByClass("singleProdInfo").first()
+        Element h4 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h4").first();
         return h4.getElementsByTag("strong").text().trim();
     }
@@ -92,7 +92,7 @@ public class SearchResultsItemParser {
      * @return the cover url of the game
      */
     private String parseCoverUrl(@NotNull final Element element) {
-        final Element a = element.getElementsByClass("prodImg").first();
+        Element a = element.getElementsByClass("prodImg").first();
         return a.child(0).attr("data-llsrc");
     }
 
