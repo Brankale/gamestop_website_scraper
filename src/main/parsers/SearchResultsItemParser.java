@@ -14,32 +14,13 @@ import java.net.MalformedURLException;
  */
 public class SearchResultsItemParser {
 
-    private int id;
-    private String title;
-    private String platform;
-    private String publisher;
-    private String coverUrl;
-
-    public GamePreview parse(@NotNull Element root) {
-        initAttributes(root);
-        return createGamePreview();
-    }
-
-    private void initAttributes(Element element) {
-        id = parseId(element);
-        title = parseTitle(element);
-        platform = parsePlatform(element);
-        publisher = parsePublisher(element);
-        coverUrl = parseCoverUrl(element);
-    }
-
-    private GamePreview createGamePreview() {
-        GamePreview gamePreview = new GamePreview(id);
-        gamePreview.setTitle(title);
-        gamePreview.setPlatform(platform);
-        gamePreview.setPublisher(publisher);
+    public static GamePreview parse(@NotNull final Element element) {
+        GamePreview gamePreview = new GamePreview(parseId(element));
+        gamePreview.setTitle(parseTitle(element));
+        gamePreview.setPlatform(parsePlatform(element));
+        gamePreview.setPublisher(parsePublisher(element));
         try {
-            gamePreview.setCoverUrl(coverUrl);
+            gamePreview.setCoverUrl(parseCoverUrl(element));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -50,7 +31,7 @@ public class SearchResultsItemParser {
      * @param element with root tag <div class="singleProdInfo">
      * @return the id of the game
      */
-    private int parseId(@NotNull final Element element) {
+    private static int parseId(@NotNull final Element element) {
         Element h3 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h3").first();
         String id = h3.child(0).attr("href").split("/")[3];
@@ -61,7 +42,7 @@ public class SearchResultsItemParser {
      * @param element with root tag <div class="singleProdInfo">
      * @return the title of the game
      */
-    private String parseTitle(@NotNull final Element element) {
+    private static String parseTitle(@NotNull final Element element) {
         Element h3 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h3").first();
         return h3.child(0).text().trim();
@@ -71,7 +52,7 @@ public class SearchResultsItemParser {
      * @param element with root tag <div class="singleProdInfo">
      * @return the platform of the game
      */
-    private String parsePlatform(@NotNull final Element element) {
+    private static String parsePlatform(@NotNull final Element element) {
         Element h4 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h4").first();
         return h4.textNodes().get(0).text().trim();
@@ -81,7 +62,7 @@ public class SearchResultsItemParser {
      * @param element with root tag <div class="singleProdInfo">
      * @return the publisher of the game
      */
-    private String parsePublisher(@NotNull final Element element) {
+    private static String parsePublisher(@NotNull final Element element) {
         Element h4 = element.getElementsByClass("singleProdInfo").first()
                 .getElementsByTag("h4").first();
         return h4.getElementsByTag("strong").text().trim();
@@ -91,7 +72,7 @@ public class SearchResultsItemParser {
      * @param element with root tag <div class="singleProdInfo">
      * @return the cover url of the game
      */
-    private String parseCoverUrl(@NotNull final Element element) {
+    private static String parseCoverUrl(@NotNull final Element element) {
         Element a = element.getElementsByClass("prodImg").first();
         return a.child(0).attr("data-llsrc");
     }
