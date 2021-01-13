@@ -47,8 +47,6 @@ public class SearchResultsItemParser {
     }
 
     /**
-     * Returns the id of the game given an Element with root tag
-     * <div class="singleProdInfo">
      * @param element with root tag <div class="singleProdInfo">
      * @return the id of the game
      */
@@ -60,8 +58,6 @@ public class SearchResultsItemParser {
     }
 
     /**
-     * Returns the title of the game given an Element with root tag
-     * <div class="singleProdInfo">
      * @param element with root tag <div class="singleProdInfo">
      * @return the title of the game
      */
@@ -72,8 +68,6 @@ public class SearchResultsItemParser {
     }
 
     /**
-     * Returns the platform of the game given an Element with root tag
-     * <div class="singleProdInfo">
      * @param element with root tag <div class="singleProdInfo">
      * @return the platform of the game
      */
@@ -84,8 +78,6 @@ public class SearchResultsItemParser {
     }
 
     /**
-     * Returns the publisher of the game given an Element with root tag
-     * <div class="singleProdInfo">
      * @param element with root tag <div class="singleProdInfo">
      * @return the publisher of the game
      */
@@ -96,8 +88,6 @@ public class SearchResultsItemParser {
     }
 
     /**
-     * Returns the cover url of the game given an Element with root tag
-     * <div class="singleProdInfo">
      * @param element with root tag <div class="singleProdInfo">
      * @return the cover url of the game
      */
