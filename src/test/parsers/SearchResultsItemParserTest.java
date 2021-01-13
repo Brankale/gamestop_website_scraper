@@ -14,13 +14,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemParserTest {
 
+    private static final String DIR = "src/test/parsers/htmls/search_results/items/";
+    private static final File EXAMPLE_ITEM = new File(DIR + "example_item.html");
+    private static final File MALFORMED_ITEM = new File(DIR + "malformed_item.html");
+
     private static GamePreview gamePreview;
 
     @BeforeAll
     public static void parseItem() {
-        File html = new File("src/test/parsers/htmls/search_results/items/search_results_item.html");
-        Element root = createElement(html);
-        gamePreview = SearchResultsItemParser.parse(root);
+        gamePreview = SearchResultsItemParser.parse(createElement(EXAMPLE_ITEM));
     }
 
     private static Element createElement(File html) {
@@ -60,6 +62,13 @@ class SearchResultsItemParserTest {
     public void parseCoverUrl() {
         String coverUrl = "https://static-it.gamestop.it/images/products/302017/2med.jpg";
         assertEquals(coverUrl, gamePreview.getCoverUrl());
+    }
+
+    @Test
+    public void malformedItemThrowException() {
+        assertThrows(SearchResultsItemParser.ItemParsingException.class, () ->
+            SearchResultsItemParser.parse(createElement(MALFORMED_ITEM))
+        );
     }
 
 }
