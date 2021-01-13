@@ -4,26 +4,38 @@ import com.sun.istack.internal.NotNull;
 import main.models.GamePreview;
 import org.jsoup.nodes.Element;
 
-import java.net.MalformedURLException;
-
-/**
- * Parses an Element with root tag: <div id="product_x" class="singleProduct">
- * (where x is a number) and returns a GamePreview.
- * HTML structure examples can be found on the GameStop website
- * or in the tests for these methods.
- */
 public class SearchResultsItemParser {
 
+    /**
+     * Parses an item in a search results html page and returns
+     * a GamePreview representing the item
+     *
+     * @param element with root tag <div id="product_x" class="singleProduct">.
+     *                (product_x: x is a number)
+     * @return a GamePreview object
+     */
     public static GamePreview parse(@NotNull final Element element) {
+        try {
+            return initGamePreview(element);
+        } catch (Exception e) {
+            throw new CannotParsingException(e);
+        }
+    }
+
+    /**
+     * HTML can change so instead of throwing different RuntimeExceptions
+     * for every information parsed, I just throw Exception
+     *
+     * @param element with root tag <div class="singleProduct">
+     * @return a GamePreview object
+     * @throws Exception if an error occurred while parsing
+     */
+    private static GamePreview initGamePreview(@NotNull final Element element) throws Exception {
         GamePreview gamePreview = new GamePreview(parseId(element));
         gamePreview.setTitle(parseTitle(element));
         gamePreview.setPlatform(parsePlatform(element));
         gamePreview.setPublisher(parsePublisher(element));
-        try {
-            gamePreview.setCoverUrl(parseCoverUrl(element));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        gamePreview.setCoverUrl(parseCoverUrl(element));
         return gamePreview;
     }
 
@@ -75,6 +87,21 @@ public class SearchResultsItemParser {
     private static String parseCoverUrl(@NotNull final Element element) {
         Element a = element.getElementsByClass("prodImg").first();
         return a.child(0).attr("data-llsrc");
+    }
+
+    public static class CannotParsingException extends RuntimeException {
+        private final Exception exception;
+
+        public CannotParsingException(Exception e) {
+            exception = e;
+        }
+
+        @Override
+        public String toString() {
+            return "CannotParsingException {" +
+                    "exception = " + exception.getMessage() +
+                    '}';
+        }
     }
 
 }
