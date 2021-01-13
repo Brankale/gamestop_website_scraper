@@ -18,7 +18,7 @@ public class SearchResultsItemParser {
         try {
             return initGamePreview(element);
         } catch (Exception e) {
-            throw new CannotParsingException(e);
+            throw new ItemParsingException(e);
         }
     }
 
@@ -89,10 +89,10 @@ public class SearchResultsItemParser {
         return a.child(0).attr("data-llsrc");
     }
 
-    public static class CannotParsingException extends RuntimeException {
+    public static class ItemParsingException extends RuntimeException {
         private final Exception exception;
 
-        public CannotParsingException(Exception e) {
+        public ItemParsingException(Exception e) {
             exception = e;
         }
 
