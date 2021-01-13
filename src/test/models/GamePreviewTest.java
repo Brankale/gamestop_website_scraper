@@ -100,19 +100,14 @@ public class GamePreviewTest {
     }
 
     @Test
-    public void setCoverUrl() {
-        try {
-            String url = "https://example.com";
-            gamePreview.setCoverUrl(url);
-            assertEquals(gamePreview.getCoverUrl(), url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            assert false;
-        }
+    public void setValidCoverUrl() throws MalformedURLException {
+        String url = "https://example.com";
+        gamePreview.setCoverUrl(url);
+        assertEquals(gamePreview.getCoverUrl(), url);
     }
 
     @Test
-    public void invalidCoverUrlThrowsMalformedURLException() {
+    public void setInvalidCoverUrlThrowsMalformedURLException() {
         assertThrows(MalformedURLException.class, () -> {
             String url = "this is not a url";
             gamePreview.setCoverUrl(url);
