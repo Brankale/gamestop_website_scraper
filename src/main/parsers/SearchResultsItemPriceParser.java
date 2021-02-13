@@ -18,17 +18,19 @@ public class SearchResultsItemPriceParser {
     public Price parse(Element element) {
         Element priceTypeTag = element.getElementsByTag("p").first();
         Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
+        Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
 
         Price price = new Price(BigDecimal.valueOf(-1), getPriceType(priceTypeTag));
 
-        // always present
         price.setAvailable(isAvailable(element));
 
-        //
         if (!homeDeliveryTag.isEmpty()) {
             price.setHomeDeliveryAvailability(isHomeDeliveryAvailable(homeDeliveryTag.first()));
         }
 
+        if (!collectInStore.isEmpty()) {
+            price.setCanCollectInStore(canCollectInStore(collectInStore.first()));
+        }
 
         return price;
     }
@@ -76,6 +78,18 @@ public class SearchResultsItemPriceParser {
      * @return the availability of home delivery
      */
     private boolean isHomeDeliveryAvailable(Element element) {
+        // deliveryUnavailable.png if unavailable
+        return element.getElementsByTag("img").attr("src")
+                .equals("/Content/Images/deliveryAvailable.png");
+    }
+
+    /**
+     * Returns the "collect in store" availability given an Element
+     * with root tag <span class="clickAndCollectAvailable"></span>
+     * @param element span tag with class="clickAndCollectAvailable"
+     * @return the availability of "collect in store"
+     */
+    private boolean canCollectInStore(Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");

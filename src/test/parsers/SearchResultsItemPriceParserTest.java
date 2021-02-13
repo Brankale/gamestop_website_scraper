@@ -30,6 +30,10 @@ class SearchResultsItemPriceParserTest {
             new File(DIR + "home_delivery_available.html");
     private static final File FILE_HOME_DELIVERY_UNAVAILABLE =
             new File(DIR + "home_delivery_unavailable.html");
+    private static final File FILE_COLLECT_IN_STORE_AVAILABLE =
+            new File(DIR + "collect_in_store_available.html");
+    private static final File FILE_COLLECT_IN_STORE_UNAVAILABLE =
+            new File(DIR + "collect_in_store_unavailable.html");
 
     private static SearchResultsItemPriceParser priceParser;
 
@@ -88,6 +92,14 @@ class SearchResultsItemPriceParserTest {
         Price unavailable = priceParser.parse(createElement(FILE_HOME_DELIVERY_UNAVAILABLE));
         assertTrue(available.isHomeDeliveryAvailable());
         assertFalse(unavailable.isHomeDeliveryAvailable());
+    }
+
+    @Test
+    public void isCollectInStoreAvailable() {
+        Price available = priceParser.parse(createElement(FILE_COLLECT_IN_STORE_AVAILABLE));
+        Price unavailable = priceParser.parse(createElement(FILE_COLLECT_IN_STORE_UNAVAILABLE));
+        assertTrue(available.canCollectInStore());
+        assertFalse(unavailable.canCollectInStore());
     }
 
 }
