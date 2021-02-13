@@ -66,10 +66,10 @@ class PriceTest {
 
     @Test
     public void setCanCollectInStore() {
-        price.setCanCollectInStore(true);
-        assertTrue(price.canCollectInStore());
-        price.setCanCollectInStore(false);
-        assertFalse(price.canCollectInStore());
+        price.setCollectibleInStore(true);
+        assertTrue(price.isCollectibleInStore());
+        price.setCollectibleInStore(false);
+        assertFalse(price.isCollectibleInStore());
     }
 
     @Test

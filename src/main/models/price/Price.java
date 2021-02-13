@@ -71,11 +71,11 @@ public class Price {
         return homeDelivery;
     }
 
-    public void setCanCollectInStore(boolean canCollectInStore) {
+    public void setCollectibleInStore(boolean canCollectInStore) {
         collectInStore = canCollectInStore;
     }
 
-    public boolean canCollectInStore() {
+    public boolean isCollectibleInStore() {
         return collectInStore;
     }
 

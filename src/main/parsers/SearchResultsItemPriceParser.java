@@ -29,7 +29,7 @@ public class SearchResultsItemPriceParser {
         }
 
         if (!collectInStore.isEmpty()) {
-            price.setCanCollectInStore(canCollectInStore(collectInStore.first()));
+            price.setCollectibleInStore(isCollectibleInStore(collectInStore.first()));
         }
 
         return price;
@@ -89,7 +89,7 @@ public class SearchResultsItemPriceParser {
      * @param element span tag with class="clickAndCollectAvailable"
      * @return the availability of "collect in store"
      */
-    private boolean canCollectInStore(Element element) {
+    private boolean isCollectibleInStore(Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");

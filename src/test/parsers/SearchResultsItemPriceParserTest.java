@@ -98,8 +98,8 @@ class SearchResultsItemPriceParserTest {
     public void isCollectInStoreAvailable() {
         Price available = priceParser.parse(createElement(FILE_COLLECT_IN_STORE_AVAILABLE));
         Price unavailable = priceParser.parse(createElement(FILE_COLLECT_IN_STORE_UNAVAILABLE));
-        assertTrue(available.canCollectInStore());
-        assertFalse(unavailable.canCollectInStore());
+        assertTrue(available.isCollectibleInStore());
+        assertFalse(unavailable.isCollectibleInStore());
     }
 
 }
