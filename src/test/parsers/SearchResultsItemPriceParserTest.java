@@ -22,10 +22,10 @@ class SearchResultsItemPriceParserTest {
     private static final File FILE_PRICE_TYPE_DIGITAL = new File(DIR + "price_type_digital.html");
     private static final File FILE_PRICE_TYPE_UNKNOWN = new File(DIR + "price_type_unknown.html");
     private static final File FILE_PRICE_AVAILABLE = new File(DIR + "price_available.html");
-    private static final File FILE_PRICE_NOT_AVAILABLE = new File(DIR + "price_not_available.html");
+    private static final File FILE_PRICE_NOT_AVAILABLE = new File(DIR + "price_unavailable.html");
     private static final File FILE_PREORDER_AVAILABLE = new File(DIR + "preorder_available.html");
     // TODO: find an HTML example
-    // private static final File FILE_PREORDER_NOT_AVAILABLE = new File(DIR + "preorder_not_available.html");
+    // private static final File FILE_PREORDER_NOT_AVAILABLE = new File(DIR + "preorder_unavailable.html");
     private static final File FILE_HOME_DELIVERY_AVAILABLE =
             new File(DIR + "home_delivery_available.html");
     private static final File FILE_HOME_DELIVERY_UNAVAILABLE =
