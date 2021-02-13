@@ -5,6 +5,7 @@ import main.models.price.PriceType;
 import main.parsers.SearchResultsItemPriceParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -25,6 +26,17 @@ class SearchResultsItemPriceParserTest {
     private static final File FILE_PREORDER_AVAILABLE = new File(DIR + "preorder_available.html");
     // TODO: find an HTML example
     // private static final File FILE_PREORDER_NOT_AVAILABLE = new File(DIR + "preorder_not_available.html");
+    private static final File FILE_HOME_DELIVERY_AVAILABLE =
+            new File(DIR + "home_delivery_available.html");
+    private static final File FILE_HOME_DELIVERY_UNAVAILABLE =
+            new File(DIR + "home_delivery_unavailable.html");
+
+    private static SearchResultsItemPriceParser priceParser;
+
+    @BeforeAll
+    public static void init() {
+        priceParser = new SearchResultsItemPriceParser();
+    }
 
     private static Element createElement(File html) {
         try {
@@ -37,8 +49,6 @@ class SearchResultsItemPriceParserTest {
 
     @Test
     public void checkPriceType() {
-        SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
-
         Price priceNew = priceParser.parse(createElement(FILE_PRICE_NEW));
         Price priceUsed = priceParser.parse(createElement(FILE_PRICE_USED));
         Price pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
@@ -53,15 +63,12 @@ class SearchResultsItemPriceParserTest {
     @Test
     public void throwsExceptionOnInvalidPriceType() {
         assertThrows(SearchResultsItemPriceParser.UnknownPriceTypeException.class, () -> {
-            SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
             priceParser.parse(createElement(FILE_PRICE_UNKNOWN));
         });
     }
 
     @Test
     public void checkAvailability() {
-        SearchResultsItemPriceParser priceParser = new SearchResultsItemPriceParser();
-
         Price available = priceParser.parse(createElement(FILE_PRICE_AVAILABLE));
         Price notAvailable = priceParser.parse(createElement(FILE_PRICE_NOT_AVAILABLE));
         Price preorderAvailable = priceParser.parse(createElement(FILE_PREORDER_AVAILABLE));
@@ -73,6 +80,14 @@ class SearchResultsItemPriceParserTest {
         assertTrue(preorderAvailable.isAvailable());
         // TODO: find an HTML example
         // assertFalse(preorderNotAvailable.isAvailable());
+    }
+
+    @Test
+    public void isHomeDeliveryAvailable() {
+        Price available = priceParser.parse(createElement(FILE_HOME_DELIVERY_AVAILABLE));
+        Price unavailable = priceParser.parse(createElement(FILE_HOME_DELIVERY_UNAVAILABLE));
+        assertTrue(available.isHomeDeliveryAvailable());
+        assertFalse(unavailable.isHomeDeliveryAvailable());
     }
 
 }

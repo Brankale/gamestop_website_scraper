@@ -3,6 +3,7 @@ package main.parsers;
 import main.models.price.Price;
 import main.models.price.PriceType;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.math.BigDecimal;
 
@@ -15,10 +16,20 @@ public class SearchResultsItemPriceParser {
      * @return a price
      */
     public Price parse(Element element) {
-        PriceType priceType = getPriceType(element.getElementsByTag("p").first());
-        boolean available = isAvailable(element);
-        Price price = new Price(BigDecimal.valueOf(-1), priceType);
-        price.setAvailable(available);
+        Element priceTypeTag = element.getElementsByTag("p").first();
+        Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
+
+        Price price = new Price(BigDecimal.valueOf(-1), getPriceType(priceTypeTag));
+
+        // always present
+        price.setAvailable(isAvailable(element));
+
+        //
+        if (!homeDeliveryTag.isEmpty()) {
+            price.setHomeDeliveryAvailability(isHomeDeliveryAvailable(homeDeliveryTag.first()));
+        }
+
+
         return price;
     }
 
@@ -56,6 +67,18 @@ public class SearchResultsItemPriceParser {
         Element a = element.getElementsByTag("a").first();
         return a.className().equals("megaButton buyTier3 cartAddNoRadio") ||
                 a.className().equals("megaButton cartAddNoRadio");
+    }
+
+    /**
+     * Returns the home delivery availability given an Element
+     * with root tag <span class="homeDeliveryAvailable"></span>
+     * @param element span tag with class="homeDeliveryAvailable"
+     * @return the availability of home delivery
+     */
+    private boolean isHomeDeliveryAvailable(Element element) {
+        // deliveryUnavailable.png if unavailable
+        return element.getElementsByTag("img").attr("src")
+                .equals("/Content/Images/deliveryAvailable.png");
     }
 
     public static class UnknownPriceTypeException extends RuntimeException {
