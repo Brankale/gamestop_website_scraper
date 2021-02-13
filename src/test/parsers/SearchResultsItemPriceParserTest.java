@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class SearchResultsItemPriceParserTest {
 
     private static final String DIR = "src/test/parsers/htmls/search_results/prices/";
-    private static final File FILE_PRICE_NEW = new File(DIR + "price_new.html");
-    private static final File FILE_PRICE_USED = new File(DIR + "price_used.html");
-    private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
-    private static final File FILE_PRICE_DIGITAL = new File(DIR + "price_digital.html");
-    private static final File FILE_PRICE_UNKNOWN = new File(DIR + "unknown_price_type.html");
+    private static final File FILE_PRICE_TYPE_NEW = new File(DIR + "price_type_new.html");
+    private static final File FILE_PRICE_TYPE_USED = new File(DIR + "price_type_used.html");
+    private static final File FILE_PRICE_TYPE_PREORDER = new File(DIR + "price_type_preorder.html");
+    private static final File FILE_PRICE_TYPE_DIGITAL = new File(DIR + "price_type_digital.html");
+    private static final File FILE_PRICE_TYPE_UNKNOWN = new File(DIR + "price_type_unknown.html");
     private static final File FILE_PRICE_AVAILABLE = new File(DIR + "price_available.html");
     private static final File FILE_PRICE_NOT_AVAILABLE = new File(DIR + "price_not_available.html");
     private static final File FILE_PREORDER_AVAILABLE = new File(DIR + "preorder_available.html");
@@ -53,10 +53,10 @@ class SearchResultsItemPriceParserTest {
 
     @Test
     public void checkPriceType() {
-        Price priceNew = priceParser.parse(createElement(FILE_PRICE_NEW));
-        Price priceUsed = priceParser.parse(createElement(FILE_PRICE_USED));
-        Price pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
-        Price priceDigital = priceParser.parse(createElement(FILE_PRICE_DIGITAL));
+        Price priceNew = priceParser.parse(createElement(FILE_PRICE_TYPE_NEW));
+        Price priceUsed = priceParser.parse(createElement(FILE_PRICE_TYPE_USED));
+        Price pricePreorder = priceParser.parse(createElement(FILE_PRICE_TYPE_PREORDER));
+        Price priceDigital = priceParser.parse(createElement(FILE_PRICE_TYPE_DIGITAL));
 
         assertEquals(priceNew.getType(), PriceType.NEW);
         assertEquals(priceUsed.getType(), PriceType.USED);
@@ -66,9 +66,9 @@ class SearchResultsItemPriceParserTest {
 
     @Test
     public void throwsExceptionOnInvalidPriceType() {
-        assertThrows(SearchResultsItemPriceParser.UnknownPriceTypeException.class, () -> {
-            priceParser.parse(createElement(FILE_PRICE_UNKNOWN));
-        });
+        assertThrows(SearchResultsItemPriceParser.UnknownPriceTypeException.class, () ->
+            priceParser.parse(createElement(FILE_PRICE_TYPE_UNKNOWN))
+        );
     }
 
     @Test
