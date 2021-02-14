@@ -28,10 +28,10 @@ class SearchResultsItemPriceParserTest {
     private static final File FILE_PRICE_TYPE_UNKNOWN = new File(DIR + "price_type_unknown.html");
 
     private static final File FILE_PRICE_AVAILABLE = new File(DIR + "price_available.html");
-    private static final File FILE_PRICE_NOT_AVAILABLE = new File(DIR + "price_unavailable.html");
+    private static final File FILE_PRICE_UNAVAILABLE = new File(DIR + "price_unavailable.html");
     private static final File FILE_PREORDER_AVAILABLE = new File(DIR + "preorder_available.html");
     // TODO: find an HTML example
-    // private static final File FILE_PREORDER_NOT_AVAILABLE = new File(DIR + "preorder_unavailable.html");
+    // private static final File FILE_PREORDER_UNAVAILABLE = new File(DIR + "preorder_unavailable.html");
 
     private static final File FILE_HOME_DELIVERY_AVAILABLE =
             new File(DIR + "home_delivery_available.html");
@@ -92,10 +92,10 @@ class SearchResultsItemPriceParserTest {
     @Test
     public void checkAvailability() {
         Price available = priceParser.parse(createElement(FILE_PRICE_AVAILABLE));
-        Price notAvailable = priceParser.parse(createElement(FILE_PRICE_NOT_AVAILABLE));
+        Price notAvailable = priceParser.parse(createElement(FILE_PRICE_UNAVAILABLE));
         Price preorderAvailable = priceParser.parse(createElement(FILE_PREORDER_AVAILABLE));
         // TODO: find an HTML example
-        // Price preorderNotAvailable = priceParser.parse(createElement(FILE_PREORDER_NOT_AVAILABLE));
+        // Price preorderNotAvailable = priceParser.parse(createElement(FILE_PREORDER_UNAVAILABLE));
 
         assertTrue(available.isAvailable());
         assertFalse(notAvailable.isAvailable());
