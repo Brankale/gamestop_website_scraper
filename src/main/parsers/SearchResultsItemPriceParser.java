@@ -20,7 +20,7 @@ public class SearchResultsItemPriceParser {
         Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
         Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
 
-        Price price = new Price(BigDecimal.valueOf(-1), getPriceType(priceTypeTag));
+        Price price = new Price(getPrice(priceTypeTag), getPriceType(priceTypeTag));
 
         price.setAvailable(isAvailable(element));
 
@@ -33,6 +33,32 @@ public class SearchResultsItemPriceParser {
         }
 
         return price;
+    }
+
+    /**
+     * Returns the price given an Element with root tag
+     * <p class="buyXXX"></p>
+     * @param element p tag with class="buyXXX"
+     * @return the price
+     */
+    private BigDecimal getPrice(Element element) {
+        Element tmp = element.getElementsByTag("span").first();
+        tmp.child(0).remove();  // remove <strong></strong>
+        return parsePriceString(tmp.text());
+    }
+
+    /**
+     * Accepted formats: "xx,xx€","xx.xx€", "x.xxx,xx€".
+     * There can be any currency.
+     * @param price string with the price
+     * @return a BigDecimal representing the price
+     */
+    private BigDecimal parsePriceString(String price) {
+        String parsable = price
+                .replaceAll("[^0-9.,]","")  // remove all characters except for numbers, ',' and '.'
+                .replace(".", "")           // handle prices over 999,99€ like 1.249,99€
+                .replace(',', '.');         // convert the price in a string that can be parsed
+        return new BigDecimal(parsable);
     }
 
     /**

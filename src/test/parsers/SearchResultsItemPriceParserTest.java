@@ -10,30 +10,40 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemPriceParserTest {
 
     private static final String DIR = "src/test/parsers/htmls/search_results/prices/";
+
+    private static final File FILE_PRICE = new File(DIR + "price_new_used_digital.html");
+    private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
+
     private static final File FILE_PRICE_TYPE_NEW = new File(DIR + "price_type_new.html");
     private static final File FILE_PRICE_TYPE_USED = new File(DIR + "price_type_used.html");
     private static final File FILE_PRICE_TYPE_PREORDER = new File(DIR + "price_type_preorder.html");
     private static final File FILE_PRICE_TYPE_DIGITAL = new File(DIR + "price_type_digital.html");
     private static final File FILE_PRICE_TYPE_UNKNOWN = new File(DIR + "price_type_unknown.html");
+
     private static final File FILE_PRICE_AVAILABLE = new File(DIR + "price_available.html");
     private static final File FILE_PRICE_NOT_AVAILABLE = new File(DIR + "price_unavailable.html");
     private static final File FILE_PREORDER_AVAILABLE = new File(DIR + "preorder_available.html");
     // TODO: find an HTML example
     // private static final File FILE_PREORDER_NOT_AVAILABLE = new File(DIR + "preorder_unavailable.html");
+
     private static final File FILE_HOME_DELIVERY_AVAILABLE =
             new File(DIR + "home_delivery_available.html");
     private static final File FILE_HOME_DELIVERY_UNAVAILABLE =
             new File(DIR + "home_delivery_unavailable.html");
+
     private static final File FILE_COLLECT_IN_STORE_AVAILABLE =
             new File(DIR + "collect_in_store_available.html");
     private static final File FILE_COLLECT_IN_STORE_UNAVAILABLE =
             new File(DIR + "collect_in_store_unavailable.html");
+
+
 
     private static SearchResultsItemPriceParser priceParser;
 
@@ -49,6 +59,14 @@ class SearchResultsItemPriceParserTest {
             e.printStackTrace();
             return new Element("div");
         }
+    }
+
+    @Test
+    public void checkPrice() {
+        Price price = priceParser.parse(createElement(FILE_PRICE));
+        Price pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
+        assertEquals(BigDecimal.valueOf(90.98), price.getPrice());
+        assertEquals(BigDecimal.valueOf(60.98), pricePreorder.getPrice());
     }
 
     @Test
