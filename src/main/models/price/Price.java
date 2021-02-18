@@ -1,6 +1,7 @@
 package main.models.price;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class Price {
     private boolean available;
     private boolean homeDelivery;
     private boolean collectInStore;
+    private Promo promo;
 
     public Price(@NotNull BigDecimal price, @NotNull PriceType type) {
         // TODO: add a message to the exception
@@ -77,6 +79,15 @@ public class Price {
 
     public boolean isCollectibleInStore() {
         return collectInStore;
+    }
+
+    @Nullable
+    public Promo getPromo() {
+        return promo;
+    }
+
+    public void setPromo(Promo promo) {
+        this.promo = promo;
     }
 
     public static class PriceInitException extends RuntimeException {}
