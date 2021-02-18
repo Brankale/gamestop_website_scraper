@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +21,7 @@ class SearchResultsItemPriceParserTest {
 
     private static final File FILE_PRICE = new File(DIR + "price_new_used_digital.html");
     private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
+    private static final File FILE_OLD_PRICES = new File(DIR + "old_prices.html");
 
     private static final File FILE_PRICE_TYPE_NEW = new File(DIR + "price_type_new.html");
     private static final File FILE_PRICE_TYPE_USED = new File(DIR + "price_type_used.html");
@@ -65,8 +67,21 @@ class SearchResultsItemPriceParserTest {
     public void checkPrice() {
         Price price = priceParser.parse(createElement(FILE_PRICE));
         Price pricePreorder = priceParser.parse(createElement(FILE_PRICE_PREORDER));
+        // when games are discounted, html is different
+        Price olderPrices = priceParser.parse(createElement(FILE_OLD_PRICES));
+
         assertEquals(BigDecimal.valueOf(90.98), price.getPrice());
         assertEquals(BigDecimal.valueOf(60.98), pricePreorder.getPrice());
+        assertEquals(BigDecimal.valueOf(329.98), olderPrices.getPrice());
+    }
+
+    @Test
+    public void checkOldPrices() {
+        ArrayList<BigDecimal> oldPrices = new ArrayList<>();
+
+        Price oldPricesNew = priceParser.parse(createElement(FILE_OLD_PRICES));
+        oldPrices.add(BigDecimal.valueOf(349.98));
+        assertEquals(oldPrices,oldPricesNew.getOldPrices());
     }
 
     @Test

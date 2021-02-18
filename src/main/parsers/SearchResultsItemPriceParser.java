@@ -1,11 +1,13 @@
 package main.parsers;
 
+import com.sun.istack.internal.NotNull;
 import main.models.price.Price;
 import main.models.price.PriceType;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class SearchResultsItemPriceParser {
 
@@ -21,6 +23,8 @@ public class SearchResultsItemPriceParser {
         Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
 
         Price price = new Price(getPrice(priceTypeTag), getPriceType(priceTypeTag));
+
+        price.addOldPrices(getOldPrices(priceTypeTag));
 
         price.setAvailable(isAvailable(element));
 
@@ -42,9 +46,35 @@ public class SearchResultsItemPriceParser {
      * @return the price
      */
     private BigDecimal getPrice(Element element) {
-        Element tmp = element.getElementsByTag("span").first();
-        tmp.child(0).remove();  // remove <strong></strong>
-        return parsePriceString(tmp.text());
+        // em tags are present only if the game is discounted
+        Elements em = element.getElementsByTag("em");
+        if (em.isEmpty()) {
+            Element tmp = element.getElementsByTag("span").first();
+            tmp.child(0).remove();  // remove <strong></strong>
+            return parsePriceString(tmp.text());
+        } else {
+            return parsePriceString(em.first().text());
+        }
+    }
+
+    /**
+     * Returns the old prices given an Element with root tag
+     * <p class="buyXXX"></p>
+     * @param element p tag with class="buyXXX"
+     * @return an array with old prices
+     */
+    @NotNull
+    private ArrayList<BigDecimal> getOldPrices(Element element) {
+        Elements em = element.getElementsByTag("em");
+        if (!em.isEmpty()) {
+            // em.size() = current price + # old prices
+            ArrayList<BigDecimal> oldPrices = new ArrayList<>(em.size() - 2);
+            for (int i = 1; i < em.size(); ++i) {
+                oldPrices.add(parsePriceString(em.get(i).text()));
+            }
+            return oldPrices;
+        }
+        return new ArrayList<>();
     }
 
     /**
