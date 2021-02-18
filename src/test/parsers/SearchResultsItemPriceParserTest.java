@@ -70,9 +70,9 @@ class SearchResultsItemPriceParserTest {
         // when games are discounted, html is different
         Price olderPrices = priceParser.parse(createElement(FILE_OLD_PRICES));
 
-        assertEquals(BigDecimal.valueOf(90.98), price.getPrice());
-        assertEquals(BigDecimal.valueOf(60.98), pricePreorder.getPrice());
-        assertEquals(BigDecimal.valueOf(329.98), olderPrices.getPrice());
+        assertEquals(new BigDecimal("90.98"), price.getPrice());
+        assertEquals(new BigDecimal("60.98"), pricePreorder.getPrice());
+        assertEquals(new BigDecimal("329.98"), olderPrices.getPrice());
     }
 
     @Test
@@ -80,7 +80,7 @@ class SearchResultsItemPriceParserTest {
         ArrayList<BigDecimal> oldPrices = new ArrayList<>();
 
         Price oldPricesNew = priceParser.parse(createElement(FILE_OLD_PRICES));
-        oldPrices.add(BigDecimal.valueOf(349.98));
+        oldPrices.add(new BigDecimal("349.98"));
         assertEquals(oldPrices,oldPricesNew.getOldPrices());
     }
 
