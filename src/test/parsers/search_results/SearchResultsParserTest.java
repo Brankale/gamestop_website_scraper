@@ -1,4 +1,4 @@
-package test.parsers;
+package test.parsers.search_results;
 
 import org.junit.jupiter.api.Disabled;
 

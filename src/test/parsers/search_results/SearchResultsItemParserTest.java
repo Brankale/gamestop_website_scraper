@@ -1,7 +1,7 @@
-package test.parsers;
+package test.parsers.search_results;
 
 import main.models.GamePreview;
-import main.parsers.SearchResultsItemParser;
+import main.parsers.search_results.SearchResultsItemParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemParserTest {
 
-    private static final String DIR = "src/test/parsers/htmls/search_results/items/";
+    private static final String DIR = "src/test/parsers/search_results/htmls/items/";
     private static final File EXAMPLE_ITEM = new File(DIR + "example_item.html");
     private static final File MALFORMED_ITEM = new File(DIR + "malformed_item.html");
 

@@ -1,8 +1,8 @@
-package test.parsers;
+package test.parsers.search_results;
 
 import main.models.price.Price;
 import main.models.price.PriceType;
-import main.parsers.SearchResultsItemPriceParser;
+import main.parsers.search_results.SearchResultsItemPriceParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemPriceParserTest {
 
-    private static final String DIR = "src/test/parsers/htmls/search_results/prices/";
+    private static final String DIR = "src/test/parsers/search_results/htmls/prices/";
 
     private static final File FILE_PRICE = new File(DIR + "price_new_used_digital.html");
     private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");

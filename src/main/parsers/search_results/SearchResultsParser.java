@@ -1,4 +1,4 @@
-package main.parsers;
+package main.parsers.search_results;
 
 import com.sun.istack.internal.NotNull;
 import main.models.price.Price;
