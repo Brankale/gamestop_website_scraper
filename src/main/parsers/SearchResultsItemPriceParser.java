@@ -17,7 +17,8 @@ public class SearchResultsItemPriceParser {
      * @param element div tag with class="prodBuy"
      * @return a price
      */
-    public Price parse(Element element) {
+    @NotNull
+    public Price parse(@NotNull Element element) {
         Element priceTypeTag = element.getElementsByTag("p").first();
         Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
         Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
@@ -45,7 +46,8 @@ public class SearchResultsItemPriceParser {
      * @param element p tag with class="buyXXX"
      * @return the price
      */
-    private BigDecimal getPrice(Element element) {
+    @NotNull
+    private BigDecimal getPrice(@NotNull Element element) {
         // em tags are present only if the game is discounted
         Elements em = element.getElementsByTag("em");
         if (em.isEmpty()) {
@@ -64,7 +66,7 @@ public class SearchResultsItemPriceParser {
      * @return an array with old prices
      */
     @NotNull
-    private ArrayList<BigDecimal> getOldPrices(Element element) {
+    private ArrayList<BigDecimal> getOldPrices(@NotNull Element element) {
         Elements em = element.getElementsByTag("em");
         if (!em.isEmpty()) {
             // em.size() = current price + # old prices
@@ -83,7 +85,8 @@ public class SearchResultsItemPriceParser {
      * @param price string with the price
      * @return a BigDecimal representing the price
      */
-    private BigDecimal parsePriceString(String price) {
+    @NotNull
+    private BigDecimal parsePriceString(@NotNull String price) {
         String parsable = price
                 .replaceAll("[^0-9.,]","")  // remove all characters except for numbers, ',' and '.'
                 .replace(".", "")           // handle prices over 999,99€ like 1.249,99€
@@ -98,7 +101,8 @@ public class SearchResultsItemPriceParser {
      * @throws UnknownPriceTypeException if the price type is unknown
      * @return the price type
      */
-    private PriceType getPriceType(Element element) {
+    @NotNull
+    private PriceType getPriceType(@NotNull Element element) {
         switch (element.className()) {
             case "buyNew": return PriceType.NEW;
             case "buyUsed": return PriceType.USED;
@@ -114,7 +118,7 @@ public class SearchResultsItemPriceParser {
      * @param element p tag with class="buyXXX"
      * @return the availability of the price type
      */
-    private boolean isAvailable(Element element) {
+    private boolean isAvailable(@NotNull Element element) {
         // if you can buy the product:
         //   - class "megaButton buyTier3 cartAddNoRadio" (NEW, USED prices)
         //   - class "megaButton cartAddNoRadio"          (PREORDER prices)
@@ -133,7 +137,7 @@ public class SearchResultsItemPriceParser {
      * @param element span tag with class="homeDeliveryAvailable"
      * @return the availability of home delivery
      */
-    private boolean isHomeDeliveryAvailable(Element element) {
+    private boolean isHomeDeliveryAvailable(@NotNull Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");
@@ -145,7 +149,7 @@ public class SearchResultsItemPriceParser {
      * @param element span tag with class="clickAndCollectAvailable"
      * @return the availability of "collect in store"
      */
-    private boolean isCollectibleInStore(Element element) {
+    private boolean isCollectibleInStore(@NotNull Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");
