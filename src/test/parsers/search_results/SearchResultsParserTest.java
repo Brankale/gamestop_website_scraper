@@ -2,12 +2,10 @@ package test.parsers.search_results;
 
 import main.models.GamePreviews;
 import main.parsers.search_results.SearchResultsParser;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
