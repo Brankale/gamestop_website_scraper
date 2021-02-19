@@ -10,7 +10,7 @@ public class Utils {
 
     public static Element createElement(File html) {
         try {
-            return Jsoup.parse(html, "UTF-8").body().child(0);
+            return Jsoup.parse(html, "UTF-8").body();
         } catch (IOException e) {
             e.printStackTrace();
             return new Element("div");
