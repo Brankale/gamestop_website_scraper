@@ -12,7 +12,7 @@ public class SearchResultsParser {
 
     @NotNull
     public static GamePreviews parse(Document root) {
-        Elements items = getItems(root.body());
+        Elements items = getItems(root);
         GamePreviews gamePreviews = new GamePreviews();
         for (Element item : items) {
             GamePreview gamePreview = SearchResultsItemParser.parse(item);
@@ -22,9 +22,25 @@ public class SearchResultsParser {
     }
 
     @NotNull
-    private static Elements getItems(@NotNull final Element root) {
-        // TODO: throw custom exception if "productsList" is not present
-        return root.getElementById("productsList").getElementsByClass("singleProduct");
+    private static Elements getItems(@NotNull final Document root) {
+        Element productsList = root.getElementById("productsList");
+        if (productsList == null) {
+            throw new InvalidHtmlException(root);
+        }
+        return productsList.getElementsByClass("singleProduct");
+    }
+
+    public static class InvalidHtmlException extends RuntimeException {
+        private final Document invalidHtml;
+
+        public InvalidHtmlException(Document invalidHtml) {
+            this.invalidHtml = invalidHtml;
+        }
+
+        @Override
+        public String toString() {
+            return "Invalid html:\n" + invalidHtml;
+        }
     }
 
 }
