@@ -17,18 +17,9 @@ class SearchResultsParserTest {
 
     private static final File FILE_SEARCH_RESULTS = new File(DIR + "search_results.html");
 
-    private static Element createElement(File html) {
-        try {
-            return Jsoup.parse(html, "UTF-8").body().child(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Element("div");
-        }
-    }
-
     @Test
     public void searchResults() {
-        Element searchResults = createElement(FILE_SEARCH_RESULTS);
+        Element searchResults = Utils.createElement(FILE_SEARCH_RESULTS);
         GamePreviews gamePreviews = SearchResultsParser.parse(searchResults.ownerDocument());
 
         assertEquals("Persona® 5 Strikers", gamePreviews.get(0).getTitle());

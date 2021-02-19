@@ -2,13 +2,10 @@ package test.parsers.search_results;
 
 import main.models.GamePreview;
 import main.parsers.search_results.SearchResultsItemParser;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,16 +19,7 @@ class SearchResultsItemParserTest {
 
     @BeforeAll
     public static void parseItem() {
-        gamePreview = SearchResultsItemParser.parse(createElement(EXAMPLE_ITEM));
-    }
-
-    private static Element createElement(File html) {
-        try {
-            return Jsoup.parse(html, "UTF-8").body().child(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Element("div");
-        }
+        gamePreview = SearchResultsItemParser.parse(Utils.createElement(EXAMPLE_ITEM));
     }
 
     @Test
@@ -67,7 +55,7 @@ class SearchResultsItemParserTest {
     @Test
     public void malformedItemThrowException() {
         assertThrows(SearchResultsItemParser.ItemParsingException.class, () ->
-            SearchResultsItemParser.parse(createElement(MALFORMED_ITEM))
+            SearchResultsItemParser.parse(Utils.createElement(MALFORMED_ITEM))
         );
     }
 
