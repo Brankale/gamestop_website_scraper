@@ -16,6 +16,7 @@ class SearchResultsParserTest {
     private static final String DIR = "src/test/parsers/search_results/htmls/";
 
     private static final File FILE_SEARCH_RESULTS = new File(DIR + "search_results.html");
+    private static final File FILE_INVALID_HTML = new File(DIR + "invalid_html.html");
 
     @Test
     public void searchResults() {
@@ -32,6 +33,14 @@ class SearchResultsParserTest {
         assertEquals("Resident Evil 5 HD", gamePreviews.get(7).getTitle());
         assertEquals("Resident Evil 4 HD", gamePreviews.get(8).getTitle());
         assertEquals("Persona 5 Royal", gamePreviews.get(9).getTitle());
+    }
+
+    @Test
+    public void throwsExceptionIfInvalidHtml() {
+        assertThrows(SearchResultsParser.InvalidHtmlException.class, () -> {
+            Element searchResults = Utils.createElement(FILE_INVALID_HTML);
+            SearchResultsParser.parse(searchResults.ownerDocument());
+        });
     }
 
 }
