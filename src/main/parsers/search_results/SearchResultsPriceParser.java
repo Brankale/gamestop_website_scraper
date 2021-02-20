@@ -21,7 +21,7 @@ public final class SearchResultsPriceParser {
      * @return the Prices of the product
      */
     @NotNull
-    public static Prices parse(Element element) {
+    public static Prices parse(@NotNull Element element) {
         Elements buyXXXs = element.getElementsByTag("p");
         Elements productsAvailability = element.getElementsByTag("div");
 
