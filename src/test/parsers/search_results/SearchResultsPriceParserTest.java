@@ -1,7 +1,7 @@
 package test.parsers.search_results;
 
-import main.models.price.Price;
 import main.models.price.PriceType;
+import main.models.price.Prices;
 import main.parsers.search_results.SearchResultsPriceParser;
 import org.junit.jupiter.api.Test;
 
@@ -43,36 +43,36 @@ class SearchResultsPriceParserTest {
 
     @Test
     public void checkPrice() {
-        Price price = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE));
-        Price pricePreorder = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_PREORDER));
+        Prices price = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE));
+        Prices pricePreorder = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_PREORDER));
         // when games are discounted, html is different
-        Price olderPrices = SearchResultsPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
+        Prices olderPrices = SearchResultsPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
 
-        assertEquals(new BigDecimal("90.98"), price.getPrice());
-        assertEquals(new BigDecimal("60.98"), pricePreorder.getPrice());
-        assertEquals(new BigDecimal("329.98"), olderPrices.getPrice());
+        assertEquals(new BigDecimal("90.98"), price.get(0).getPrice());
+        assertEquals(new BigDecimal("60.98"), pricePreorder.get(0).getPrice());
+        assertEquals(new BigDecimal("329.98"), olderPrices.get(0).getPrice());
     }
 
     @Test
     public void checkOldPrices() {
         ArrayList<BigDecimal> oldPrices = new ArrayList<>();
 
-        Price oldPricesNew = SearchResultsPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
+        Prices oldPricesNew = SearchResultsPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
         oldPrices.add(new BigDecimal("349.98"));
-        assertEquals(oldPrices,oldPricesNew.getOldPrices());
+        assertEquals(oldPrices,oldPricesNew.get(0).getOldPrices());
     }
 
     @Test
     public void checkPriceType() {
-        Price priceNew = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_NEW));
-        Price priceUsed = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_USED));
-        Price pricePreorder = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_PREORDER));
-        Price priceDigital = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_DIGITAL));
+        Prices priceNew = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_NEW));
+        Prices priceUsed = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_USED));
+        Prices pricePreorder = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_PREORDER));
+        Prices priceDigital = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_DIGITAL));
 
-        assertEquals(priceNew.getType(), PriceType.NEW);
-        assertEquals(priceUsed.getType(), PriceType.USED);
-        assertEquals(pricePreorder.getType(), PriceType.PREORDER);
-        assertEquals(priceDigital.getType(), PriceType.DIGITAL);
+        assertEquals(priceNew.get(0).getType(), PriceType.NEW);
+        assertEquals(priceUsed.get(0).getType(), PriceType.USED);
+        assertEquals(pricePreorder.get(0).getType(), PriceType.PREORDER);
+        assertEquals(priceDigital.get(0).getType(), PriceType.DIGITAL);
     }
 
     @Test
@@ -84,33 +84,33 @@ class SearchResultsPriceParserTest {
 
     @Test
     public void checkAvailability() {
-        Price available = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_AVAILABLE));
-        Price notAvailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_UNAVAILABLE));
-        Price preorderAvailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_PREORDER_AVAILABLE));
+        Prices available = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_AVAILABLE));
+        Prices notAvailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_UNAVAILABLE));
+        Prices preorderAvailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_PREORDER_AVAILABLE));
         // TODO: find an HTML example
         // Price preorderNotAvailable = priceParser.parse(createElement(FILE_PREORDER_UNAVAILABLE));
 
-        assertTrue(available.isAvailable());
-        assertFalse(notAvailable.isAvailable());
-        assertTrue(preorderAvailable.isAvailable());
+        assertTrue(available.get(0).isAvailable());
+        assertFalse(notAvailable.get(0).isAvailable());
+        assertTrue(preorderAvailable.get(0).isAvailable());
         // TODO: find an HTML example
         // assertFalse(preorderNotAvailable.isAvailable());
     }
 
     @Test
     public void isHomeDeliveryAvailable() {
-        Price available = SearchResultsPriceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_AVAILABLE));
-        Price unavailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_UNAVAILABLE));
-        assertTrue(available.isHomeDeliveryAvailable());
-        assertFalse(unavailable.isHomeDeliveryAvailable());
+        Prices available = SearchResultsPriceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_AVAILABLE));
+        Prices unavailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_UNAVAILABLE));
+        assertTrue(available.get(0).isHomeDeliveryAvailable());
+        assertFalse(unavailable.get(0).isHomeDeliveryAvailable());
     }
 
     @Test
     public void isCollectInStoreAvailable() {
-        Price available = SearchResultsPriceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_AVAILABLE));
-        Price unavailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_UNAVAILABLE));
-        assertTrue(available.isCollectibleInStore());
-        assertFalse(unavailable.isCollectibleInStore());
+        Prices available = SearchResultsPriceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_AVAILABLE));
+        Prices unavailable = SearchResultsPriceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_UNAVAILABLE));
+        assertTrue(available.get(0).isCollectibleInStore());
+        assertFalse(unavailable.get(0).isCollectibleInStore());
     }
 
 }

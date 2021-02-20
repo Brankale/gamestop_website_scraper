@@ -37,6 +37,7 @@ public final class SearchResultsItemParser {
         gamePreview.setPlatform(parsePlatform(singleProdInfo));
         gamePreview.setPublisher(parsePublisher(singleProdInfo));
         gamePreview.setCoverUrl(parseCoverUrl(element));
+        // TODO: init prices
         return gamePreview;
     }
 

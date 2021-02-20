@@ -3,6 +3,7 @@ package main.parsers.search_results;
 import com.sun.istack.internal.NotNull;
 import main.models.price.Price;
 import main.models.price.PriceType;
+import main.models.price.Prices;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -16,31 +17,39 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns a price given an Element with the root tag
-     * <div class="prodBuy"></div>
-     * @param element div tag with class="prodBuy"
-     * @return a price
+     * @param element <div class="prodBuy">
+     * @return a Prices object
      */
     @NotNull
-    public static Price parse(@NotNull Element element) {
-        Element priceTypeTag = element.getElementsByTag("p").first();
-        Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
-        Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
+    public static Prices parse(Element element) {
+        Elements buyXXXs = element.getElementsByTag("p");
+        Elements productsAvailability = element.getElementsByTag("div");
 
-        Price price = new Price(parsePrice(priceTypeTag), parsePriceType(priceTypeTag));
-
-        price.addOldPrices(parseOldPrices(priceTypeTag));
-
-        price.setAvailable(parseAvailability(element));
-
-        if (!homeDeliveryTag.isEmpty()) {
-            price.setHomeDeliveryAvailability(parseHomeDeliveryAvailability(homeDeliveryTag.first()));
+        Prices prices = new Prices();
+        for (int i = 0; i < buyXXXs.size(); ++i) {
+            if (buyXXXs.get(i).className().startsWith("buy")) {
+                prices.add(parse(buyXXXs.get(i), productsAvailability.get(i)));
+            }
         }
+        return prices;
+    }
 
-        if (!collectInStore.isEmpty()) {
-            price.setCollectibleInStore(parseCollectibleInStore(collectInStore.first()));
-        }
-
+    /**
+     * @param buyXXX <p class="buyXXX"> tag
+     * @param productAvailability <div class="productAvailability"> tag
+     * @return a Price object
+     */
+    @NotNull
+    private static Price parse(@NotNull Element buyXXX, @NotNull Element productAvailability) {
+        Price price = new Price(parsePrice(buyXXX), parsePriceType(buyXXX));
+        price.addOldPrices(parseOldPrices(buyXXX));
+        price.setAvailable(parseAvailability(buyXXX));
+        price.setHomeDeliveryAvailability(parseHomeDeliveryAvailability(
+                productAvailability.getElementsByClass("homeDeliveryAvailable").first()
+        ));
+        price.setCollectibleInStore(parseCollectibleInStore(
+                productAvailability.getElementsByClass("clickAndCollectAvailable").first()
+        ));
         return price;
     }
 
