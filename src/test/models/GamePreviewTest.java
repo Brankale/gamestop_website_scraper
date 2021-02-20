@@ -93,7 +93,7 @@ public class GamePreviewTest {
     }
 
     @Test
-    public void setValidCoverUrl() throws MalformedURLException {
+    public void setValidCoverUrl() {
         String url = "https://example.com";
         gamePreview.setCoverUrl(url);
         assertEquals(gamePreview.getCoverUrl(), url);
