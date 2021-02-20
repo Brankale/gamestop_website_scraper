@@ -105,12 +105,13 @@ public class GamePreviewTest {
     }
 
     @Test
-    public void addPrice() {
-        Price price = new Price(BigDecimal.valueOf(9.99), PriceType.NEW);
-        gamePreview.addPrice(price);
-        Prices prices = new Prices();
-        prices.add(price);
-        assertEquals(gamePreview.getPrices(), prices);
+    public void setPrices() {
+        Prices expected = new Prices();
+        Price price = new Price(new BigDecimal("9.99"), PriceType.NEW);
+        expected.add(price);
+
+        gamePreview.setPrices(expected);
+        assertEquals(gamePreview.getPrices(), expected);
     }
 
 }

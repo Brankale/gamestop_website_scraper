@@ -1,6 +1,7 @@
 package main.models;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import main.models.price.Price;
 import main.models.price.Prices;
 
@@ -12,7 +13,7 @@ public class GamePreview {
 
     private final int id;
     private String title;
-    private final Prices prices;
+    private Prices prices;
     private String platform;    // do not use enum because if a new console is released it must be added
     private String publisher;
     private String releaseDate;
@@ -30,7 +31,7 @@ public class GamePreview {
         return id;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@Nullable String title) {
         this.title = title;
     }
 
@@ -41,21 +42,18 @@ public class GamePreview {
         return title;
     }
 
-    public void addPrice(Price price) {
-        prices.add(price);
-    }
-
-    public void addPrices(Prices prices) {
-        for (Price price : prices)
-            addPrice(price);
+    public void setPrices(@Nullable Prices prices) {
+        this.prices = prices;
     }
 
     @NotNull
     public Prices getPrices() {
+        if (prices == null)
+            return new Prices();
         return prices;
     }
 
-    public void setPlatform(String platform) {
+    public void setPlatform(@Nullable String platform) {
         this.platform = platform;
     }
 
@@ -66,7 +64,7 @@ public class GamePreview {
         return platform;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(@Nullable String publisher) {
         this.publisher = publisher;
     }
 
@@ -77,7 +75,7 @@ public class GamePreview {
         return publisher;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(@Nullable String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -88,7 +86,7 @@ public class GamePreview {
         return releaseDate;
     }
 
-    public void setCoverUrl(String url) {
+    public void setCoverUrl(@Nullable String url) {
         coverUrl = url;
     }
 
