@@ -90,7 +90,7 @@ public final class SearchResultsPriceParser {
      * @return a BigDecimal representing the price
      */
     @NotNull
-    public static BigDecimal parsePriceString(@NotNull String price) {
+    private static BigDecimal parsePriceString(@NotNull String price) {
         // TODO: xxx.xx€ is the format of other currencies.
         // TODO: x.xxx,xx€ is a special case but it's extremely rare. Find an HTML example.
 
