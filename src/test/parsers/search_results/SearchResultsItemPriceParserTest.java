@@ -3,7 +3,6 @@ package test.parsers.search_results;
 import main.models.price.Price;
 import main.models.price.PriceType;
 import main.parsers.search_results.SearchResultsItemPriceParser;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -42,21 +41,12 @@ class SearchResultsItemPriceParserTest {
     private static final File FILE_COLLECT_IN_STORE_UNAVAILABLE =
             new File(DIR + "collect_in_store_unavailable.html");
 
-
-
-    private static SearchResultsItemPriceParser priceParser;
-
-    @BeforeAll
-    public static void init() {
-        priceParser = new SearchResultsItemPriceParser();
-    }
-
     @Test
     public void checkPrice() {
-        Price price = priceParser.parse(Utils.createElement(FILE_PRICE));
-        Price pricePreorder = priceParser.parse(Utils.createElement(FILE_PRICE_PREORDER));
+        Price price = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE));
+        Price pricePreorder = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_PREORDER));
         // when games are discounted, html is different
-        Price olderPrices = priceParser.parse(Utils.createElement(FILE_OLD_PRICES));
+        Price olderPrices = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
 
         assertEquals(new BigDecimal("90.98"), price.getPrice());
         assertEquals(new BigDecimal("60.98"), pricePreorder.getPrice());
@@ -67,17 +57,17 @@ class SearchResultsItemPriceParserTest {
     public void checkOldPrices() {
         ArrayList<BigDecimal> oldPrices = new ArrayList<>();
 
-        Price oldPricesNew = priceParser.parse(Utils.createElement(FILE_OLD_PRICES));
+        Price oldPricesNew = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
         oldPrices.add(new BigDecimal("349.98"));
         assertEquals(oldPrices,oldPricesNew.getOldPrices());
     }
 
     @Test
     public void checkPriceType() {
-        Price priceNew = priceParser.parse(Utils.createElement(FILE_PRICE_TYPE_NEW));
-        Price priceUsed = priceParser.parse(Utils.createElement(FILE_PRICE_TYPE_USED));
-        Price pricePreorder = priceParser.parse(Utils.createElement(FILE_PRICE_TYPE_PREORDER));
-        Price priceDigital = priceParser.parse(Utils.createElement(FILE_PRICE_TYPE_DIGITAL));
+        Price priceNew = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_NEW));
+        Price priceUsed = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_USED));
+        Price pricePreorder = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_PREORDER));
+        Price priceDigital = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_DIGITAL));
 
         assertEquals(priceNew.getType(), PriceType.NEW);
         assertEquals(priceUsed.getType(), PriceType.USED);
@@ -88,15 +78,15 @@ class SearchResultsItemPriceParserTest {
     @Test
     public void throwsExceptionOnInvalidPriceType() {
         assertThrows(SearchResultsItemPriceParser.UnknownPriceTypeException.class, () ->
-            priceParser.parse(Utils.createElement(FILE_PRICE_TYPE_UNKNOWN))
+                SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_TYPE_UNKNOWN))
         );
     }
 
     @Test
     public void checkAvailability() {
-        Price available = priceParser.parse(Utils.createElement(FILE_PRICE_AVAILABLE));
-        Price notAvailable = priceParser.parse(Utils.createElement(FILE_PRICE_UNAVAILABLE));
-        Price preorderAvailable = priceParser.parse(Utils.createElement(FILE_PREORDER_AVAILABLE));
+        Price available = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_AVAILABLE));
+        Price notAvailable = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PRICE_UNAVAILABLE));
+        Price preorderAvailable = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_PREORDER_AVAILABLE));
         // TODO: find an HTML example
         // Price preorderNotAvailable = priceParser.parse(createElement(FILE_PREORDER_UNAVAILABLE));
 
@@ -109,16 +99,16 @@ class SearchResultsItemPriceParserTest {
 
     @Test
     public void isHomeDeliveryAvailable() {
-        Price available = priceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_AVAILABLE));
-        Price unavailable = priceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_UNAVAILABLE));
+        Price available = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_AVAILABLE));
+        Price unavailable = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_HOME_DELIVERY_UNAVAILABLE));
         assertTrue(available.isHomeDeliveryAvailable());
         assertFalse(unavailable.isHomeDeliveryAvailable());
     }
 
     @Test
     public void isCollectInStoreAvailable() {
-        Price available = priceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_AVAILABLE));
-        Price unavailable = priceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_UNAVAILABLE));
+        Price available = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_AVAILABLE));
+        Price unavailable = SearchResultsItemPriceParser.parse(Utils.createElement(FILE_COLLECT_IN_STORE_UNAVAILABLE));
         assertTrue(available.isCollectibleInStore());
         assertFalse(unavailable.isCollectibleInStore());
     }

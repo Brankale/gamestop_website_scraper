@@ -9,7 +9,11 @@ import org.jsoup.select.Elements;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class SearchResultsItemPriceParser {
+public final class SearchResultsItemPriceParser {
+
+    private SearchResultsItemPriceParser() {
+        // prevent instantiation
+    }
 
     /**
      * Returns a price given an Element with the root tag
@@ -18,7 +22,7 @@ public class SearchResultsItemPriceParser {
      * @return a price
      */
     @NotNull
-    public Price parse(@NotNull Element element) {
+    public static Price parse(@NotNull Element element) {
         Element priceTypeTag = element.getElementsByTag("p").first();
         Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
         Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
@@ -47,7 +51,7 @@ public class SearchResultsItemPriceParser {
      * @return the price
      */
     @NotNull
-    private BigDecimal getPrice(@NotNull Element element) {
+    private static BigDecimal getPrice(@NotNull Element element) {
         // em tags are present only if the game is discounted
         Elements em = element.getElementsByTag("em");
         if (em.isEmpty()) {
@@ -66,7 +70,7 @@ public class SearchResultsItemPriceParser {
      * @return an array with old prices
      */
     @NotNull
-    private ArrayList<BigDecimal> getOldPrices(@NotNull Element element) {
+    private static ArrayList<BigDecimal> getOldPrices(@NotNull Element element) {
         Elements em = element.getElementsByTag("em");
         if (!em.isEmpty()) {
             // em.size() = current price + # old prices
@@ -86,7 +90,7 @@ public class SearchResultsItemPriceParser {
      * @return a BigDecimal representing the price
      */
     @NotNull
-    private BigDecimal parsePriceString(@NotNull String price) {
+    private static BigDecimal parsePriceString(@NotNull String price) {
         String parsable = price
                 .replaceAll("[^0-9.,]","")  // remove all characters except for numbers, ',' and '.'
                 .replace(".", "")           // handle prices over 999,99€ like 1.249,99€
@@ -102,7 +106,7 @@ public class SearchResultsItemPriceParser {
      * @return the price type
      */
     @NotNull
-    private PriceType getPriceType(@NotNull Element element) {
+    private static PriceType getPriceType(@NotNull Element element) {
         switch (element.className()) {
             case "buyNew": return PriceType.NEW;
             case "buyUsed": return PriceType.USED;
@@ -118,7 +122,7 @@ public class SearchResultsItemPriceParser {
      * @param element p tag with class="buyXXX"
      * @return the availability of the price type
      */
-    private boolean isAvailable(@NotNull Element element) {
+    private static boolean isAvailable(@NotNull Element element) {
         // if you can buy the product:
         //   - class "megaButton buyTier3 cartAddNoRadio" (NEW, USED prices)
         //   - class "megaButton cartAddNoRadio"          (PREORDER prices)
@@ -137,7 +141,7 @@ public class SearchResultsItemPriceParser {
      * @param element span tag with class="homeDeliveryAvailable"
      * @return the availability of home delivery
      */
-    private boolean isHomeDeliveryAvailable(@NotNull Element element) {
+    private static boolean isHomeDeliveryAvailable(@NotNull Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");
@@ -149,7 +153,7 @@ public class SearchResultsItemPriceParser {
      * @param element span tag with class="clickAndCollectAvailable"
      * @return the availability of "collect in store"
      */
-    private boolean isCollectibleInStore(@NotNull Element element) {
+    private static boolean isCollectibleInStore(@NotNull Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");

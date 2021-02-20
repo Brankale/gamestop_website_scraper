@@ -4,7 +4,11 @@ import com.sun.istack.internal.NotNull;
 import main.models.GamePreview;
 import org.jsoup.nodes.Element;
 
-public class SearchResultsItemParser {
+public final class SearchResultsItemParser {
+
+    private SearchResultsItemParser() {
+        // prevent instantiation
+    }
 
     /**
      * Parses an item in a search results html page and returns
