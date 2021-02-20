@@ -27,18 +27,18 @@ public final class SearchResultsPriceParser {
         Elements homeDeliveryTag = element.getElementsByClass("homeDeliveryAvailable");
         Elements collectInStore = element.getElementsByClass("clickAndCollectAvailable");
 
-        Price price = new Price(getPrice(priceTypeTag), getPriceType(priceTypeTag));
+        Price price = new Price(parsePrice(priceTypeTag), parsePriceType(priceTypeTag));
 
-        price.addOldPrices(getOldPrices(priceTypeTag));
+        price.addOldPrices(parseOldPrices(priceTypeTag));
 
-        price.setAvailable(isAvailable(element));
+        price.setAvailable(parseAvailability(element));
 
         if (!homeDeliveryTag.isEmpty()) {
-            price.setHomeDeliveryAvailability(isHomeDeliveryAvailable(homeDeliveryTag.first()));
+            price.setHomeDeliveryAvailability(parseHomeDeliveryAvailability(homeDeliveryTag.first()));
         }
 
         if (!collectInStore.isEmpty()) {
-            price.setCollectibleInStore(isCollectibleInStore(collectInStore.first()));
+            price.setCollectibleInStore(parseCollectibleInStore(collectInStore.first()));
         }
 
         return price;
@@ -51,7 +51,7 @@ public final class SearchResultsPriceParser {
      * @return the price
      */
     @NotNull
-    private static BigDecimal getPrice(@NotNull Element element) {
+    private static BigDecimal parsePrice(@NotNull Element element) {
         // em tags are present only if the game is discounted
         Elements em = element.getElementsByTag("em");
         if (em.isEmpty()) {
@@ -70,7 +70,7 @@ public final class SearchResultsPriceParser {
      * @return an array with old prices
      */
     @NotNull
-    private static ArrayList<BigDecimal> getOldPrices(@NotNull Element element) {
+    private static ArrayList<BigDecimal> parseOldPrices(@NotNull Element element) {
         Elements em = element.getElementsByTag("em");
         if (!em.isEmpty()) {
             // em.size() = current price + # old prices
@@ -106,7 +106,7 @@ public final class SearchResultsPriceParser {
      * @return the price type
      */
     @NotNull
-    private static PriceType getPriceType(@NotNull Element element) {
+    private static PriceType parsePriceType(@NotNull Element element) {
         switch (element.className()) {
             case "buyNew": return PriceType.NEW;
             case "buyUsed": return PriceType.USED;
@@ -122,7 +122,7 @@ public final class SearchResultsPriceParser {
      * @param element p tag with class="buyXXX"
      * @return the availability of the price type
      */
-    private static boolean isAvailable(@NotNull Element element) {
+    private static boolean parseAvailability(@NotNull Element element) {
         // if you can buy the product:
         //   - class "megaButton buyTier3 cartAddNoRadio" (NEW, USED prices)
         //   - class "megaButton cartAddNoRadio"          (PREORDER prices)
@@ -141,7 +141,7 @@ public final class SearchResultsPriceParser {
      * @param element span tag with class="homeDeliveryAvailable"
      * @return the availability of home delivery
      */
-    private static boolean isHomeDeliveryAvailable(@NotNull Element element) {
+    private static boolean parseHomeDeliveryAvailability(@NotNull Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");
@@ -153,7 +153,7 @@ public final class SearchResultsPriceParser {
      * @param element span tag with class="clickAndCollectAvailable"
      * @return the availability of "collect in store"
      */
-    private static boolean isCollectibleInStore(@NotNull Element element) {
+    private static boolean parseCollectibleInStore(@NotNull Element element) {
         // deliveryUnavailable.png if unavailable
         return element.getElementsByTag("img").attr("src")
                 .equals("/Content/Images/deliveryAvailable.png");
