@@ -70,7 +70,7 @@ public final class SearchResultsItemParser {
      */
     private static String parsePlatform(@NotNull final Element element) {
         Element h4 = element.getElementsByTag("h4").first();
-        return h4.textNodes().get(0).text();
+        return h4.textNodes().get(0).text().trim();
     }
 
     /**
