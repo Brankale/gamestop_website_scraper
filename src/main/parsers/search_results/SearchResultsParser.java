@@ -12,7 +12,11 @@ import org.jsoup.select.Elements;
  * results page, it returns the results found.
  * A valid HTML has one tag with id = "productsList".
  */
-public class SearchResultsParser {
+public final class SearchResultsParser {
+
+    private SearchResultsParser() {
+        // prevent instantiation
+    }
 
     /**
      * @param root org.jsoup.nodes.Document representing
