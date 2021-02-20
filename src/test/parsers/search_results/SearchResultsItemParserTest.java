@@ -13,7 +13,6 @@ class SearchResultsItemParserTest {
 
     private static final String DIR = "src/test/parsers/search_results/htmls/items/";
     private static final File EXAMPLE_ITEM = new File(DIR + "example_item.html");
-    private static final File MALFORMED_ITEM = new File(DIR + "malformed_item.html");
 
     private static GamePreview gamePreview;
 
@@ -50,13 +49,6 @@ class SearchResultsItemParserTest {
     public void parseCoverUrl() {
         String coverUrl = "https://static-it.gamestop.it/images/products/302017/2med.jpg";
         assertEquals(coverUrl, gamePreview.getCoverUrl());
-    }
-
-    @Test
-    public void malformedItemThrowException() {
-        assertThrows(SearchResultsItemParser.ItemParsingException.class, () ->
-            SearchResultsItemParser.parse(Utils.createElement(MALFORMED_ITEM))
-        );
     }
 
 }

@@ -107,14 +107,6 @@ public class GamePreviewTest {
     }
 
     @Test
-    public void setInvalidCoverUrlThrowsMalformedURLException() {
-        assertThrows(MalformedURLException.class, () -> {
-            String url = "this is not a url";
-            gamePreview.setCoverUrl(url);
-        });
-    }
-
-    @Test
     public void coverUrlCantBeNull() {
         assertNotNull(gamePreview.getCoverUrl());
     }

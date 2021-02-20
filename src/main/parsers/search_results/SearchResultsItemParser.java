@@ -19,11 +19,7 @@ public final class SearchResultsItemParser {
      * @return a GamePreview object
      */
     public static GamePreview parse(@NotNull final Element element) {
-        try {
-            return initGamePreview(element);
-        } catch (Exception e) {
-            throw new ItemParsingException(e);
-        }
+        return initGamePreview(element);
     }
 
     /**
@@ -32,9 +28,8 @@ public final class SearchResultsItemParser {
      *
      * @param element with root tag <div class="singleProduct">
      * @return a GamePreview object
-     * @throws Exception if an error occurred while parsing
      */
-    private static GamePreview initGamePreview(@NotNull final Element element) throws Exception {
+    private static GamePreview initGamePreview(@NotNull final Element element) {
         Element singleProdInfo = element.getElementsByClass("singleProdInfo").first();
 
         GamePreview gamePreview = new GamePreview(parseId(singleProdInfo));
@@ -89,21 +84,6 @@ public final class SearchResultsItemParser {
     private static String parseCoverUrl(@NotNull final Element element) {
         Element a = element.getElementsByClass("prodImg").first();
         return a.child(0).attr("data-llsrc");
-    }
-
-    public static class ItemParsingException extends RuntimeException {
-        private final Exception exception;
-
-        public ItemParsingException(Exception e) {
-            exception = e;
-        }
-
-        @Override
-        public String toString() {
-            return "CannotParsingException {" +
-                    "exception = " + exception.getMessage() +
-                    '}';
-        }
     }
 
 }

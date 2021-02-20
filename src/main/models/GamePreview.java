@@ -90,8 +90,7 @@ public class GamePreview {
         return releaseDate;
     }
 
-    public void setCoverUrl(String url) throws MalformedURLException {
-        new URL(url);
+    public void setCoverUrl(String url) {
         coverUrl = url;
     }
 
