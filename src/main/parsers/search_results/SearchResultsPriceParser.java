@@ -9,9 +9,9 @@ import org.jsoup.select.Elements;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public final class SearchResultsItemPriceParser {
+public final class SearchResultsPriceParser {
 
-    private SearchResultsItemPriceParser() {
+    private SearchResultsPriceParser() {
         // prevent instantiation
     }
 
