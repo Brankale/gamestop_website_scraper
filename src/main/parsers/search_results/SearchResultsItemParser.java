@@ -35,10 +35,12 @@ public final class SearchResultsItemParser {
      * @throws Exception if an error occurred while parsing
      */
     private static GamePreview initGamePreview(@NotNull final Element element) throws Exception {
-        GamePreview gamePreview = new GamePreview(parseId(element));
-        gamePreview.setTitle(parseTitle(element));
-        gamePreview.setPlatform(parsePlatform(element));
-        gamePreview.setPublisher(parsePublisher(element));
+        Element singleProdInfo = element.getElementsByClass("singleProdInfo").first();
+
+        GamePreview gamePreview = new GamePreview(parseId(singleProdInfo));
+        gamePreview.setTitle(parseTitle(singleProdInfo));
+        gamePreview.setPlatform(parsePlatform(singleProdInfo));
+        gamePreview.setPublisher(parsePublisher(singleProdInfo));
         gamePreview.setCoverUrl(parseCoverUrl(element));
         return gamePreview;
     }
@@ -48,8 +50,7 @@ public final class SearchResultsItemParser {
      * @return the id of the game
      */
     private static int parseId(@NotNull final Element element) {
-        Element h3 = element.getElementsByClass("singleProdInfo").first()
-                .getElementsByTag("h3").first();
+        Element h3 = element.getElementsByTag("h3").first();
         String id = h3.child(0).attr("href").split("/")[3];
         return Integer.parseInt(id);
     }
@@ -59,8 +60,7 @@ public final class SearchResultsItemParser {
      * @return the title of the game
      */
     private static String parseTitle(@NotNull final Element element) {
-        Element h3 = element.getElementsByClass("singleProdInfo").first()
-                .getElementsByTag("h3").first();
+        Element h3 = element.getElementsByTag("h3").first();
         return h3.child(0).text().trim();
     }
 
@@ -69,8 +69,7 @@ public final class SearchResultsItemParser {
      * @return the platform of the game
      */
     private static String parsePlatform(@NotNull final Element element) {
-        Element h4 = element.getElementsByClass("singleProdInfo").first()
-                .getElementsByTag("h4").first();
+        Element h4 = element.getElementsByTag("h4").first();
         return h4.textNodes().get(0).text().trim();
     }
 
@@ -79,8 +78,7 @@ public final class SearchResultsItemParser {
      * @return the publisher of the game
      */
     private static String parsePublisher(@NotNull final Element element) {
-        Element h4 = element.getElementsByClass("singleProdInfo").first()
-                .getElementsByTag("h4").first();
+        Element h4 = element.getElementsByTag("h4").first();
         return h4.getElementsByTag("strong").text().trim();
     }
 
