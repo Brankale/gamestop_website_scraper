@@ -61,7 +61,7 @@ public final class SearchResultsItemParser {
      */
     private static String parseTitle(@NotNull final Element element) {
         Element h3 = element.getElementsByTag("h3").first();
-        return h3.child(0).text().trim();
+        return h3.child(0).text();
     }
 
     /**
@@ -70,7 +70,7 @@ public final class SearchResultsItemParser {
      */
     private static String parsePlatform(@NotNull final Element element) {
         Element h4 = element.getElementsByTag("h4").first();
-        return h4.textNodes().get(0).text().trim();
+        return h4.textNodes().get(0).text();
     }
 
     /**
@@ -79,7 +79,7 @@ public final class SearchResultsItemParser {
      */
     private static String parsePublisher(@NotNull final Element element) {
         Element h4 = element.getElementsByTag("h4").first();
-        return h4.getElementsByTag("strong").text().trim();
+        return h4.getElementsByTag("strong").text();
     }
 
     /**
