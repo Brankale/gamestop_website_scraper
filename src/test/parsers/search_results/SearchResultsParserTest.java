@@ -1,11 +1,15 @@
 package test.parsers.search_results;
 
+import main.models.GamePreview;
 import main.models.GamePreviews;
 import main.parsers.search_results.SearchResultsParser;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,6 +43,32 @@ class SearchResultsParserTest {
             Element searchResults = Utils.createElement(FILE_INVALID_HTML);
             SearchResultsParser.parse(searchResults.ownerDocument());
         });
+    }
+
+    /**
+     * Enable this test to perform lots of searches on real website.
+     * It can help to find malformed HTMLs.
+     */
+    @Disabled
+    public void randomSearchOnWebSite() {
+        for (int i = 0; i < ('z'-'a'); ++i) {
+            for (int j = 0; j < ('z'-'a'); ++j) {
+                String game = "" + (char)('a' + i) + (char)('a' + j);
+                String webPage = "https://www.gamestop.it/SearchResult/QuickSearch?q=" + game;
+
+                try {
+                    System.out.println("Search: " + game);
+                    GamePreviews gamePreviews = SearchResultsParser.parse(Jsoup.connect(webPage).get());
+                    for (GamePreview gamePreview : gamePreviews) {
+                        System.out.println(gamePreview.getTitle());
+                    }
+                    System.out.println();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
     }
 
 }
