@@ -84,18 +84,28 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Accepted formats: "xx,xx€","xx.xx€", "x.xxx,xx€".
+     * Accepted format: "xxx,xx€" where 'x' is a digit.
      * There can be any currency.
      * @param price string with the price
      * @return a BigDecimal representing the price
      */
     @NotNull
-    private static BigDecimal parsePriceString(@NotNull String price) {
-        String parsable = price
-                .replaceAll("[^0-9.,]","")  // remove all characters except for numbers, ',' and '.'
-                .replace(".", "")           // handle prices over 999,99€ like 1.249,99€
-                .replace(',', '.');         // convert the price in a string that can be parsed
-        return new BigDecimal(parsable);
+    public static BigDecimal parsePriceString(@NotNull String price) {
+        // TODO: xxx.xx€ is the format of other currencies.
+        // TODO: x.xxx,xx€ is a special case but it's extremely rare. Find an HTML example.
+
+        StringBuilder parsable = new StringBuilder();
+        char currentChar;
+        for (int i = 0; i < price.length() - 1; ++i) {  // length - 1 skips the currency
+            currentChar = price.charAt(i);
+            if (currentChar == ',') {
+                parsable.append('.');                   // replace ',' with '.'
+            } else {
+                parsable.append(currentChar);
+            }
+        }
+
+        return new BigDecimal(parsable.toString());
     }
 
     /**
