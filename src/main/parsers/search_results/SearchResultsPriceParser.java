@@ -18,7 +18,7 @@ public final class SearchResultsPriceParser {
 
     /**
      * @param element <div class="prodBuy">
-     * @return a Prices object
+     * @return the Prices of the product
      */
     @NotNull
     public static Prices parse(Element element) {
@@ -37,7 +37,7 @@ public final class SearchResultsPriceParser {
     /**
      * @param buyXXX <p class="buyXXX"> tag
      * @param productAvailability <div class="productAvailability"> tag
-     * @return a Price object
+     * @return the Price of the product
      */
     @NotNull
     private static Price parse(@NotNull Element buyXXX, @NotNull Element productAvailability) {
@@ -54,9 +54,7 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns the price given an Element with root tag
-     * <p class="buyXXX"></p>
-     * @param element p tag with class="buyXXX"
+     * @param element <p class="buyXXX"> tag
      * @return the price
      */
     @NotNull
@@ -73,9 +71,7 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns the old prices given an Element with root tag
-     * <p class="buyXXX"></p>
-     * @param element p tag with class="buyXXX"
+     * @param element <p class="buyXXX"> tag
      * @return an array with old prices
      */
     @NotNull
@@ -118,11 +114,10 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns the price type given an Element with the root tag
-     * <p class="buyXXX"></p>
-     * @param element p tag with class="buyXXX"
-     * @throws UnknownPriceTypeException if the price type is unknown
+     * @param element <p class="buyXXX"> tag
      * @return the price type
+     *
+     * @throws UnknownPriceTypeException if the price type is unknown
      */
     @NotNull
     private static PriceType parsePriceType(@NotNull Element element) {
@@ -136,9 +131,7 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns the availability given an Element with the root tag
-     * <p class="buyXXX"></p>
-     * @param element p tag with class="buyXXX"
+     * @param element <p class="buyXXX"> tag
      * @return the availability of the price type
      */
     private static boolean parseAvailability(@NotNull Element element) {
@@ -155,9 +148,7 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns the home delivery availability given an Element
-     * with root tag <span class="homeDeliveryAvailable"></span>
-     * @param element span tag with class="homeDeliveryAvailable"
+     * @param element <span class="homeDeliveryAvailable"> tag
      * @return the availability of home delivery
      */
     private static boolean parseHomeDeliveryAvailability(@NotNull Element element) {
@@ -167,9 +158,7 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * Returns the "collect in store" availability given an Element
-     * with root tag <span class="clickAndCollectAvailable"></span>
-     * @param element span tag with class="clickAndCollectAvailable"
+     * @param element <span class="clickAndCollectAvailable"> tag
      * @return the availability of "collect in store"
      */
     private static boolean parseCollectibleInStore(@NotNull Element element) {
