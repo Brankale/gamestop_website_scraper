@@ -29,13 +29,6 @@ public class GamePreviewTest {
     }
 
     @Test
-    public void idCantBeNegative() {
-        assertThrows(GamePreview.InvalidGamePreviewIdException.class, () ->
-            new GamePreview(-1)
-        );
-    }
-
-    @Test
     public void setTitle() {
         String title = "this is the title";
         gamePreview.setTitle(title);

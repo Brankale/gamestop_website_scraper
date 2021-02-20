@@ -19,12 +19,10 @@ public class GamePreview {
     private String coverUrl;
 
     /**
-     * @param id of the game. ID cannot be negative.
+     * @param id of the game.
      */
     public GamePreview(int id) {
         this.id = id;
-        if (id < 0)
-            throw new InvalidGamePreviewIdException(id);
         prices = new Prices();
     }
 
@@ -116,19 +114,6 @@ public class GamePreview {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public static class InvalidGamePreviewIdException extends RuntimeException {
-        private final int id;
-
-        public InvalidGamePreviewIdException(int id) {
-            this.id = id;
-        }
-
-        @Override
-        public String toString() {
-            return "GamePreview ID can't be negative. Given value = " + id;
-        }
     }
 
 }
