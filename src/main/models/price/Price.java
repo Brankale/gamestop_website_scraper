@@ -36,8 +36,6 @@ public class Price {
     }
 
     public void addOldPrice(@NotNull BigDecimal oldPrice) {
-        if (oldPrice == null)
-            throw new NullPointerException();
         oldPrices.add(oldPrice);
     }
 
