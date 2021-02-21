@@ -22,14 +22,12 @@ public final class SearchResultsPriceParser {
      */
     @NotNull
     public static Prices parse(@NotNull Element element) {
-        Elements buyXXXs = element.getElementsByTag("p");
-        Elements productsAvailability = element.getElementsByTag("div");
+        Elements buyXXXs = element.getElementsByAttributeValueStarting("class", "buy");
+        Elements productsAvailability = element.getElementsByClass("productAvailability");
 
         Prices prices = new Prices();
         for (int i = 0; i < buyXXXs.size(); ++i) {
-            if (buyXXXs.get(i).className().startsWith("buy")) {
-                prices.add(parse(buyXXXs.get(i), productsAvailability.get(i)));
-            }
+            prices.add(parse(buyXXXs.get(i), productsAvailability.get(i)));
         }
         return prices;
     }

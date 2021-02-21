@@ -18,6 +18,7 @@ class SearchResultsPriceParserTest {
     private static final File FILE_PRICE = new File(DIR + "price_new_used_digital.html");
     private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
     private static final File FILE_OLD_PRICES = new File(DIR + "old_prices.html");
+    private static final File FILE_PRICE_WITH_PROMO = new File(DIR + "price_with_promo.html");
 
     private static final File FILE_PRICE_TYPE_NEW = new File(DIR + "price_type_new.html");
     private static final File FILE_PRICE_TYPE_USED = new File(DIR + "price_type_used.html");
@@ -60,6 +61,27 @@ class SearchResultsPriceParserTest {
         Prices oldPricesNew = SearchResultsPriceParser.parse(Utils.createElement(FILE_OLD_PRICES));
         oldPrices.add(new BigDecimal("349.98"));
         assertEquals(oldPrices,oldPricesNew.get(0).getOldPrices());
+    }
+
+    @Test
+    public void checkPriceWithPromo() {
+        Prices parsed = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_WITH_PROMO));
+        assertEquals(new BigDecimal("49.98"), parsed.get(0).getPrice());
+        assertEquals(new BigDecimal("48.98"), parsed.get(1).getPrice());
+    }
+
+    @Test
+    public void checkHomeDeliveryWithPromo() {
+        Prices parsed = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_WITH_PROMO));
+        assertTrue(parsed.get(0).isHomeDeliveryAvailable());
+        assertTrue(parsed.get(1).isHomeDeliveryAvailable());
+    }
+
+    @Test
+    public void checkCollectInStoreWithPromo() {
+        Prices parsed = SearchResultsPriceParser.parse(Utils.createElement(FILE_PRICE_WITH_PROMO));
+        assertTrue(parsed.get(0).isCollectibleInStore());
+        assertTrue(parsed.get(1).isCollectibleInStore());
     }
 
     @Test

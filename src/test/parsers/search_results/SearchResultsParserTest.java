@@ -45,6 +45,7 @@ class SearchResultsParserTest {
         });
     }
 
+    // TODO: this test should be moved to GameStop class tests
     /**
      * Enable this test to perform lots of searches on real website.
      * It can help to find malformed HTMLs.
@@ -54,20 +55,36 @@ class SearchResultsParserTest {
         for (int i = 0; i < ('z'-'a'); ++i) {
             for (int j = 0; j < ('z'-'a'); ++j) {
                 String game = "" + (char)('a' + i) + (char)('a' + j);
-                String webPage = "https://www.gamestop.it/SearchResult/QuickSearch?q=" + game;
-
-                try {
-                    System.out.println("Search: " + game);
-                    GamePreviews gamePreviews = SearchResultsParser.parse(Jsoup.connect(webPage).get());
-                    for (GamePreview gamePreview : gamePreviews) {
-                        System.out.println(gamePreview.getTitle());
-                    }
-                    System.out.println();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                search(game);
             }
+        }
+    }
+
+    /**
+     * Perform individual searches. It can be useful if some errors are found
+     * with randomSearchOnWebSite().
+     */
+    @Disabled
+    public void searchSingleGame() {
+        String gameToSearch = "ai";
+        search(gameToSearch);
+    }
+
+    /**
+     * TODO: this method must be replaced with GameStop.search() once it's finished
+     */
+    private void search(String game) {
+        String webPage = "https://www.gamestop.it/SearchResult/QuickSearch?q=" + game;
+
+        try {
+            System.out.println("Search: " + game);
+            GamePreviews gamePreviews = SearchResultsParser.parse(Jsoup.connect(webPage).get());
+            for (GamePreview gamePreview : gamePreviews) {
+                System.out.println(gamePreview.getTitle());
+            }
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
