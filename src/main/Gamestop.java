@@ -15,11 +15,7 @@ public class Gamestop {
         AUSTRIA,
         ITALY,
         SWITZERLAND,
-        DENMARK,
         GERMANY,
-        NORWAY,
-        SWEDEN,
-        FINLAND,
         IRELAND
     }
 
@@ -28,11 +24,7 @@ public class Gamestop {
             case AUSTRIA:       website += ".at"; break;
             case ITALY:         website += ".it"; break;
             case SWITZERLAND:   website += ".ch"; break;
-            case DENMARK:       website += ".dk"; break;
             case GERMANY:       website += ".de"; break;
-            case NORWAY:        website += ".no"; break;
-            case SWEDEN:        website += ".se"; break;
-            case FINLAND:       website += ".fi"; break;
             case IRELAND:       website += ".ie"; break;
         }
     }
