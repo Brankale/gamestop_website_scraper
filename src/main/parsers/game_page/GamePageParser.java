@@ -2,6 +2,7 @@ package main.parsers.game_page;
 
 import main.models.Game;
 import main.models.price.Prices;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.util.List;
@@ -10,6 +11,15 @@ public class GamePageParser {
 
     private GamePageParser() {
         // prevent instantiation
+    }
+
+    public static Game getGame(Document gamePage) {
+        return new Game(getId(gamePage));
+    }
+
+    private static int getId(Element element) {
+        // TODO: to implement
+        return -1;
     }
 
     private static String getTitle(Element element) {
