@@ -30,24 +30,6 @@ class PriceTest {
         assertEquals(price.getPrice(), _price);
     }
 
-    @SuppressWarnings("ConstantConditions")
-    @Test
-    public void cantPassNullPrice() {
-        assertThrows(Price.PriceInitException.class, () -> {
-            PriceType type = PriceType.NEW;
-            new Price(null, type);
-        });
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Test
-    public void cantPassNullPriceType() {
-        assertThrows(Price.PriceInitException.class, () -> {
-            BigDecimal _price = new BigDecimal("9.99");
-            new Price(_price, null);
-        });
-    }
-
     @Test
     public void setAvailable() {
         price.setAvailable(true);
