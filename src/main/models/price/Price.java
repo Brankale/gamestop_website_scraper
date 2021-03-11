@@ -18,13 +18,6 @@ public class Price {
     private Promo promo;
 
     public Price(@NotNull BigDecimal price, @NotNull PriceType type) {
-        // TODO: add a message to the exception
-        if (price == null)
-            throw new PriceInitException();
-        // TODO: add a message to the exception
-        if (type == null)
-            throw new PriceInitException();
-
         this.price = price;
         this.type = type;
         this.oldPrices = new ArrayList<>();
@@ -87,7 +80,5 @@ public class Price {
     public void setPromo(Promo promo) {
         this.promo = promo;
     }
-
-    public static class PriceInitException extends RuntimeException {}
 
 }
