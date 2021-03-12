@@ -30,4 +30,9 @@ class GamePageParserTest {
         assertEquals(126640, game.getId());
     }
 
+    @Test
+    public void getTitle() {
+        assertEquals("Cyberpunk 2077 - Day One Edition", game.getTitle());
+    }
+
 }

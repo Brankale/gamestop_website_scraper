@@ -14,7 +14,12 @@ public class GamePageParser {
     }
 
     public static Game getGame(Document gamePage) {
-        return new Game(getId(gamePage));
+        Game game = new Game(getId(gamePage));
+
+        Element prodTitle = gamePage.getElementsByClass("prodTitle").first();
+        game.setTitle(getTitle(prodTitle));
+
+        return game;
     }
 
     /**
@@ -52,9 +57,12 @@ public class GamePageParser {
         return i+1;
     }
 
+    /**
+     * @param element <div class="prodTitle"> tag
+     * @return the title of the game
+     */
     private static String getTitle(Element element) {
-        // TODO: to implement
-        return null;
+        return element.getElementsByTag("span").first().text();
     }
 
     private static Prices getPrices(Element element) {
