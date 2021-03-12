@@ -68,21 +68,6 @@ class PriceTest {
     }
 
     @Test
-    public void cantAddNullOldPrice() {
-        assertThrows(NullPointerException.class, () ->
-                price.addOldPrice(null)
-        );
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Test
-    public void cantAddNullOldPrices() {
-        assertThrows(NullPointerException.class, () ->
-                price.addOldPrices(null)
-        );
-    }
-
-    @Test
     public void getPriceType() {
         Price price;
         price = new Price(BigDecimal.valueOf(1), PriceType.NEW);
