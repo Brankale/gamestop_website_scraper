@@ -4,6 +4,7 @@ import main.models.price.PriceType;
 import main.models.price.Prices;
 import main.parsers.search_results.SearchResultsPriceParser;
 import org.junit.jupiter.api.Test;
+import test.parsers.Utils;
 
 import java.io.File;
 import java.math.BigDecimal;

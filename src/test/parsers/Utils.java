@@ -1,4 +1,4 @@
-package test.parsers.search_results;
+package test.parsers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;

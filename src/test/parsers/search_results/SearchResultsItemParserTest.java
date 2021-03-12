@@ -4,6 +4,7 @@ import main.models.GamePreview;
 import main.parsers.search_results.SearchResultsItemParser;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import test.parsers.Utils;
 
 import java.io.File;
 

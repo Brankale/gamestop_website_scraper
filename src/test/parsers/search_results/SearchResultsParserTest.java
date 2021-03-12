@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import test.parsers.Utils;
 
 import java.io.File;
 import java.io.IOException;
