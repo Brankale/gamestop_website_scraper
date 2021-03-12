@@ -17,9 +17,39 @@ public class GamePageParser {
         return new Game(getId(gamePage));
     }
 
+    /**
+     * @param element <html> tag
+     * @return the ID of the game
+     */
     private static int getId(Element element) {
-        // TODO: to implement
-        return -1;
+        String url = findUrlWithId(element);
+        return getGameIdFromUrl(url);
+    }
+
+    /**
+     * @param element <html> tag
+     * @return the url containing the ID of the game
+     */
+    private static String findUrlWithId(Element element) {
+        for (Element el : element.getElementsByTag("link")){
+            if (el.attr("rel").equals("canonical")) {
+                return el.attr("href");
+            }
+        }
+        return "";
+    }
+
+    private static int getGameIdFromUrl(String url) {
+        String id = url.substring(findIdStringStartIndex(url));
+        return Integer.parseInt(id);
+    }
+
+    private static int findIdStringStartIndex(String url) {
+        int i = url.length() - 1;
+        while (url.charAt(i) != '/') {
+            --i;
+        }
+        return i+1;
     }
 
     private static String getTitle(Element element) {
