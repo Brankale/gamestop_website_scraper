@@ -35,4 +35,20 @@ class GamePageParserTest {
         assertEquals("Cyberpunk 2077 - Day One Edition", game.getTitle());
     }
 
+    @Test
+    public void getPlatform() {
+        assertEquals("PS4", game.getPlatform());
+    }
+
+    @Test
+    public void getPublisher() {
+        assertEquals("CD Projekt", game.getPublisher());
+    }
+
+    @Test
+    public void getDescription() {
+        assertTrue(game.getDescription().startsWith("Cyberpunk 2077 è un'avventura a mondo aperto ambientata a Night City"));
+        assertTrue(game.getDescription().endsWith("Sfondi per desktop e dispositivi mobile"));
+    }
+
 }

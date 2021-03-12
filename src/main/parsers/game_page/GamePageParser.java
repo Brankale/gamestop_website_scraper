@@ -17,7 +17,12 @@ public class GamePageParser {
         Game game = new Game(getId(gamePage));
 
         Element prodTitle = gamePage.getElementsByClass("prodTitle").first();
+        Element prodDesc = gamePage.getElementById("prodDesc");
+
         game.setTitle(getTitle(prodTitle));
+        game.setPlatform(getPlatform(prodTitle));
+        game.setPublisher(getPublisher(prodTitle));
+        game.setDescription(getDescription(prodDesc));
 
         return game;
     }
@@ -70,14 +75,20 @@ public class GamePageParser {
         return null;
     }
 
+    /**
+     * @param element <div class="prodTitle"> tag
+     * @return the platform of the game
+     */
     private static String getPlatform(Element element) {
-        // TODO: to implement
-        return null;
+        return element.getElementsByTag("span").get(1).text();
     }
 
+    /**
+     * @param element <div class="prodTitle"> tag
+     * @return the publisher of the game
+     */
     private static String getPublisher(Element element) {
-        // TODO: to implement
-        return null;
+        return element.getElementsByTag("strong").text();
     }
 
     private static String getReleaseDate(Element element) {
@@ -120,9 +131,19 @@ public class GamePageParser {
         return false;
     }
 
+    /**
+     * @param element <div id="prodDesc"> tag
+     * @return the description of the game
+     */
     private static String getDescription(Element element) {
-        // TODO: to implement
-        return null;
+        // there can be multiple div tags with info
+        StringBuilder description = new StringBuilder();
+        for (Element el : element.children()) {
+            if (el.tagName().equals("div")) {
+                description.append(el.text());
+            }
+        }
+        return description.toString();
     }
 
 }
