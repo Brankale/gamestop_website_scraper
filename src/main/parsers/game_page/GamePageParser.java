@@ -101,6 +101,58 @@ public class GamePageParser {
         return null;
     }
 
+    /**
+     * Every gallery image has both a low res and a high res version
+     *
+     * Structure of a gallery image name:
+     * low res: <even number> + "srcmin" + <number of the image> + ".jpg"
+     * high res: <even number + 1> + "srcmax" + <number of the image> + ".jpg"
+     *
+     * Legend:
+     * <number of the image> number which starts from 1
+     * <even number> number which starts from 4
+     *
+     *
+     * HTML example:
+     * <a class="gallery" href="https://static-it.gamestop.it/images/products/154167/11scrmax4.jpg">
+     *     <span>
+     *         <img src="https://static-it.gamestop.it/images/products/154167/10scrmin4.jpg" alt="screen shot min">
+     *     </span>
+     * </a>
+     *
+     * Notes:
+     * - High res version is in the "href" attribute of <a> tag
+     * - Low res version is in the "src" attribute of <img> tag
+     *
+     *
+     * Malformed HTML notes:
+     * <a class="gallery">
+     *     <span>
+     *         <img src="https://static-it.gamestop.it/images/products/154167/6scrmin1.jpg" alt="screen shot min">
+     *     </span>
+     * </a>
+     * <a class="gallery" href="https://static-it.gamestop.it/images/products/154167/7scrmax2.jpg">
+     *     <span>
+     *         <img alt="screen shot min">
+     *     </span>
+     * </a>
+     *
+     * Notes:
+     * - Malformed HTMLs have "href" attribute missing
+     * - Malformed HTMLs have the even number starting from 6 instead of 4
+     * - There are two <a> tags: one with only the low res version, one with 
+     *   only high res version of the same image
+     *
+     * Assumption:
+     * If a malformed HTML is encountered, skip the <a> tag with "href" attribute not set
+     *
+     * Known malformed HTMLs:
+     * - New Super Mario Bros 2
+     * - Catherine (PS3/Xbox360 Edition)
+     *
+     * @param element
+     * @return
+     */
     private static List<String> getGallery(Element element) {
         // TODO: to implement
         return null;
