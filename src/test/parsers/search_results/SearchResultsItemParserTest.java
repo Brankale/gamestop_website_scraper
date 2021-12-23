@@ -41,12 +41,6 @@ class SearchResultsItemParserTest {
     }
 
     @Test
-    public void parsePublisher() {
-        String publisher = "Atlus";
-        assertEquals(publisher, gamePreview.getPublisher());
-    }
-
-    @Test
     public void parseCoverUrl() {
         String coverUrl = "https://static-it.gamestop.it/images/products/302017/2med.jpg";
         assertEquals(coverUrl, gamePreview.getCoverUrl());

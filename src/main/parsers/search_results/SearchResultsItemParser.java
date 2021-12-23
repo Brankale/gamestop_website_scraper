@@ -1,6 +1,7 @@
 package main.parsers.search_results;
 
 import com.sun.istack.internal.NotNull;
+import main.models.Game;
 import main.models.GamePreview;
 import org.jsoup.nodes.Element;
 
@@ -33,13 +34,14 @@ public final class SearchResultsItemParser {
         Element singleProdInfo = element.getElementsByClass("singleProdInfo").first();
         Element prodBuy = element.getElementsByClass("prodBuy").first();
 
-        GamePreview gamePreview = new GamePreview(parseId(singleProdInfo));
-        gamePreview.setTitle(parseTitle(singleProdInfo));
-        gamePreview.setPlatform(parsePlatform(singleProdInfo));
-        gamePreview.setPublisher(parsePublisher(singleProdInfo));
-        gamePreview.setCoverUrl(parseCoverUrl(element));
-        gamePreview.setPrices(SearchResultsPriceParser.parse(prodBuy));
-        return gamePreview;
+        Game game = new Game(parseId(singleProdInfo));
+        game.setTitle(parseTitle(singleProdInfo));
+        game.setPlatform(parsePlatform(singleProdInfo));
+        game.setPublisher(parsePublisher(singleProdInfo));
+        game.setCoverUrl(parseCoverUrl(element));
+        game.setPrices(SearchResultsPriceParser.parse(prodBuy));
+
+        return new GamePreview(game);
     }
 
     /**

@@ -1,6 +1,6 @@
 package test.models;
 
-import main.models.GamePreview;
+import main.models.Game;
 import main.models.price.Price;
 import main.models.price.PriceType;
 import main.models.price.Prices;
@@ -11,96 +11,96 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GamePreviewTest {
+public class GameTest {
 
-    private static GamePreview gamePreview;
+    private static Game game;
 
     @BeforeAll
     public static void createGamePreviewObject() {
-        gamePreview = new GamePreview(0);
+        game = new Game(0);
     }
 
     @Test
     public void setId() {
         int id = 234;
-        GamePreview gamePreview = new GamePreview(id);
-        assertEquals(gamePreview.getId(), id);
+        Game game = new Game(id);
+        assertEquals(game.getId(), id);
     }
 
     @Test
     public void setTitle() {
         String title = "this is the title";
-        gamePreview.setTitle(title);
-        assertEquals(title, gamePreview.getTitle());
+        game.setTitle(title);
+        assertEquals(title, game.getTitle());
     }
 
     @Test
     public void titleCantBeNull() {
-        assertNotNull(gamePreview.getTitle());
+        assertNotNull(game.getTitle());
     }
 
     @Test
     public void setPlatform() {
         String platform = "this is the platform";
-        gamePreview.setPlatform(platform);
-        assertEquals(gamePreview.getPlatform(), platform);
+        game.setPlatform(platform);
+        assertEquals(game.getPlatform(), platform);
     }
 
     @Test
     public void platformCantBeNull() {
-        assertNotNull(gamePreview.getPlatform());
+        assertNotNull(game.getPlatform());
     }
 
     @Test
     public void setPublisher() {
         String publisher = "this is a publisher";
-        gamePreview.setPublisher(publisher);
-        assertEquals(gamePreview.getPublisher(), publisher);
+        game.setPublisher(publisher);
+        assertEquals(game.getPublisher(), publisher);
     }
 
     @Test
     public void publisherCantBeNull() {
-        assertNotNull(gamePreview.getPublisher());
+        assertNotNull(game.getPublisher());
     }
 
     @Test
     public void setReleaseDate() {
         String releaseDate = "this is a releaseDate";
-        gamePreview.setReleaseDate(releaseDate);
-        assertEquals(gamePreview.getReleaseDate(), releaseDate);
+        game.setReleaseDate(releaseDate);
+        assertEquals(game.getReleaseDate(), releaseDate);
     }
 
     @Test
     public void releaseDateCantBeNull() {
-        assertNotNull(gamePreview.getReleaseDate());
+        assertNotNull(game.getReleaseDate());
     }
 
     @Test
     public void equalsIfSameId() {
         int id = 123;
-        GamePreview g1 = new GamePreview(id);
-        GamePreview g2 = new GamePreview(id);
+        Game g1 = new Game(id);
+        Game g2 = new Game(id);
         assertEquals(g1, g2);
     }
 
     @Test
     public void sameHashCodeIfSameId() {
         int id = 123;
-        GamePreview g1 = new GamePreview(id);
-        GamePreview g2 = new GamePreview(id);
+        Game g1 = new Game(id);
+        Game g2 = new Game(id);
         assertEquals(g2.hashCode(), g1.hashCode());
     }
 
     @Test
     public void setValidCoverUrl() {
         String url = "https://example.com";
-        gamePreview.setCoverUrl(url);
-        assertEquals(gamePreview.getCoverUrl(), url);
+        game.setCoverUrl(url);
+        assertEquals(game.getCoverUrl(), url);
     }
 
     @Test
     public void coverUrlCantBeNull() {
-        assertNotNull(gamePreview.getCoverUrl());
+        assertNotNull(game.getCoverUrl());
     }
 
     @Test
@@ -109,8 +109,8 @@ public class GamePreviewTest {
         Price price = new Price(new BigDecimal("9.99"), PriceType.NEW);
         expected.add(price);
 
-        gamePreview.setPrices(expected);
-        assertEquals(gamePreview.getPrices(), expected);
+        game.setPrices(expected);
+        assertEquals(game.getPrices(), expected);
     }
 
 }
