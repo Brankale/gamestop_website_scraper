@@ -2,7 +2,7 @@ package main.models;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import main.models.price.Prices;
+import main.models.price.Price;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Game {
 
     private final int id;
     private String title;
-    private Prices prices;
+    private ArrayList<Price> prices;
     private String platform;    // do not use enum because if a new console is released it must be added
     private String publisher;
     private String releaseDate;
@@ -44,7 +44,7 @@ public class Game {
      */
     public Game(int id) {
         this.id = id;
-        prices = new Prices();
+        prices = new ArrayList<>();
         gallery = new ArrayList<>();
         pegi = new ArrayList<>();
         genres = new ArrayList<>();
@@ -65,14 +65,14 @@ public class Game {
         return title;
     }
 
-    public void setPrices(@Nullable Prices prices) {
+    public void setPrices(@Nullable ArrayList<Price> prices) {
         this.prices = prices;
     }
 
     @NotNull
-    public Prices getPrices() {
+    public ArrayList<Price> getPrices() {
         if (prices == null)
-            return new Prices();
+            return new ArrayList<>();
         return prices;
     }
 

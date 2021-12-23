@@ -3,11 +3,11 @@ package test.models;
 import main.models.Game;
 import main.models.price.Price;
 import main.models.price.PriceType;
-import main.models.price.Prices;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -105,7 +105,7 @@ public class GameTest {
 
     @Test
     public void setPrices() {
-        Prices expected = new Prices();
+        ArrayList<Price> expected = new ArrayList<>();
         Price price = new Price(new BigDecimal("9.99"), PriceType.NEW);
         expected.add(price);
 

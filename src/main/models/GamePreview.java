@@ -1,12 +1,14 @@
 package main.models;
 
-import main.models.price.Prices;
+import main.models.price.Price;
+
+import java.util.ArrayList;
 
 public class GamePreview {
 
     private final int id;
     private final String title;
-    private final Prices prices;
+    private final ArrayList<Price> prices;
     private final String platform;    // do not use enum because if a new console is released it must be added
     private final String coverUrl;
 
@@ -26,7 +28,7 @@ public class GamePreview {
         return title;
     }
 
-    public Prices getPrices() {
+    public ArrayList<Price> getPrices() {
         return prices;
     }
 

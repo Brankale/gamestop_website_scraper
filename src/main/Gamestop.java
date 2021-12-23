@@ -1,11 +1,12 @@
 package main;
 
-import main.models.GamePreviews;
+import main.models.GamePreview;
 import main.parsers.search_results.SearchResultsParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Gamestop {
 
@@ -29,7 +30,7 @@ public class Gamestop {
         }
     }
 
-    public GamePreviews search(String searched) {
+    public ArrayList<GamePreview> search(String searched) {
         // TODO: throw a custom exception on IOException
         try {
             Document html = Jsoup.connect(getSearchQuery(searched)).get();
@@ -37,7 +38,7 @@ public class Gamestop {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new GamePreviews();
+        return new ArrayList<>();
     }
 
     private String getSearchQuery(String searched) {

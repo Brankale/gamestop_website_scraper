@@ -1,10 +1,11 @@
 package main.parsers.game_page;
 
 import main.models.Game;
-import main.models.price.Prices;
+import main.models.price.Price;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamePageParser {
@@ -70,7 +71,7 @@ public class GamePageParser {
         return element.getElementsByTag("span").first().text();
     }
 
-    private static Prices getPrices(Element element) {
+    private static ArrayList<Price> getPrices(Element element) {
         // TODO: to implement
         return null;
     }

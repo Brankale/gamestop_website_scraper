@@ -2,10 +2,11 @@ package main.parsers.search_results;
 
 import com.sun.istack.internal.NotNull;
 import main.models.GamePreview;
-import main.models.GamePreviews;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
 
 /**
  * Given a valid HTML representing a GameStop search
@@ -24,9 +25,9 @@ public final class SearchResultsParser {
      * @return GamePreviews
      */
     @NotNull
-    public static GamePreviews parse(@NotNull Document root) {
+    public static ArrayList<GamePreview> parse(@NotNull Document root) {
         Elements items = getItems(root);
-        GamePreviews gamePreviews = new GamePreviews();
+        ArrayList<GamePreview> gamePreviews = new ArrayList<>();
         for (Element item : items) {
             GamePreview gamePreview = SearchResultsItemParser.parse(item);
             gamePreviews.add(gamePreview);

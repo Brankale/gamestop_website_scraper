@@ -3,7 +3,6 @@ package main.parsers.search_results;
 import com.sun.istack.internal.NotNull;
 import main.models.price.Price;
 import main.models.price.PriceType;
-import main.models.price.Prices;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -21,11 +20,11 @@ public final class SearchResultsPriceParser {
      * @return the Prices of the product
      */
     @NotNull
-    public static Prices parse(@NotNull Element element) {
+    public static ArrayList<Price> parse(@NotNull Element element) {
         Elements buyXXXs = element.getElementsByAttributeValueStarting("class", "buy");
         Elements productsAvailability = element.getElementsByClass("productAvailability");
 
-        Prices prices = new Prices();
+        ArrayList<Price> prices = new ArrayList<>();
         for (int i = 0; i < buyXXXs.size(); ++i) {
             prices.add(parse(buyXXXs.get(i), productsAvailability.get(i)));
         }
