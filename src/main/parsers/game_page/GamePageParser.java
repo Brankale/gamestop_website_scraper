@@ -1,6 +1,7 @@
 package main.parsers.game_page;
 
 import main.models.Game;
+import main.models.Pegi;
 import main.models.price.Price;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -157,7 +158,7 @@ public class GamePageParser {
         return null;
     }
 
-    private static List<Game.Pegi> getPegi(Element element) {
+    private static List<Pegi> getPegi(Element element) {
         // TODO: to implement
         return null;
     }
