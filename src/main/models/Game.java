@@ -1,7 +1,6 @@
 package main.models;
 
 import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import main.models.price.Price;
 
 import java.util.ArrayList;
@@ -23,39 +22,167 @@ public class Game {
     }
 
     private final int id;
-    private String title;
-    private ArrayList<Price> prices;
-    private String platform;    // do not use enum because if a new console is released it must be added
-    private String publisher;
-    private String releaseDate;
-    private String coverUrl;
 
-    private final List<String> gallery;
-    private final List<Pegi> pegi;
+    // optional attributes
+    private final String title;
+    private final String publisher;
+    private final String platform;
+    private final String coverUrl;
+    private final List<Price> prices;
+
+    private final String shippingDetails;
     private final List<String> genres;
-    private String officialSite;
-    // private List<Pair<String,Integer>> productCode;  // TODO: is it really useful?
-    private String players;
-    private boolean validForPromotions;
-    private String description;                         // TODO: should be HTML?
+    private final String officialSite;
+    private final String players;
+    private final String release;
+    private final List<Pegi> pegi;
+    private final boolean validForPromotions;
 
-    /**
-     * @param id of the game
-     */
-    public Game(int id) {
-        this.id = id;
-        prices = new ArrayList<>();
-        gallery = new ArrayList<>();
-        pegi = new ArrayList<>();
-        genres = new ArrayList<>();
+    // TODO: add bonus/promos
+    private final String description;
+    private final List<String> media;
+
+    public static class Builder {
+
+        private final int id;
+
+        // optional attributes
+        private String title;
+        private String publisher;
+        private String platform;
+        private String coverUrl;
+        private List<Price> prices;
+
+        private String shippingDetails;
+        private List<String> genres;
+        private String officialSite;
+        private String players;
+        private String release;
+        private List<Pegi> pegi;
+        private boolean validForPromotions;
+
+        // TODO: add bonus/promos
+        private String description;
+        private List<String> media;
+
+        public Builder(int id) {
+            this.id = id;
+        }
+
+        public Game build() {
+            return new Game(this);
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setPublisher(String publisher) {
+            this.publisher = publisher;
+            return this;
+        }
+
+        public Builder setPlatform(String platform) {
+            this.platform = platform;
+            return this;
+        }
+
+        public Builder setCoverUrl(String coverUrl) {
+            this.coverUrl = coverUrl;
+            return this;
+        }
+
+        public Builder addPrices(List<Price> prices) {
+            for (Price price : prices)
+                addPrice(price);
+            return this;
+        }
+
+        public Builder addPrice(Price price) {
+            if (prices == null)
+                prices = new ArrayList<>();
+            prices.add(price);
+            return this;
+        }
+
+        public Builder setShippingDetails(String shippingDetails) {
+            this.shippingDetails = shippingDetails;
+            return this;
+        }
+
+        public Builder addGenre(String genre) {
+            if (genres == null)
+                genres = new ArrayList<>();
+            genres.add(genre);
+            return this;
+        }
+
+        public Builder setOfficialSite(String officialSite) {
+            this.officialSite = officialSite;
+            return this;
+        }
+
+        public Builder setPlayers(String players) {
+            this.players = players;
+            return this;
+        }
+
+        public Builder setRelease(String release) {
+            this.release = release;
+            return this;
+        }
+
+        public Builder addPegi(Pegi pegi) {
+            if (this.pegi == null)
+                this.pegi = new ArrayList<>();
+            this.pegi.add(pegi);
+            return this;
+        }
+
+        public Builder isValidForPromotions(boolean validForPromotions) {
+            this.validForPromotions = validForPromotions;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder addMedia(String media) {
+            if (this.media == null)
+                this.media = new ArrayList<>();
+            this.media.add(media);
+            return this;
+        }
+
+    }
+
+    private Game(Builder builder) {
+        id = builder.id;
+
+        title = builder.title;
+        publisher = builder.publisher;
+        platform = builder.platform;
+        coverUrl = builder.coverUrl;
+        prices = builder.prices;
+
+        shippingDetails = builder.shippingDetails;
+        genres = builder.genres;
+        officialSite = builder.officialSite;
+        players = builder.players;
+        release = builder.release;
+        pegi = builder.pegi;
+        validForPromotions = builder.validForPromotions;
+
+        // TODO: add bonus/promos
+        description = builder.description;
+        media = builder.media;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setTitle(@Nullable String title) {
-        this.title = title;
     }
 
     @NotNull
@@ -65,32 +192,6 @@ public class Game {
         return title;
     }
 
-    public void setPrices(@Nullable ArrayList<Price> prices) {
-        this.prices = prices;
-    }
-
-    @NotNull
-    public ArrayList<Price> getPrices() {
-        if (prices == null)
-            return new ArrayList<>();
-        return prices;
-    }
-
-    public void setPlatform(@Nullable String platform) {
-        this.platform = platform;
-    }
-
-    @NotNull
-    public String getPlatform() {
-        if (platform == null)
-            return "";
-        return platform;
-    }
-
-    public void setPublisher(@Nullable String publisher) {
-        this.publisher = publisher;
-    }
-
     @NotNull
     public String getPublisher() {
         if (publisher == null)
@@ -98,19 +199,11 @@ public class Game {
         return publisher;
     }
 
-    public void setReleaseDate(@Nullable String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     @NotNull
-    public String getReleaseDate() {
-        if (releaseDate == null)
+    public String getPlatform() {
+        if (platform == null)
             return "";
-        return releaseDate;
-    }
-
-    public void setCoverUrl(@Nullable String url) {
-        coverUrl = url;
+        return platform;
     }
 
     @NotNull
@@ -121,49 +214,20 @@ public class Game {
     }
 
     @NotNull
-    public List<String> getGallery() {
-        return gallery;
-    }
-    
-    public void addGalleryImage(@Nullable String url) {
-        if (url != null && !url.isEmpty())
-            gallery.add(url);
-    }
-
-    public void addGalleryImages(@NotNull List<String> urls) {
-        for (String url : urls)
-            addGalleryImage(url);
+    public List<Price> getPrices() {
+        return prices;
     }
 
     @NotNull
-    public List<Pegi> getPegi() {
-        return pegi;
-    }
-
-    public void addPegi(@NotNull Pegi pegi) {
-        if (pegi != null)
-            this.pegi.add(pegi);
-    }
-
-    public void addPegi(@NotNull List<Pegi> pegis) {
-        for (Pegi pegi : pegis) {
-            addPegi(pegi);
-        }
+    public String getShippingDetails() {
+        if (shippingDetails == null)
+            return "";
+        return shippingDetails;
     }
 
     @NotNull
     public List<String> getGenres() {
         return genres;
-    }
-
-    public void addGenre(@Nullable String genre) {
-        if (genre != null && !genre.isEmpty())
-            genres.add(genre);
-    }
-
-    public void addGenres(@NotNull List<String> genres) {
-        for (String genre : genres)
-            addGenre(genre);
     }
 
     @NotNull
@@ -173,10 +237,6 @@ public class Game {
         return officialSite;
     }
 
-    public void setOfficialSite(@Nullable String officialSite) {
-        this.officialSite = officialSite;
-    }
-
     @NotNull
     public String getPlayers() {
         if (players == null)
@@ -184,16 +244,20 @@ public class Game {
         return players;
     }
 
-    public void setPlayers(@Nullable String players) {
-        this.players = players;
+    @NotNull
+    public String getRelease() {
+        if (release == null)
+            return "";
+        return release;
+    }
+
+    @NotNull
+    public List<Pegi> getPegi() {
+        return pegi;
     }
 
     public boolean isValidForPromotions() {
         return validForPromotions;
-    }
-
-    public void setValidForPromotions(boolean validForPromotions) {
-        this.validForPromotions = validForPromotions;
     }
 
     @NotNull
@@ -203,8 +267,9 @@ public class Game {
         return description;
     }
 
-    public void setDescription(@Nullable String description) {
-        this.description = description;
+    @NotNull
+    public List<String> getMedia() {
+        return media;
     }
 
     @Override

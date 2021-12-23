@@ -34,12 +34,13 @@ public final class SearchResultsItemParser {
         Element singleProdInfo = element.getElementsByClass("singleProdInfo").first();
         Element prodBuy = element.getElementsByClass("prodBuy").first();
 
-        Game game = new Game(parseId(singleProdInfo));
-        game.setTitle(parseTitle(singleProdInfo));
-        game.setPlatform(parsePlatform(singleProdInfo));
-        game.setPublisher(parsePublisher(singleProdInfo));
-        game.setCoverUrl(parseCoverUrl(element));
-        game.setPrices(SearchResultsPriceParser.parse(prodBuy));
+        Game game = new Game.Builder(parseId(singleProdInfo))
+                .setTitle(parseTitle(singleProdInfo))
+                .setPlatform(parsePlatform(singleProdInfo))
+                .setPublisher(parsePublisher(singleProdInfo))
+                .setCoverUrl(parseCoverUrl(element))
+                .addPrices(SearchResultsPriceParser.parse(prodBuy))
+                .build();
 
         return new GamePreview(game);
     }

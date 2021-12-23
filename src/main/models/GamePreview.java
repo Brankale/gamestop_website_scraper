@@ -2,13 +2,13 @@ package main.models;
 
 import main.models.price.Price;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GamePreview {
 
     private final int id;
     private final String title;
-    private final ArrayList<Price> prices;
+    private final List<Price> prices;
     private final String platform;    // do not use enum because if a new console is released it must be added
     private final String coverUrl;
 
@@ -28,7 +28,7 @@ public class GamePreview {
         return title;
     }
 
-    public ArrayList<Price> getPrices() {
+    public List<Price> getPrices() {
         return prices;
     }
 

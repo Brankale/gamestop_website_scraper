@@ -15,17 +15,15 @@ public class GamePageParser {
     }
 
     public static Game getGame(Document gamePage) {
-        Game game = new Game(getId(gamePage));
-
         Element prodTitle = gamePage.getElementsByClass("prodTitle").first();
         Element prodDesc = gamePage.getElementById("prodDesc");
 
-        game.setTitle(getTitle(prodTitle));
-        game.setPlatform(getPlatform(prodTitle));
-        game.setPublisher(getPublisher(prodTitle));
-        game.setDescription(getDescription(prodDesc));
-
-        return game;
+        return new Game.Builder(getId(gamePage))
+                .setTitle(getTitle(prodTitle))
+                .setPlatform(getPlatform(prodTitle))
+                .setPublisher(getPublisher(prodTitle))
+                .setDescription(getDescription(prodDesc))
+                .build();
     }
 
     /**
