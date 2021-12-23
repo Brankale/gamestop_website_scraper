@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GamePageParserTest {
 
-    private static final String DIR = "src/test/parsers/game_page/htmls/";
+    private static final String DIR = "src/test/parsers/game_page/html/";
 
     private static final File EXAMPLE = new File(DIR + "example.html");
 

@@ -1,4 +1,4 @@
-package test.parsers.search_results;
+package test.parsers.search_results_page.item_parser;
 
 import main.models.GamePreview;
 import main.parsers.search_results.SearchResultsItemParser;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsItemParserTest {
 
-    private static final String DIR = "src/test/parsers/search_results/htmls/items/";
+    private static final String DIR = "src/test/parsers/search_results_page/item_parser/html/";
     private static final File EXAMPLE_ITEM = new File(DIR + "example_item.html");
 
     private static GamePreview gamePreview;

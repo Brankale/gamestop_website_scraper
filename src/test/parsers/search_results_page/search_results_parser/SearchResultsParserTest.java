@@ -1,4 +1,4 @@
-package test.parsers.search_results;
+package test.parsers.search_results_page.search_results_parser;
 
 import main.models.GamePreview;
 import main.parsers.search_results.SearchResultsParser;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsParserTest {
 
-    private static final String DIR = "src/test/parsers/search_results/htmls/";
+    private static final String DIR = "src/test/parsers/search_results_page/search_results_parser/html/";
 
     private static final File FILE_SEARCH_RESULTS = new File(DIR + "search_results.html");
     private static final File FILE_INVALID_HTML = new File(DIR + "invalid_html.html");

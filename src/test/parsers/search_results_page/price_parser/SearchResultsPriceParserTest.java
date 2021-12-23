@@ -1,4 +1,4 @@
-package test.parsers.search_results;
+package test.parsers.search_results_page.price_parser;
 
 import main.models.price.Price;
 import main.models.price.PriceType;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SearchResultsPriceParserTest {
 
-    private static final String DIR = "src/test/parsers/search_results/htmls/prices/";
+    private static final String DIR = "src/test/parsers/search_results_page/price_parser/html/";
 
     private static final File FILE_PRICE = new File(DIR + "price_new_used_digital.html");
     private static final File FILE_PRICE_PREORDER = new File(DIR + "price_preorder.html");
