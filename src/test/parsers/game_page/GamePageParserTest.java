@@ -27,28 +27,28 @@ class GamePageParserTest {
 
     @Test
     public void getId() {
-        assertEquals(126640, game.getId());
+        assertEquals(135607, game.getId());
     }
 
     @Test
     public void getTitle() {
-        assertEquals("Cyberpunk 2077 - Day One Edition", game.getTitle());
+        assertEquals("Halo Infinite (Compatibile con Xbox Series X|S)", game.getTitle());
     }
 
     @Test
     public void getPlatform() {
-        assertEquals("PS4", game.getPlatform());
+        assertEquals("XboxONE", game.getPlatform());
     }
 
     @Test
     public void getPublisher() {
-        assertEquals("CD Projekt", game.getPublisher());
+        assertEquals("Microsoft", game.getPublisher());
     }
 
     @Test
     public void getDescription() {
-        assertTrue(game.getDescription().startsWith("Cyberpunk 2077 è un'avventura a mondo aperto ambientata a Night City"));
-        assertTrue(game.getDescription().endsWith("Sfondi per desktop e dispositivi mobile"));
+        assertTrue(game.getDescription().startsWith("Il ritorno di Master Chief in Halo Infinite"));
+        assertTrue(game.getDescription().endsWith("Nuovo: 305865 Usato: 305866"));
     }
 
 }
