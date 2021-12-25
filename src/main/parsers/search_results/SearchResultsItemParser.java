@@ -15,80 +15,56 @@ public final class SearchResultsItemParser {
      * Parses an item in a search results html page and returns
      * a GamePreview representing the item
      *
-     * @param element with root tag <div id="product_x" class="singleProduct">.
-     *                (product_x: x is a number)
+     * @param element with root tag <div id="product_x" class="searchProductTile searchTileLayout">     *
      * @return a GamePreview object
      */
     public static GamePreview parse(@NotNull final Element element) {
-        return initGamePreview(element);
-    }
+        Element mobileSearchProductInfo = element.getElementsByClass("mobileSearchProductInfo").first();
+        Element searchProductImage = element.getElementsByClass("searchProductImage").first();
+//        Element prodBuy = element.getElementsByClass("prodBuy").first();
 
-    /**
-     * HTML can change so instead of throwing different RuntimeExceptions
-     * for every information parsed, I just throw Exception
-     *
-     * @param element with root tag <div class="singleProduct">
-     * @return a GamePreview object
-     */
-    private static GamePreview initGamePreview(@NotNull final Element element) {
-        Element singleProdInfo = element.getElementsByClass("singleProdInfo").first();
-        Element prodBuy = element.getElementsByClass("prodBuy").first();
-
-        Game game = new Game.Builder(parseId(singleProdInfo))
-                .setTitle(parseTitle(singleProdInfo))
-                .setPlatform(parsePlatform(singleProdInfo))
-                .setPublisher(parsePublisher(singleProdInfo))
-                .setCoverUrl(parseCoverUrl(element))
-                .addPrices(SearchResultsPriceParser.parse(prodBuy))
+        Game game = new Game.Builder(parseId(mobileSearchProductInfo))
+                .setTitle(parseTitle(mobileSearchProductInfo))
+                .setPlatform(parsePlatform(mobileSearchProductInfo))
+                .setCoverUrl(parseCoverUrl(searchProductImage))
+//                .addPrices(SearchResultsPriceParser.parse(prodBuy))
                 .build();
 
         return new GamePreview(game);
     }
 
     /**
-     * @param element with root tag <div class="singleProdInfo">
+     * @param element with root tag <div class="mobileSearchProductInfo">
      * @return the id of the game
      */
     private static int parseId(@NotNull final Element element) {
-        Element h3 = element.getElementsByTag("h3").first();
-        String id = h3.child(0).attr("href").split("/")[3];
+        Element a = element.getElementsByTag("a").first();
+        String id = a.attr("href").split("/")[3];
         return Integer.parseInt(id);
     }
 
     /**
-     * @param element with root tag <div class="singleProdInfo">
+     * @param element with root tag <div class="mobileSearchProductInfo">
      * @return the title of the game
      */
     private static String parseTitle(@NotNull final Element element) {
-        Element h3 = element.getElementsByTag("h3").first();
-        return h3.child(0).text();
+        return element.getElementsByTag("h3").first().text().trim();
     }
 
     /**
-     * @param element with root tag <div class="singleProdInfo">
+     * @param element with root tag <div class="mobileSearchProductInfo">
      * @return the platform of the game
      */
     private static String parsePlatform(@NotNull final Element element) {
-        Element h4 = element.getElementsByTag("h4").first();
-        return h4.textNodes().get(0).text().trim();
+        return element.getElementsByTag("h4").first().text().trim();
     }
 
     /**
-     * @param element with root tag <div class="singleProdInfo">
-     * @return the publisher of the game
-     */
-    private static String parsePublisher(@NotNull final Element element) {
-        Element h4 = element.getElementsByTag("h4").first();
-        return h4.getElementsByTag("strong").text();
-    }
-
-    /**
-     * @param element with root tag <div class="singleProdInfo">
+     * @param element with root tag <div class="searchProductImage">
      * @return the cover url of the game
      */
     private static String parseCoverUrl(@NotNull final Element element) {
-        Element a = element.getElementsByClass("prodImg").first();
-        return a.child(0).attr("data-llsrc");
+        return element.getElementsByTag("img").attr("data-llsrc").trim();
     }
 
 }

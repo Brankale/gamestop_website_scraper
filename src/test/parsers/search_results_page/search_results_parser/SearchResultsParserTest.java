@@ -26,16 +26,7 @@ class SearchResultsParserTest {
         Element searchResults = Utils.createElement(FILE_SEARCH_RESULTS);
         ArrayList<GamePreview> gamePreviews = SearchResultsParser.parse(searchResults.ownerDocument());
 
-        assertEquals("Persona® 5 Strikers", gamePreviews.get(0).getTitle());
-        assertEquals("Persona® 5 Strikers", gamePreviews.get(1).getTitle());
-        assertEquals("Persona 5 - Steelbook Launch Edition", gamePreviews.get(2).getTitle());
-        assertEquals("Funko Pop! - Queen (PlayStation) Esclusiva GameStop", gamePreviews.get(3).getTitle());
-        assertEquals("Persona 5 Royal - Phantom Thieves Edition", gamePreviews.get(4).getTitle());
-        assertEquals("Resident Evil 6 HD", gamePreviews.get(5).getTitle());
-        assertEquals("Resident Evil 5 HD", gamePreviews.get(6).getTitle());
-        assertEquals("Resident Evil 5 HD", gamePreviews.get(7).getTitle());
-        assertEquals("Resident Evil 4 HD", gamePreviews.get(8).getTitle());
-        assertEquals("Persona 5 Royal", gamePreviews.get(9).getTitle());
+        assertEquals("Demon's Souls", gamePreviews.get(0).getTitle());
     }
 
     @Test

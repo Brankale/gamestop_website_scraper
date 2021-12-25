@@ -24,25 +24,25 @@ class SearchResultsItemParserTest {
 
     @Test
     public void parseId() {
-        int id = 133354;
+        int id = 131445;
         assertEquals(id, gamePreview.getId());
     }
 
     @Test
     public void parseTitle() {
-        String title = "Persona® 5 Strikers";
+        String title = "Demon's Souls";
         assertEquals(title, gamePreview.getTitle());
     }
 
     @Test
     public void parsePlatform() {
-        String platform = "Switch";
+        String platform = "PS5";
         assertEquals(platform, gamePreview.getPlatform());
     }
 
     @Test
     public void parseCoverUrl() {
-        String coverUrl = "https://static-it.gamestop.it/images/products/302017/2med.jpg";
+        String coverUrl = "https://static-it.gamestop.it/images/products/298910/2med.jpg";
         assertEquals(coverUrl, gamePreview.getCoverUrl());
     }
 

@@ -47,7 +47,7 @@ public final class SearchResultsParser {
         if (productsList == null) {
             throw new InvalidHtmlException(root);
         }
-        return productsList.getElementsByClass("singleProduct");
+        return productsList.getElementsByClass("searchProductTile searchTileLayout");
     }
 
     public static class InvalidHtmlException extends RuntimeException {
