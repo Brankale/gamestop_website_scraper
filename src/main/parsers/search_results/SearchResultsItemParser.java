@@ -15,19 +15,19 @@ public final class SearchResultsItemParser {
      * Parses an item in a search results html page and returns
      * a GamePreview representing the item
      *
-     * @param element with root tag <div id="product_x" class="searchProductTile searchTileLayout">     *
+     * @param element with root tag <div id="product_x" class="searchProductTile searchTileLayout">
      * @return a GamePreview object
      */
     public static GamePreview parse(@NotNull final Element element) {
         Element mobileSearchProductInfo = element.getElementsByClass("mobileSearchProductInfo").first();
         Element searchProductImage = element.getElementsByClass("searchProductImage").first();
-//        Element prodBuy = element.getElementsByClass("prodBuy").first();
+        Element searchTilePriceDesktop = element.getElementsByClass("searchTilePriceDesktop").first();
 
         Game game = new Game.Builder(parseId(mobileSearchProductInfo))
                 .setTitle(parseTitle(mobileSearchProductInfo))
                 .setPlatform(parsePlatform(mobileSearchProductInfo))
                 .setCoverUrl(parseCoverUrl(searchProductImage))
-//                .addPrices(SearchResultsPriceParser.parse(prodBuy))
+                .addPrices(SearchResultsPriceParser.parse(searchTilePriceDesktop))
                 .build();
 
         return new GamePreview(game);
