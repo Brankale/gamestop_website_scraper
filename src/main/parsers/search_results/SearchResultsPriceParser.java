@@ -38,16 +38,16 @@ public final class SearchResultsPriceParser {
      */
     @NotNull
     private static Price parse(@NotNull Element buyXXX, @NotNull Element productAvailability) {
-        Price price = new Price(parsePrice(buyXXX), parsePriceType(buyXXX));
-        price.addOldPrices(parseOldPrices(buyXXX));
-        price.setAvailable(parseAvailability(buyXXX));
-        price.setHomeDeliveryAvailability(parseHomeDeliveryAvailability(
-                productAvailability.getElementsByClass("homeDeliveryAvailable").first()
-        ));
-        price.setCollectibleInStore(parseCollectibleInStore(
-                productAvailability.getElementsByClass("clickAndCollectAvailable").first()
-        ));
-        return price;
+        return new Price.Builder(parsePrice(buyXXX), parsePriceType(buyXXX))
+                .setDiscountedPrice(parseOldPrices(buyXXX).get(0))
+                .setAvailability(parseAvailability(buyXXX))
+                .setHomeDelivery(parseHomeDeliveryAvailability(
+                        productAvailability.getElementsByClass("homeDeliveryAvailable").first()
+                ))
+                .setCollectibleInStore(parseCollectibleInStore(
+                        productAvailability.getElementsByClass("clickAndCollectAvailable").first()
+                ))
+                .build();
     }
 
     /**

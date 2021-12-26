@@ -1,4 +1,4 @@
-package main.models.price;
+package main.models;
 
 public class Promo {
 

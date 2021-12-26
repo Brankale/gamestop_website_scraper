@@ -1,84 +1,89 @@
 package main.models.price;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Price {
 
     private final BigDecimal price;
-    private final List<BigDecimal> oldPrices;
     private final PriceType type;
-    private boolean available;
-    private boolean homeDelivery;
-    private boolean collectInStore;
-    private Promo promo;
+    private final BigDecimal discountedPrice;
+    private final boolean available;
+    private final boolean homeDelivery;
+    private final boolean collectibleInStore;
 
-    public Price(@NotNull BigDecimal price, @NotNull PriceType type) {
-        this.price = price;
-        this.type = type;
-        this.oldPrices = new ArrayList<>();
+    public static class Builder {
+
+        private final BigDecimal price;
+        private final PriceType type;
+
+        // optionals
+        private BigDecimal discountedPrice;
+        private boolean available;
+        private boolean homeDelivery;
+        private boolean collectibleInStore;
+
+        public Builder(BigDecimal price, PriceType type) {
+            this.price = price;
+            this.type = type;
+        }
+
+        public Builder setDiscountedPrice(BigDecimal discountedPrice) {
+            this.discountedPrice = discountedPrice;
+            return this;
+        }
+
+        public Builder setAvailability(boolean available) {
+            this.available = available;
+            return this;
+        }
+
+        public Builder setHomeDelivery(boolean homeDelivery) {
+            this.homeDelivery = homeDelivery;
+            return this;
+        }
+
+        public Builder setCollectibleInStore(boolean collectibleInStore) {
+            this.collectibleInStore = collectibleInStore;
+            return this;
+        }
+
+        public Price build() {
+            return new Price(this);
+        }
+
     }
 
-    @NotNull
+    private Price(Builder builder) {
+        this.price = builder.price;
+        this.type = builder.type;
+        this.discountedPrice = builder.discountedPrice;
+        this.available = builder.available;
+        this.homeDelivery = builder.homeDelivery;
+        this.collectibleInStore = builder.collectibleInStore;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void addOldPrice(@NotNull BigDecimal oldPrice) {
-        oldPrices.add(oldPrice);
-    }
-
-    public void addOldPrices(@NotNull List<BigDecimal> oldPrices) {
-        for (BigDecimal oldPrice : oldPrices) {
-            addOldPrice(oldPrice);
-        }
-    }
-
-    @NotNull
-    public List<BigDecimal> getOldPrices() {
-        return oldPrices;
-    }
-
-    @NotNull
     public PriceType getType() {
         return type;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public BigDecimal getDiscountedPrice() {
+        return discountedPrice;
     }
 
     public boolean isAvailable() {
         return available;
     }
 
-    public void setHomeDeliveryAvailability(boolean available) {
-        homeDelivery = available;
-    }
-
-    public boolean isHomeDeliveryAvailable() {
+    public boolean hasHomeDelivery() {
         return homeDelivery;
     }
 
-    public void setCollectibleInStore(boolean canCollectInStore) {
-        collectInStore = canCollectInStore;
-    }
-
     public boolean isCollectibleInStore() {
-        return collectInStore;
-    }
-
-    @Nullable
-    public Promo getPromo() {
-        return promo;
-    }
-
-    public void setPromo(Promo promo) {
-        this.promo = promo;
+        return collectibleInStore;
     }
 
 }

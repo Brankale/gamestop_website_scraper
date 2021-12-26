@@ -106,7 +106,7 @@ public class GameTest {
     @Test
     public void setPrices() {
         ArrayList<Price> expected = new ArrayList<>();
-        Price price = new Price(new BigDecimal("9.99"), PriceType.NEW);
+        Price price = new Price.Builder(new BigDecimal("9.99"), PriceType.NEW).build();
         expected.add(price);
 
         Game game = new Game.Builder(0).addPrices(expected).build();
