@@ -1,5 +1,7 @@
 package main.models.price;
 
+import com.sun.istack.internal.Nullable;
+
 import java.math.BigDecimal;
 
 public class Price {
@@ -27,7 +29,7 @@ public class Price {
             this.type = type;
         }
 
-        public Builder setDiscountedPrice(BigDecimal discountedPrice) {
+        public Builder setDiscountedPrice(@Nullable BigDecimal discountedPrice) {
             this.discountedPrice = discountedPrice;
             return this;
         }

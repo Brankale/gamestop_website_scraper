@@ -4,7 +4,6 @@ import com.sun.istack.internal.NotNull;
 import main.models.price.Price;
 import main.models.price.PriceType;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,165 +15,81 @@ public final class SearchResultsPriceParser {
     }
 
     /**
-     * @param element <div class="prodBuy">
+     * @param element <div class="searchTilePriceDesktop">
      * @return the Prices of the product
      */
     @NotNull
     public static ArrayList<Price> parse(@NotNull Element element) {
-        Elements buyXXXs = element.getElementsByAttributeValueStarting("class", "buy");
-        Elements productsAvailability = element.getElementsByClass("productAvailability");
-
         ArrayList<Price> prices = new ArrayList<>();
-        for (int i = 0; i < buyXXXs.size(); ++i) {
-            prices.add(parse(buyXXXs.get(i), productsAvailability.get(i)));
+        for (int i = 0; i < PriceType.values().length; ++i) {
+            Price price = parse(element, PriceType.values()[i]);
+            if (price != null)
+                prices.add(price);
         }
         return prices;
     }
 
-    /**
-     * @param buyXXX <p class="buyXXX"> tag
-     * @param productAvailability <div class="productAvailability"> tag
-     * @return the Price of the product
-     */
-    @NotNull
-    private static Price parse(@NotNull Element buyXXX, @NotNull Element productAvailability) {
-        return new Price.Builder(parsePrice(buyXXX), parsePriceType(buyXXX))
-                .setDiscountedPrice(parseOldPrices(buyXXX).get(0))
-                .setAvailability(parseAvailability(buyXXX))
-                .setHomeDelivery(parseHomeDeliveryAvailability(
-                        productAvailability.getElementsByClass("homeDeliveryAvailable").first()
-                ))
-                .setCollectibleInStore(parseCollectibleInStore(
-                        productAvailability.getElementsByClass("clickAndCollectAvailable").first()
-                ))
-                .build();
-    }
+    private static Price parse(@NotNull Element element, PriceType priceType) {
+        BigDecimal price = null;
+        BigDecimal discountedPrice = null;
 
-    /**
-     * @param element <p class="buyXXX"> tag
-     * @return the price
-     */
-    @NotNull
-    private static BigDecimal parsePrice(@NotNull Element element) {
-        // em tags are present only if the game is discounted
-        Elements em = element.getElementsByTag("em");
-        if (em.isEmpty()) {
-            Element tmp = element.getElementsByTag("span").first();
-            tmp.child(0).remove();  // remove <strong></strong>
-            return parsePriceString(tmp.text());
-        } else {
-            return parsePriceString(em.first().text());
-        }
-    }
-
-    /**
-     * @param element <p class="buyXXX"> tag
-     * @return an array with old prices
-     */
-    @NotNull
-    private static ArrayList<BigDecimal> parseOldPrices(@NotNull Element element) {
-        Elements em = element.getElementsByTag("em");
-        if (!em.isEmpty()) {
-            // em.size() = current price + # old prices
-            ArrayList<BigDecimal> oldPrices = new ArrayList<>(em.size() - 2);
-            for (int i = 1; i < em.size(); ++i) {
-                oldPrices.add(parsePriceString(em.get(i).text()));
-            }
-            return oldPrices;
-        }
-        return new ArrayList<>();
-    }
-
-    /**
-     * Accepted format: "xxx,xx€" where 'x' is a digit.
-     * There can be any currency.
-     * @param price string with the price
-     * @return a BigDecimal representing the price
-     */
-    @NotNull
-    private static BigDecimal parsePriceString(@NotNull String price) {
-        // TODO: xxx.xx€ is the format of other currencies.
-        // TODO: x.xxx,xx€ is a special case but it's extremely rare. Find an HTML example.
-
-        StringBuilder parsable = new StringBuilder();
-        char currentChar;
-        for (int i = 0; i < price.length() - 1; ++i) {  // length - 1 skips the currency
-            currentChar = price.charAt(i);
-            if (currentChar == ',') {
-                parsable.append('.');                   // replace ',' with '.'
-            } else {
-                parsable.append(currentChar);
-            }
+        switch (priceType) {
+            case NEW:
+                price = parsePrice(element, "price-new");
+                discountedPrice = parseDiscountedPrice(element, "discounted-new");
+                break;
+            case USED:
+                price = parsePrice(element, "price-used");
+                discountedPrice = parseDiscountedPrice(element, "discounted-used");
+                break;
+            case PREORDER:
+                price = parsePrice(element, "price-presell");
+                // TODO: don't know if discounted-presell exists
+                discountedPrice = parseDiscountedPrice(element, "discounted-presell");
+                break;
+            case DIGITAL:
+                price = parsePrice(element, "price-dlc");
+                // TODO: don't know if discounted-dlc exists
+                discountedPrice = parseDiscountedPrice(element, "discounted-dlc");
+                break;
         }
 
-        return new BigDecimal(parsable.toString());
-    }
-
-    /**
-     * @param element <p class="buyXXX"> tag
-     * @return the price type
-     *
-     * @throws UnknownPriceTypeException if the price type is unknown
-     */
-    @NotNull
-    private static PriceType parsePriceType(@NotNull Element element) {
-        switch (element.className()) {
-            case "buyNew": return PriceType.NEW;
-            case "buyUsed": return PriceType.USED;
-            case "buyPresell": return PriceType.PREORDER;
-            case "buyDLC": return PriceType.DIGITAL;
-            default: throw new UnknownPriceTypeException(element.className());
-        }
-    }
-
-    /**
-     * @param element <p class="buyXXX"> tag
-     * @return the availability of the price type
-     */
-    private static boolean parseAvailability(@NotNull Element element) {
-        // if you can buy the product:
-        //   - class "megaButton buyTier3 cartAddNoRadio" (NEW, USED prices)
-        //   - class "megaButton cartAddNoRadio"          (PREORDER prices)
-        // if you can't buy the product:
-        //   - class "megaButton buyTier3 buyDisabled"    (NEW, USED prices)
-        //   - class "megaButton buyDisabled"             (PREORDER prices)
-
-        Element a = element.getElementsByTag("a").first();
-        return a.className().equals("megaButton buyTier3 cartAddNoRadio") ||
-                a.className().equals("megaButton cartAddNoRadio");
-    }
-
-    /**
-     * @param element <span class="homeDeliveryAvailable"> tag
-     * @return the availability of home delivery
-     */
-    private static boolean parseHomeDeliveryAvailability(@NotNull Element element) {
-        // deliveryUnavailable.png if unavailable
-        return element.getElementsByTag("img").attr("src")
-                .equals("/Content/Images/deliveryAvailable.png");
-    }
-
-    /**
-     * @param element <span class="clickAndCollectAvailable"> tag
-     * @return the availability of "collect in store"
-     */
-    private static boolean parseCollectibleInStore(@NotNull Element element) {
-        // deliveryUnavailable.png if unavailable
-        return element.getElementsByTag("img").attr("src")
-                .equals("/Content/Images/deliveryAvailable.png");
-    }
-
-    public static class UnknownPriceTypeException extends RuntimeException {
-        private final String unknownPriceType;
-
-        public UnknownPriceTypeException(String unknownPriceType) {
-            this.unknownPriceType = unknownPriceType;
+        if (price != null) {
+            return new Price.Builder(price, priceType)
+                    .setDiscountedPrice(discountedPrice)
+                    .build();
         }
 
-        @Override
-        public String toString() {
-            return "Given price type: " + unknownPriceType;
-        }
+        return null;
+    }
+
+    private static BigDecimal parsePrice(@NotNull Element element, @NotNull String divClassName) {
+        Element div = element.getElementsByClass(divClassName).first();
+        if (div == null)
+            return null;
+        return parsePriceString(div.text());
+    }
+
+    private static BigDecimal parsePriceString(@NotNull String priceString) {
+        priceString = priceString.substring(priceString.indexOf("-") + 1)
+                .replace("€", "")
+                .replace(",", ".")
+                .trim();
+        return new BigDecimal(priceString);
+    }
+
+    private static BigDecimal parseDiscountedPrice(@NotNull Element element, @NotNull String divClassName) {
+        Element div = element.getElementsByClass(divClassName).first();
+        if (div == null)
+            return null;
+        return parseDiscountedPriceString(div.text());
+    }
+
+    private static BigDecimal parseDiscountedPriceString(@NotNull String discountedPriceString) {
+        discountedPriceString = discountedPriceString.replace("€", "")
+                .replace(",", ".")
+                .trim();
+        return new BigDecimal(discountedPriceString);
     }
 
 }

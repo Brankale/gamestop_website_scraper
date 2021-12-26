@@ -2,81 +2,86 @@ package test.models;
 
 import main.models.price.Price;
 import main.models.price.PriceType;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PriceTest {
 
-    private static Price price;
-
-    @BeforeAll
-    private static void createPriceObject() {
-        BigDecimal _price = new BigDecimal("9.99");
-        PriceType type = PriceType.NEW;
-        price = new Price(_price, type);
-    }
+    private static final BigDecimal _price = new BigDecimal("9.99");
+    private static final PriceType _type = PriceType.NEW;
 
     @Test
     public void getPrice() {
-        BigDecimal _price = new BigDecimal("9.99");
-        PriceType type = PriceType.NEW;
-        Price price = new Price(_price, type);
+        Price price = new Price.Builder(_price, _type).build();
         assertEquals(price.getPrice(), _price);
     }
 
     @Test
     public void setAvailable() {
-        price.setAvailable(true);
+        Price price = new Price.Builder(_price, _type)
+                .setAvailability(true)
+                .build();
         assertTrue(price.isAvailable());
-        price.setAvailable(false);
+
+
+        price = new Price.Builder(_price, _type)
+                .setAvailability(false)
+                .build();
         assertFalse(price.isAvailable());
     }
 
     @Test
     public void setHomeDelivery() {
-        price.setHomeDeliveryAvailability(true);
-        assertTrue(price.isHomeDeliveryAvailable());
-        price.setHomeDeliveryAvailability(false);
-        assertFalse(price.isHomeDeliveryAvailable());
+        Price price = new Price.Builder(_price, _type)
+                .setHomeDelivery(true)
+                .build();
+        assertTrue(price.hasHomeDelivery());
+
+        price = new Price.Builder(_price, _type)
+                .setHomeDelivery(false)
+                .build();
+        assertFalse(price.hasHomeDelivery());
     }
 
     @Test
     public void setCanCollectInStore() {
-        price.setCollectibleInStore(true);
+        Price price = new Price.Builder(_price, _type)
+                .setCollectibleInStore(true)
+                .build();
         assertTrue(price.isCollectibleInStore());
-        price.setCollectibleInStore(false);
+
+        price = new Price.Builder(_price, _type)
+                .setCollectibleInStore(false)
+                .build();
         assertFalse(price.isCollectibleInStore());
     }
 
     @Test
-    public void oldPricesCantBeNull() {
-        assertNotNull(price.getOldPrices());
-    }
-
-    @Test
     public void addOldPrice() {
-        List<BigDecimal> test = new ArrayList<>();
-        test.add(BigDecimal.valueOf(10));
-        price.addOldPrice(BigDecimal.valueOf(10));
-        assertEquals(price.getOldPrices(), test);
+        Price price = new Price.Builder(_price, PriceType.NEW)
+                .setDiscountedPrice(BigDecimal.valueOf(20))
+                .build();
+
+        assertEquals(price.getDiscountedPrice(), BigDecimal.valueOf(20));
     }
 
     @Test
     public void getPriceType() {
         Price price;
-        price = new Price(BigDecimal.valueOf(1), PriceType.NEW);
+
+        price = new Price.Builder(_price, PriceType.NEW).build();
         assertEquals(price.getType(), PriceType.NEW);
-        price = new Price(BigDecimal.valueOf(1), PriceType.USED);
+
+        price = new Price.Builder(_price, PriceType.USED).build();
         assertEquals(price.getType(), PriceType.USED);
-        price = new Price(BigDecimal.valueOf(1), PriceType.PREORDER);
+
+        price = new Price.Builder(_price, PriceType.PREORDER).build();
         assertEquals(price.getType(), PriceType.PREORDER);
-        price = new Price(BigDecimal.valueOf(1), PriceType.DIGITAL);
+
+        price = new Price.Builder(_price, PriceType.DIGITAL).build();
         assertEquals(price.getType(), PriceType.DIGITAL);
     }
 
