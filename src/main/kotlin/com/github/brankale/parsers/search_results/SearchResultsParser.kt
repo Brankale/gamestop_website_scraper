@@ -1,6 +1,6 @@
 package com.github.brankale.parsers.search_results
 
-import com.github.brankale.parsers.search_results.dto.DataProduct
+import com.github.brankale.parsers.search_results.dto.DataProductDto
 import com.github.brankale.models.Game
 import com.github.brankale.models.GamePreview
 import com.github.brankale.models.price.Price
@@ -36,11 +36,11 @@ private fun getGames(document: Document) : List<Game> {
 
     val elements: Elements = document.getElementsByClass("searchProductTile")
     for (element in elements) {
-        val dataProducts: List<DataProduct>? = extractDataProducts(element)
+        val dataProductDtos: List<DataProductDto>? = extractDataProducts(element)
         val gamePageUrl = extractGameId(element)
         val imageUrl = extractGameCoverUrl(element)
 
-        val game = buildGame(dataProducts, gamePageUrl, imageUrl)
+        val game = buildGame(dataProductDtos, gamePageUrl, imageUrl)
         game?.let {
             games.add(game)
         }
@@ -50,19 +50,19 @@ private fun getGames(document: Document) : List<Game> {
 }
 
 private fun buildGame(
-        dataProducts: List<DataProduct>?,
+        dataProductDtos: List<DataProductDto>?,
         gameId: Int?,
         coverUrl: String?
 ): Game? {
-    if (gameId != null && dataProducts != null) {
-        val prices: List<Price> = dataProducts.map { dataProduct ->
+    if (gameId != null && dataProductDtos != null) {
+        val prices: List<Price> = dataProductDtos.map { dataProduct ->
             Price.Builder(
                     dataProduct.price,
                     getPriceType(dataProduct.variant)
             ).build()
         }
 
-        dataProducts[0].apply {
+        dataProductDtos[0].apply {
             return Game.Builder(gameId)
                     .setTitle(name)
                     .setPlatform(brand)
@@ -112,11 +112,11 @@ private fun extractGameId(element: Element): Int? {
     return null
 }
 
-private fun extractDataProducts(element: Element): List<DataProduct>? {
+private fun extractDataProducts(element: Element): List<DataProductDto>? {
     val dataProductAttrValue = element.attr("data-product")
-    val type: Type = object : TypeToken<List<DataProduct>>() {}.type
-    val dataProducts: List<DataProduct> = Gson().fromJson(dataProductAttrValue, type)
-    return dataProducts.ifEmpty { null }
+    val type: Type = object : TypeToken<List<DataProductDto>>() {}.type
+    val dataProductDtos: List<DataProductDto> = Gson().fromJson(dataProductAttrValue, type)
+    return dataProductDtos.ifEmpty { null }
 }
 
 // TODO: implement the other query-string params
@@ -144,14 +144,12 @@ data class SearchParams(
     }
 
     private fun getParams(): Map<String, String> {
-        val map = TreeMap<String, String>()
-        map.apply {
+        return TreeMap<String, String>().apply {
             put("q", game)
             put("typesorting", sorting.toString())
             put("direction", order)
             put("skippos", startFromPos.toString())
             put("takenum", numItems.toString())
         }
-        return map
     }
 }
