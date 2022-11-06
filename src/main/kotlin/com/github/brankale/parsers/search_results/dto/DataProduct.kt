@@ -1,4 +1,4 @@
-package com.github.brankale.dto
+package com.github.brankale.parsers.search_results.dto
 
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal

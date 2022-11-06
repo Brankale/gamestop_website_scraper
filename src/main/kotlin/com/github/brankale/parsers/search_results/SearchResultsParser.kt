@@ -1,6 +1,6 @@
-package com.github.brankale.parsers
+package com.github.brankale.parsers.search_results
 
-import com.github.brankale.dto.DataProduct
+import com.github.brankale.parsers.search_results.dto.DataProduct
 import com.github.brankale.models.Game
 import com.github.brankale.models.GamePreview
 import com.github.brankale.models.price.Price
