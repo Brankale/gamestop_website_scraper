@@ -259,4 +259,24 @@ public class Game {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", platform='" + platform + '\'' +
+                ", coverUrl='" + coverUrl + '\'' +
+                ", prices=" + prices +
+                ", shippingDetails='" + shippingDetails + '\'' +
+                ", genres=" + genres +
+                ", officialSite='" + officialSite + '\'' +
+                ", players='" + players + '\'' +
+                ", release='" + release + '\'' +
+                ", pegi=" + pegi +
+                ", validForPromotions=" + validForPromotions +
+                ", description='" + description + '\'' +
+                ", media=" + media +
+                '}';
+    }
 }
