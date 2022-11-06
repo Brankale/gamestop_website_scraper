@@ -8,11 +8,11 @@ data class GamePageDto(
         @SerializedName("name") val name: String,
         @SerializedName("image") val images: List<String>,
         @SerializedName("description") val description: String,
-        @SerializedName("sku") val sku: Long,
+        @SerializedName("sku") val sku: Long,           // stock keeping unit
         @SerializedName("category") val category: String,
         @SerializedName("releaseDate") val releaseDate: String,
-        @SerializedName("gtin13") val gtin13: String,
-        @SerializedName("brand") val brand: BrandDto,
+        @SerializedName("gtin13") val gtin13: String,   // barcode EAN-13
+        @SerializedName("brand") val brand: BrandDto?,  // can be absent
         @SerializedName("offers")  val offers: List<OffersDto>,
         @SerializedName("aggregateRating")  val aggregateRating: RatingDto
 )
