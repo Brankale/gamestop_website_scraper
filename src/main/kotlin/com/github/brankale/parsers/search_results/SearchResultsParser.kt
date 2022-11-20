@@ -128,7 +128,7 @@ class SearchResultsParser {
                 private val game: String,
                 private val sorting: Int = 0,
                 private val order: String = "ascending",
-                private val startFromPos: Int = 24,
+                private val startFromPos: Int = 0,
                 private val numItems: Int = 24
         ) {
             fun getQueryString(): String {
