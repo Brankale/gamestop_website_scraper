@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.io.IOException
+import java.lang.NumberFormatException
 import java.lang.StringBuilder
 import java.lang.reflect.Type
 import java.net.URLEncoder
@@ -16,7 +17,6 @@ import java.nio.charset.StandardCharsets
 import java.util.TreeMap
 
 class SearchResultsParser {
-
     companion object {
 
         private const val SCHEME = "https://"
@@ -38,8 +38,9 @@ class SearchResultsParser {
                 val dataProductDtos: List<DataProductDto>? = extractDataProducts(element)
                 val gamePageUrl = extractGameId(element)
                 val imageUrl = extractGameCoverUrl(element)
+                val imageSku = extractImageSku(imageUrl)
 
-                val game = buildGame(dataProductDtos, gamePageUrl, imageUrl)
+                val game = buildGame(dataProductDtos, gamePageUrl, imageSku)
                 game?.let {
                     games.add(game)
                 }
@@ -48,10 +49,18 @@ class SearchResultsParser {
             return games
         }
 
+        private fun extractImageSku(imageUrl: String?): Long? {
+            return try {
+                imageUrl?.split("/")?.get(5)?.toLong()
+            } catch (ex: NumberFormatException) {
+                null
+            }
+        }
+
         private fun buildGame(
                 dataProductDtos: List<DataProductDto>?,
                 gameId: Int?,
-                coverUrl: String?
+                imageSku: Long?
         ): Game? {
             if (gameId != null && dataProductDtos != null) {
                 val priceOlds: List<Price> = dataProductDtos.map { dataProduct ->
@@ -67,6 +76,7 @@ class SearchResultsParser {
                     return Game.Builder(gameId)
                             .name(name)
                             .publisher(brand)
+                            .imageSku(imageSku)
                             .prices(priceOlds)
                             .build()
                 }
@@ -145,5 +155,6 @@ class SearchResultsParser {
         }
 
     }
+
 
 }

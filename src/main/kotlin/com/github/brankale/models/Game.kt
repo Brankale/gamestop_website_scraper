@@ -30,13 +30,13 @@ class Game private constructor(
         private var publisher: String? = null
         private var prices: MutableList<Price>? = null
 
-        fun type(type: String) = apply { this.type = type }
-        fun name(name: String) = apply { this.name = name }
-        fun description(description: String) = apply { this.description = description }
-        fun sku(sku: Long) = apply { this.sku = sku }
-        fun imageSku(imageSku: Long) = apply { this.imageSku = imageSku }
-        fun category(category: String) = apply { this.category = category }
-        fun releaseDate(releaseDate: String) = apply { this.releaseDate = releaseDate }
+        fun type(type: String?) = apply { this.type = type }
+        fun name(name: String?) = apply { this.name = name }
+        fun description(description: String?) = apply { this.description = description }
+        fun sku(sku: Long?) = apply { this.sku = sku }
+        fun imageSku(imageSku: Long?) = apply { this.imageSku = imageSku }
+        fun category(category: String?) = apply { this.category = category }
+        fun releaseDate(releaseDate: String?) = apply { this.releaseDate = releaseDate }
         fun publisher(publisher: String?) = apply { this.publisher = publisher }
         fun prices(prices: List<Price>) = apply { this.prices = mutableListOf<Price>().apply { addAll(prices) } }
         fun addPrice(price: Price) = apply {
