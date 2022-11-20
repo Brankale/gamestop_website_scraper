@@ -62,7 +62,7 @@ class Game private constructor(
             "$imageUrlPrefix/$imageSku/${quality.suffix}"
 
     override fun toString(): String {
-        return "GameNew(id=$id, name=$name, sku=$sku, category=$category, releaseDate=$releaseDate, publisher=$publisher, prices=$prices, description=$description,)"
+        return "Game(id=$id, name=$name, sku=$sku, category=$category, releaseDate=$releaseDate, publisher=$publisher, prices=$prices, description=$description,)"
     }
 }
 
