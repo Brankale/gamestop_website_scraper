@@ -24,6 +24,7 @@ enum class Currency(val symbol: String) {
 }
 
 enum class ItemCondition {
+    UNKNOWN,
     NEW,
     USED;
 
@@ -39,6 +40,7 @@ enum class ItemCondition {
 }
 
 enum class Availability {
+    UNKNOWN,
     PREORDER,
     IN_STOCK,
     OUT_OF_STOCK;

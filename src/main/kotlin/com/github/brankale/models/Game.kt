@@ -2,7 +2,7 @@ package com.github.brankale.models
 
 // TODO - list of missing params:
 //        platform, shippingDetails, officialSite, numPlayers, pegi, validForPromo, available Promotions, gallery images
-class GameNew private constructor(
+class Game private constructor(
         val id: Int,
         val name: String?,
         val description: String?,
@@ -45,7 +45,7 @@ class GameNew private constructor(
             prices?.add(price)
         }
 
-        fun build() = GameNew(
+        fun build() = Game(
                 id = id,
                 name = name,
                 description = description,
